@@ -1,0 +1,31 @@
+name = "subprocess"
+version = "1.0.0"
+maintainer = "David Pfister"
+author = "David Pfister"
+description = "experimental repo for subprocess spawning"
+categories = ["process"]
+keywords = ["subprocess", "fork"]
+homepage = "https://github.com/davidpfister/subprocess.f"
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+[dependencies]
+processlib = { path = "./lib" }
+
+[preprocess]
+cpp.suffixes = ["F90", "f90"]
+cpp.macros = ["_WIN32", "_FPM"]
+
+[library]
+source-dir = "src"
+include-dir = ["include"]
+
+[install]
+library = false
+
+[[test]]
+name = "test"
+source-dir = "tests"
+main="main.f90"
