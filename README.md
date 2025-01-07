@@ -30,7 +30,6 @@
 <center>
 
 ![Screen Shot](https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/image.png?raw=true)
-
 </center>
 
 This project aims at providing some ideas and experiments to create child processes in Fortran. <br><br>
