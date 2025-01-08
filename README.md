@@ -112,9 +112,9 @@ logical :: succ
 integer :: code
 
 p = process("gfortran")
-call p%arg("hello_world.f90")
-call p%arg("-o")
-call p%arg("hello_world")
+call p%with_arg("hello_world.f90")
+call p%with_arg("-o")
+call p%with_arg("hello_world")
 call p%run(success=succ, code=code)
 ```
 <!-- CONTRIBUTING -->

@@ -15,9 +15,9 @@ TESTPROGRAM(main)
 #endif
 
         p = process("gfortran")
-        call p%arg(dirparth//"hello_world.f90") ! contains "print *, "Hello from child!"; end
-        call p%arg("-o")
-        call p%arg(dirparth//"hello_world")
+        call p%with_arg(dirparth//"hello_world.f90") ! contains "print *, "Hello from child!"; end
+        call p%with_arg("-o")
+        call p%with_arg(dirparth//"hello_world")
         call p%run(success=succ, code=code)
 
         EXPECT_TRUE(succ)

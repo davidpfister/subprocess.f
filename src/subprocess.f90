@@ -11,7 +11,7 @@ module subprocess
         type(string), allocatable, private  :: args(:)
         type(handle_pointer), private       :: ptr
     contains
-        procedure, pass(this), public       :: arg => set_arg
+        procedure, pass(this), public       :: with_arg
         procedure, pass(this), public       :: run
         procedure, pass(this), public       :: kill
     end type
@@ -33,7 +33,7 @@ contains
         this%command = trim(prog)
     end function
 
-    subroutine set_arg(this, arg)
+    subroutine with_arg(this, arg)
         class(process), intent(inout) :: this
         character(*), intent(in) :: arg
         type(string) :: vs
