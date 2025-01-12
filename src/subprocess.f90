@@ -67,24 +67,24 @@ contains
 
         this%pid = process_start(cmd, 'r', this%ptr, code)
 
-        do while (code == 0)
-            call process_readline(line, this%ptr, code) ! read a line from the process
-            if (code /= 0) then
-                exit
-            end if
-            this%output = this%output//line
-        end do
-
-        call process_close(this%ptr, code)
-        if (code /= 0) then
-            success = .false.
-        end if
+        !do while (code == 0)
+        !    call process_readline(line, this%ptr, code) ! read a line from the process
+        !    if (code /= 0) then
+        !        exit
+        !    end if
+        !    this%output = this%output//line
+        !end do
+        !
+        !call process_close(this%ptr, code)
+        !if (code /= 0) then
+        !    success = .false.
+        !end if
     end subroutine
 
     subroutine kill(this)
         class(process), intent(inout) :: this
 
-        call process_kill(this%pid)
+        !call process_kill(this%pid)
     end subroutine
 
 end module
