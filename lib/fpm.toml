@@ -4,7 +4,7 @@ maintainer = "David Pfister"
 author = "David Pfister"
 description = "experimental repo for subprocess spawning"
 categories = ["process"]
-keywords = ["subprocess", "fork"]
+keywords = ["subprocess"]
 homepage = "https://github.com/davidpfister/subprocess.f"
 
 [preprocess]

@@ -14,6 +14,7 @@ module subprocess
         procedure, pass(this), public       :: with_arg
         procedure, pass(this), public       :: run
         procedure, pass(this), public       :: kill
+        !final :: finalize
     end type
 
     interface process
@@ -65,7 +66,7 @@ contains
         success = .true.
         code = 0
 
-        this%pid = process_start(cmd, 'r', this%ptr, code)
+        this%pid = process_run(cmd, 0, this%ptr, code)
 
         !do while (code == 0)
         !    call process_readline(line, this%ptr, code) ! read a line from the process
@@ -85,6 +86,12 @@ contains
         class(process), intent(inout) :: this
 
         !call process_kill(this%pid)
+    end subroutine
+    
+    subroutine finalize(this)
+        type(process), intent(inout) :: this
+        
+        call process_finalize(this%ptr)
     end subroutine
 
 end module

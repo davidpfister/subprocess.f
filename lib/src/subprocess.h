@@ -53,15 +53,12 @@
 
 #if defined(_MSC_VER)
 #define subprocess_pure
-#define subprocess_weak __inline
 #define subprocess_tls __declspec(thread)
 #elif defined(__MINGW32__)
 #define subprocess_pure SUBPROCESS_ATTRIBUTE(pure)
-#define subprocess_weak static SUBPROCESS_ATTRIBUTE(used)
 #define subprocess_tls __thread
 #elif defined(__clang__) || defined(__GNUC__) || defined(__TINYC__)
 #define subprocess_pure SUBPROCESS_ATTRIBUTE(pure)
-#define subprocess_weak SUBPROCESS_ATTRIBUTE(weak)
 #define subprocess_tls __thread
 #else
 #error Non clang, non gcc, non MSVC compiler found!
@@ -89,8 +86,9 @@ enum subprocess_option_e {
 	subprocess_option_search_user_path = 0x10
 };
 
+#if defined(__cplusplus)
 extern "C" {
-
+#endif
 	/// @brief Create a process.
 	/// @param command_line An array of strings for the command line to execute for
 	/// this process. The last element must be NULL to signify the end of the array.
@@ -99,9 +97,9 @@ extern "C" {
 	/// @param options A bit field of subprocess_option_e's to pass.
 	/// @param out_process The newly created process.
 	/// @return On success zero is returned.
-	__declspec(dllexport) subprocess_weak int __cdecl subprocess_create(char* command_line,
+	__declspec(dllexport) int __cdecl subprocess_create(char* command_line,
 		int options,
-		struct subprocess_s* const out_process);
+		struct subprocess_s* out_process);
 
 	/// @brief Create a process (extended create).
 	/// @param command_line An array of strings for the command line to execute for
@@ -117,10 +115,10 @@ extern "C" {
 	///
 	/// If `options` contains `subprocess_option_inherit_environment`, then
 	/// `environment` must be NULL.
-	__declspec(dllexport) subprocess_weak int __cdecl
+	__declspec(dllexport) int __cdecl
 		subprocess_create_ex(char* command_line, int options,
 			const char* const environment[],
-			struct subprocess_s* const out_process);
+			struct subprocess_s* out_process);
 
 	/// @brief Get the standard input file for a process.
 	/// @param process The process to query.
@@ -128,8 +126,8 @@ extern "C" {
 	///
 	/// The file returned can be written to by the parent process to feed data to
 	/// the standard input of the process.
-	__declspec(dllexport) subprocess_pure subprocess_weak FILE* __cdecl
-		subprocess_stdin(const struct subprocess_s* const process);
+	__declspec(dllexport) subprocess_pure FILE* __cdecl
+		subprocess_stdin(const struct subprocess_s* process);
 
 	/// @brief Get the standard output file for a process.
 	/// @param process The process to query.
@@ -137,8 +135,8 @@ extern "C" {
 	///
 	/// The file returned can be read from by the parent process to read data from
 	/// the standard output of the child process.
-	__declspec(dllexport) subprocess_pure subprocess_weak FILE* __cdecl
-		subprocess_stdout(const struct subprocess_s* const process);
+	__declspec(dllexport) subprocess_pure FILE* __cdecl
+		subprocess_stdout(const struct subprocess_s* process);
 
 	/// @brief Get the standard error file for a process.
 	/// @param process The process to query.
@@ -150,8 +148,8 @@ extern "C" {
 	/// If the process was created with the subprocess_option_combined_stdout_stderr
 	/// option bit set, this function will return NULL, and the subprocess_stdout
 	/// function should be used for both the standard output and error combined.
-	__declspec(dllexport) subprocess_pure subprocess_weak FILE* __cdecl
-		subprocess_stderr(const struct subprocess_s* const process);
+	__declspec(dllexport) subprocess_pure FILE* __cdecl
+		subprocess_stderr(const struct subprocess_s* process);
 
 	/// @brief Wait for a process to finish execution.
 	/// @param process The process to wait for.
@@ -160,7 +158,7 @@ extern "C" {
 	/// @return On success zero is returned.
 	///
 	/// Joining a process will close the stdin pipe to the process.
-	__declspec(dllexport) subprocess_weak int __cdecl subprocess_join(struct subprocess_s* const process,
+	__declspec(dllexport) int __cdecl subprocess_join(struct subprocess_s* process,
 		int* const out_return_code);
 
 	/// @brief Destroy a previously created process.
@@ -169,7 +167,7 @@ extern "C" {
 	///
 	/// If the process to be destroyed had not finished execution, it may out live
 	/// the parent process.
-	__declspec(dllexport) subprocess_weak int __cdecl subprocess_destroy(struct subprocess_s* const process);
+	__declspec(dllexport) int __cdecl subprocess_destroy(struct subprocess_s* process);
 
 	/// @brief Terminate a previously created process.
 	/// @param process The process to terminate.
@@ -177,7 +175,7 @@ extern "C" {
 	///
 	/// If the process to be destroyed had not finished execution, it will be
 	/// terminated (i.e killed).
-	__declspec(dllexport) subprocess_weak int __cdecl subprocess_terminate(struct subprocess_s* const process);
+	__declspec(dllexport) int __cdecl subprocess_terminate(struct subprocess_s* process);
 
 	/// @brief Read the standard output from the child process.
 	/// @param process The process to read from.
@@ -189,8 +187,8 @@ extern "C" {
 	/// The only safe way to read from the standard output of a process during it's
 	/// execution is to use the `subprocess_option_enable_async` option in
 	/// conjunction with this method.
-	__declspec(dllexport) subprocess_weak unsigned __cdecl
-		subprocess_read_stdout(struct subprocess_s* const process, char* const buffer,
+	__declspec(dllexport) unsigned __cdecl
+		subprocess_read_stdout(struct subprocess_s* process, char* const buffer,
 			unsigned size);
 
 	/// @brief Read the standard error from the child process.
@@ -203,14 +201,14 @@ extern "C" {
 	/// The only safe way to read from the standard error of a process during it's
 	/// execution is to use the `subprocess_option_enable_async` option in
 	/// conjunction with this method.
-	__declspec(dllexport) subprocess_weak unsigned __cdecl
-		subprocess_read_stderr(struct subprocess_s* const process, char* const buffer,
+	__declspec(dllexport) unsigned __cdecl
+		subprocess_read_stderr(struct subprocess_s* process, char* const buffer,
 			unsigned size);
 
 	/// @brief Returns if the subprocess is currently still alive and executing.
 	/// @param process The process to check.
 	/// @return If the process is still alive non-zero is returned.
-	__declspec(dllexport) subprocess_weak int __cdecl subprocess_alive(struct subprocess_s* const process);
+	__declspec(dllexport) int __cdecl subprocess_alive(struct subprocess_s* process);
 
 #define SUBPROCESS_CAST(type, x) static_cast<type>(x)
 #define SUBPROCESS_PTR_CAST(type, x) reinterpret_cast<type>(x)
@@ -402,7 +400,7 @@ extern "C" {
 		int return_status;
 #endif
 
-		subprocess_size_t alive;
+		int alive;
 	};
 #ifdef __clang__
 #pragma clang diagnostic pop
@@ -416,7 +414,7 @@ extern "C" {
 #endif
 
 #if defined(_WIN32)
-	subprocess_weak int subprocess_create_named_pipe_helper(void** rd, void** wr);
+	int subprocess_create_named_pipe_helper(void** rd, void** wr);
 	int subprocess_create_named_pipe_helper(void** rd, void** wr) {
 		const unsigned long pipeAccessInbound = 0x00000001;
 		const unsigned long fileFlagOverlapped = 0x40000000;
@@ -468,14 +466,14 @@ extern "C" {
 #endif
 
 	int subprocess_create(char* commandLine, int options,
-		struct subprocess_s* const out_process) {
+		struct subprocess_s* out_process) {
 		return subprocess_create_ex(commandLine, options, SUBPROCESS_NULL,
 			out_process);
 	}
 
 	int subprocess_create_ex(char* commandLine, int options,
 		const char* const environment[],
-		struct subprocess_s* const out_process) {
+		struct subprocess_s* out_process) {
 #if defined(_WIN32)
 		int fd;
 		void* rd;
@@ -519,10 +517,7 @@ extern "C" {
 
 		if (subprocess_option_inherit_environment !=
 			(options & subprocess_option_inherit_environment)) {
-			if (SUBPROCESS_NULL == environment) {
-				used_environment = SUBPROCESS_CONST_CAST(char*, "\0\0");
-			}
-			else {
+			if (SUBPROCESS_NULL != environment) {
 				// We always end with two null terminators.
 				len = 2;
 
@@ -658,15 +653,14 @@ extern "C" {
 
 		if (!CreateProcessA(
 			SUBPROCESS_NULL,
-			commandLine, // command line
+			commandLine,		 // command line
 			SUBPROCESS_NULL,     // process security attributes
 			SUBPROCESS_NULL,     // primary thread security attributes
 			1,                   // handles are inherited
 			flags,               // creation flags
 			used_environment,    // used environment
 			SUBPROCESS_NULL,     // use parent's current directory
-			SUBPROCESS_PTR_CAST(LPSTARTUPINFOA,
-				&startInfo), // STARTUPINFO pointer
+			SUBPROCESS_PTR_CAST(LPSTARTUPINFOA, &startInfo), // STARTUPINFO pointer
 			SUBPROCESS_PTR_CAST(LPPROCESS_INFORMATION, &processInfo))) {
 			return -1;
 		}
@@ -688,7 +682,7 @@ extern "C" {
 
 		out_process->alive = 1;
 
-		return processInfo.dwProcessId;;
+		return processInfo.dwProcessId;
 #else
 		int stdinfd[2];
 		int stdoutfd[2];
@@ -849,15 +843,15 @@ extern "C" {
 #endif
 	}
 
-	FILE* subprocess_stdin(const struct subprocess_s* const process) {
+	FILE* subprocess_stdin(const struct subprocess_s* process) {
 		return process->stdin_file;
 	}
 
-	FILE* subprocess_stdout(const struct subprocess_s* const process) {
+	FILE* subprocess_stdout(const struct subprocess_s* process) {
 		return process->stdout_file;
 	}
 
-	FILE* subprocess_stderr(const struct subprocess_s* const process) {
+	FILE* subprocess_stderr(const struct subprocess_s* process) {
 		if (process->stdout_file != process->stderr_file) {
 			return process->stderr_file;
 		}
@@ -866,20 +860,10 @@ extern "C" {
 		}
 	}
 
-	int subprocess_join(struct subprocess_s* const process,
+	int subprocess_join(struct subprocess_s* process,
 		int* const out_return_code) {
 #if defined(_WIN32)
 		const unsigned long infinite = 0xFFFFFFFF;
-
-		if (process->stdin_file) {
-			fclose(process->stdin_file);
-			process->stdin_file = SUBPROCESS_NULL;
-		}
-
-		if (process->hStdInput) {
-			CloseHandle(process->hStdInput);
-			process->hStdInput = SUBPROCESS_NULL;
-		}
 
 		WaitForSingleObject(process->hProcess, infinite);
 
@@ -890,17 +874,9 @@ extern "C" {
 				return -1;
 			}
 		}
-
-		process->alive = 0;
-
 		return 0;
 #else
 		int status;
-
-		if (process->stdin_file) {
-			fclose(process->stdin_file);
-			process->stdin_file = SUBPROCESS_NULL;
-		}
 
 		if (process->child) {
 			if (process->child != waitpid(process->child, &status, 0)) {
@@ -910,24 +886,22 @@ extern "C" {
 			process->child = 0;
 
 			if (WIFEXITED(status)) {
-				process->return_status = WEXITSTATUS(status);
+				if (out_return_code) {
+					*out_return_code = WEXITSTATUS(status);
+				}
 			}
 			else {
-				process->return_status = EXIT_FAILURE;
+				if (out_return_code) {
+					*out_return_code = EXIT_FAILURE;
+				}
 			}
-
-			process->alive = 0;
-		}
-
-		if (out_return_code) {
-			*out_return_code = process->return_status;
 		}
 
 		return 0;
 #endif
 	}
 
-	int subprocess_destroy(struct subprocess_s* const process) {
+	int subprocess_destroy(struct subprocess_s* process) {
 		if (process->stdin_file) {
 			fclose(process->stdin_file);
 			process->stdin_file = SUBPROCESS_NULL;
@@ -951,6 +925,7 @@ extern "C" {
 
 			if (process->hStdInput) {
 				CloseHandle(process->hStdInput);
+				process->hStdInput = SUBPROCESS_NULL;
 			}
 
 			if (process->hEventOutput) {
@@ -962,11 +937,11 @@ extern "C" {
 			}
 		}
 #endif
-
+		process->alive = 0;
 		return 0;
 	}
 
-	int subprocess_terminate(struct subprocess_s* const process) {
+	int subprocess_terminate(struct subprocess_s* process) {
 #if defined(_WIN32)
 		unsigned int killed_process_exit_code;
 		int success_terminate;
@@ -984,7 +959,7 @@ extern "C" {
 #endif
 	}
 
-	unsigned subprocess_read_stdout(struct subprocess_s* const process,
+	unsigned subprocess_read_stdout(struct subprocess_s* process,
 		char* const buffer, unsigned size) {
 #if defined(_WIN32)
 		void* handle;
@@ -1029,7 +1004,7 @@ extern "C" {
 #endif
 	}
 
-	unsigned subprocess_read_stderr(struct subprocess_s* const process,
+	unsigned subprocess_read_stderr(struct subprocess_s* process,
 		char* const buffer, unsigned size) {
 #if defined(_WIN32)
 		void* handle;
@@ -1074,7 +1049,7 @@ extern "C" {
 #endif
 	}
 
-	int subprocess_alive(struct subprocess_s* const process) {
+	int subprocess_alive(struct subprocess_s* process) {
 		int is_alive = SUBPROCESS_CAST(int, process->alive);
 
 		if (!is_alive) {
@@ -1124,5 +1099,6 @@ extern "C" {
 #pragma clang diagnostic pop
 #endif
 #endif
-
+#if defined(__cplusplus)
 } // extern "C"
+#endif

@@ -24,7 +24,7 @@
     <ProjectGuid>{EA46B9B4-F034-4117-95DD-5A9D5279DCF6}</ProjectGuid>
     <RootNamespace>FxProcessCxx</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>forklib</ProjectName>
+    <ProjectName>processlib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,7 +155,7 @@
     <ClInclude Include="subprocess.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="subprocess.cpp" />
+    <ClCompile Include="processlib.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

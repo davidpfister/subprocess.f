@@ -11,6 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="subprocess.cpp" />
+    <ClCompile Include="processlib.cpp" />
   </ItemGroup>
 </Project>
