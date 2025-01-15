@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "gtest/gtest.h"
 #include "../src/subprocess.h"
 
 TEST(utest, process_return_zero) {
