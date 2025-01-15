@@ -13,6 +13,7 @@ module subprocess
     contains
         procedure, pass(this), public       :: with_arg
         procedure, pass(this), public       :: run
+        procedure, pass(this), public       :: wait
         procedure, pass(this), public       :: kill
         !final :: finalize
     end type
@@ -80,6 +81,12 @@ contains
         !if (code /= 0) then
         !    success = .false.
         !end if
+    end subroutine
+    
+    subroutine wait(this)
+        class(process), intent(inout) :: this
+        
+        call process_wait(this%ptr)
     end subroutine
 
     subroutine kill(this)

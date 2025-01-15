@@ -4,7 +4,8 @@ module subprocess_handler
     implicit none
 
     public  :: process_run, &
-               process_finalize
+               process_finalize, &
+               process_wait
     !public  :: process_close
     !public  :: process_readline
     !public  :: process_kill
@@ -97,6 +98,11 @@ module subprocess_handler
             integer(c_int), intent(in), value :: size
         end function
     
+        integer(c_int) function subprocess_alive_c(process) bind(C, name='subprocess_alive')
+            import
+            type(subprocess_s), intent(inout) :: process
+        end function
+    
         type(subprocess_s) function fgets_c(str, numChars, stream) bind(C, name='fgets')
             import
             character(c_char), intent(inout) :: str(*)
@@ -143,17 +149,37 @@ contains
         integer :: istat
 
         istat = 0
-        if (present(ierr)) ierr = istat
-
         pid = subprocess_create_c(cmd//c_null_char, options, fp%handle)
         if (pid < 0) then
-            write (*, *) '*process_run* ERROR: Could not open pipe!'
+            write (*, *) '*process_run* ERROR: Could not create process!'
             istat = -1
         end if
         istat = subprocess_join_c(fp%handle)
         istat = subprocess_destroy_c(fp%handle)
         if (present(ierr)) ierr = istat
     end function
+    
+    function process_isalive(fp, ierr) result(alive)
+        type(handle_pointer), intent(inout)     :: fp
+        integer, intent(out), optional          :: ierr
+        logical :: alive
+        !private
+        integer :: status
+        
+        status = subprocess_alive_c(fp%handle)
+        alive = (status /= 0)
+    end function
+    
+    subroutine process_wait(fp, ierr)
+        type(handle_pointer), intent(inout)     :: fp
+        integer, intent(out), optional          :: ierr
+        !private
+        integer :: istat
+
+        istat = 0
+        istat = subprocess_join_c(fp%handle)
+        if (present(ierr)) ierr = istat
+    end subroutine
     
     subroutine process_finalize(fp)
         type(handle_pointer), intent(inout) :: fp
