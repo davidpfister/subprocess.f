@@ -14,9 +14,7 @@ TESTPROGRAM(main)
         character(*), parameter :: dirparth = "tests/TestData/"
 #endif
         p = process("gfortran")
-        call p%with_arg(dirparth//"hello_world.f90") ! contains "print *, "Hello from child!"; end
-        call p%with_arg("-o")
-        call p%with_arg(dirparth//"hello_world")
+        call p%with_arg(dirparth//"hello_world.f90 -o "//dirparth//"hello_world") ! contains "print *, "Hello from child!"; end
         call p%run(success=succ, code=code)
 
         EXPECT_TRUE(succ)
@@ -24,7 +22,7 @@ TESTPROGRAM(main)
         call p%run(success=succ, code=code)
         
         EXPECT_TRUE(succ)
-	    !EXPECT_STREQ(p%output(:18), ' Hello from child!')
+	    EXPECT_STREQ(p%output(:18), ' Hello from child!')
     END_TEST
 
 END_TESTPROGRAM

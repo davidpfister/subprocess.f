@@ -3,26 +3,23 @@ module subprocess_handler
 
     implicit none
 
-    public  :: process_run, &
-               process_finalize, &
-               process_wait
+    public  :: internal_run, &
+               internal_finalize, &
+               internal_wait, &
+               internal_read_stdout
     !public  :: process_close
     !public  :: process_readline
     !public  :: process_kill
     
-    type, bind(c) :: iobuf
-        type(c_ptr) :: PlaceHolder
-    end type
-    
     type, bind(c) :: subprocess_s
-        type(iobuf) :: stdin_file
-		type(iobuf) :: stdout_file
-		type(iobuf) :: stderr_file
+        type(c_ptr) :: stdin_file   !FILE*
+		type(c_ptr) :: stdout_file  !FILE*
+		type(c_ptr) :: stderr_file  !FILE*
 #if defined(_WIN32)
-		type(c_ptr) :: hProcess
-		type(c_ptr) :: hStdInput
-		type(c_ptr) :: hEventOutput
-		type(c_ptr) :: hEventError
+		type(c_ptr) :: hProcess     !void*
+		type(c_ptr) :: hStdInput    !void*
+		type(c_ptr) :: hEventOutput !void*
+		type(c_ptr) :: hEventError  !void*
 #else
 		integer(c_int) :: child
 		integer(c_int) :: return_status
@@ -30,7 +27,7 @@ module subprocess_handler
         integer(c_int) :: alive
     end type
 
-    integer, parameter :: BUFFER_SIZE = 4096
+    integer, parameter :: BUFFER_SIZE = 4095
 
     type, public :: handle_pointer
         private
@@ -53,25 +50,25 @@ module subprocess_handler
             type(subprocess_s), intent(inout) :: out_process
         end function
     
-        type(subprocess_s) function subprocess_stdin_c(process) bind(C, name='subprocess_stdin')
+        type(c_ptr) function subprocess_stdin_c(process) bind(C, name='subprocess_stdin')
             import
             type(subprocess_s), intent(inout) :: process
         end function
     
-        type(subprocess_s) function subprocess_stdout_c(process) bind(C, name='subprocess_stdout')
+        type(c_ptr) function subprocess_stdout_c(process) bind(C, name='subprocess_stdout')
             import
             type(subprocess_s), intent(inout) :: process
         end function
     
-        type(subprocess_s) function subprocess_stderr_c(process, out_return_code) bind(C, name='subprocess_stderr')
+        type(c_ptr) function subprocess_stderr_c(process) bind(C, name='subprocess_stderr')
+            import
+            type(subprocess_s), intent(inout) :: process
+        end function
+    
+        integer(c_int) function subprocess_join_c(process, out_return_code) bind(C, name='subprocess_join')
             import
             type(subprocess_s), intent(inout) :: process
             integer(c_int), intent(out) :: out_return_code
-        end function
-    
-        integer(c_int) function subprocess_join_c(process) bind(C, name='subprocess_join')
-            import
-            type(subprocess_s), value :: process
         end function
     
         integer(c_int) function subprocess_destroy_c(process) bind(C, name='subprocess_destroy')
@@ -84,18 +81,18 @@ module subprocess_handler
             type(subprocess_s), intent(inout) :: process
         end function
     
-        integer(c_int) function subprocess_read_stdout_c(process, buffer, size) bind(C, name='subprocess_read_stdout')
+        integer(c_long) function subprocess_read_stdout_c(process, buffer, size) bind(C, name='subprocess_read_stdout')
             import
-            type(subprocess_s), value :: process
+            type(subprocess_s), intent(inout) :: process
             character(c_char), intent(inout) :: buffer(*)
-            integer(c_int), intent(in), value :: size
+            integer(c_long), value :: size
         end function
     
         integer(c_int) function subprocess_read_stderr_c(process, buffer, size) bind(C, name='subprocess_read_stderr')
             import
-            type(subprocess_s), value :: process
+            type(subprocess_s), intent(inout) :: process
             character(c_char), intent(inout) :: buffer(*)
-            integer(c_int), intent(in), value :: size
+            integer(c_int), intent(out) :: size
         end function
     
         integer(c_int) function subprocess_alive_c(process) bind(C, name='subprocess_alive')
@@ -103,29 +100,28 @@ module subprocess_handler
             type(subprocess_s), intent(inout) :: process
         end function
     
-        type(subprocess_s) function fgets_c(str, numChars, stream) bind(C, name='fgets')
+        type(c_ptr) function fgets_c(str, numChars, stream) bind(C, name='fgets')
             import
             character(c_char), intent(inout) :: str(*)
-            integer(c_int), intent(out) :: numChars
-            type(subprocess_s), value :: stream
+            integer(c_int), intent(inout) :: numChars
+            type(c_ptr), value :: stream
         end function
 
-        function fputs_c(buf, handle) bind(C, name='fputs')
+        integer(c_int) function fputs_c(buf, handle) bind(C, name='fputs')
             import
-            integer(c_int) :: fputs_c
-            character(c_char), dimension(*) :: buf
-            type(subprocess_s), value :: handle
+            character(c_char), intent(inout) :: buf(*)
+            type(c_ptr), value :: handle
         end function
 
         function fflush_c(handle) bind(C, name='fflush')
             import
             integer(c_int) :: fflush_c
-            type(subprocess_s), value :: handle
+            type(c_ptr), value :: handle
         end function
     end interface
 
-    interface process_run
-        module procedure :: process_run_default
+    interface internal_run
+        module procedure :: internal_run_default
     end interface
         
 contains
@@ -140,26 +136,45 @@ contains
     !! termination of the cmd was detected.  This is based on the last
     !! line of text that was written by the program - if it is the same as
     !! success_text then it is assumed that the program succeeded.
-    integer function process_run_default(cmd, options, fp, ierr) result(pid)
+    integer function internal_run_default(cmd, options, fp, ierr) result(pid)
         character(*), intent(in)                :: cmd
         integer, intent(in)                     :: options
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         !private
         integer :: istat
-
+        integer(c_int) :: rcode
+        
         istat = 0
+        
         pid = subprocess_create_c(cmd//c_null_char, options, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             istat = -1
         end if
-        istat = subprocess_join_c(fp%handle)
-        istat = subprocess_destroy_c(fp%handle)
+        
+        istat = subprocess_join_c(fp%handle, rcode)
+        
         if (present(ierr)) ierr = istat
     end function
     
-    function process_isalive(fp, ierr) result(alive)
+    function internal_read_stdout(fp) result(output)
+        type(handle_pointer), intent(inout)     :: fp
+        character(:), allocatable :: output
+        !private
+        integer(c_long) :: l
+        character(BUFFER_SIZE) :: buf
+
+        l = -1
+        buf = ' '
+        allocate(character(0)::output)
+        l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
+        if (l > 0) then 
+            output = trim(buf(:l))
+        end if
+    end function
+    
+    function internal_isalive(fp, ierr) result(alive)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         logical :: alive
@@ -170,18 +185,19 @@ contains
         alive = (status /= 0)
     end function
     
-    subroutine process_wait(fp, ierr)
+    subroutine internal_wait(fp, ierr)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         !private
         integer :: istat
+        integer(c_int) :: rcode
 
         istat = 0
-        istat = subprocess_join_c(fp%handle)
+        istat = subprocess_join_c(fp%handle, rcode)
         if (present(ierr)) ierr = istat
     end subroutine
     
-    subroutine process_finalize(fp)
+    subroutine internal_finalize(fp)
         type(handle_pointer), intent(inout) :: fp
         !private
         integer(c_int) :: ierr

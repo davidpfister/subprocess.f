@@ -861,9 +861,19 @@ extern "C" {
 	}
 
 	int subprocess_join(struct subprocess_s* process,
-		int* const out_return_code) {
+		int* out_return_code) {
 #if defined(_WIN32)
 		const unsigned long infinite = 0xFFFFFFFF;
+
+		if (process->stdin_file) {
+			fclose(process->stdin_file);
+			process->stdin_file = SUBPROCESS_NULL;
+		}
+
+		if (process->hStdInput) {
+			CloseHandle(process->hStdInput);
+			process->hStdInput = SUBPROCESS_NULL;
+		}
 
 		WaitForSingleObject(process->hProcess, infinite);
 
@@ -874,9 +884,17 @@ extern "C" {
 				return -1;
 			}
 		}
+
+		process->alive = 0;
+
 		return 0;
 #else
 		int status;
+
+		if (process->stdin_file) {
+			fclose(process->stdin_file);
+			process->stdin_file = SUBPROCESS_NULL;
+		}
 
 		if (process->child) {
 			if (process->child != waitpid(process->child, &status, 0)) {
@@ -886,22 +904,24 @@ extern "C" {
 			process->child = 0;
 
 			if (WIFEXITED(status)) {
-				if (out_return_code) {
-					*out_return_code = WEXITSTATUS(status);
-				}
+				process->return_status = WEXITSTATUS(status);
 			}
 			else {
-				if (out_return_code) {
-					*out_return_code = EXIT_FAILURE;
-				}
+				process->return_status = EXIT_FAILURE;
 			}
+
+			process->alive = 0;
+		}
+
+		if (out_return_code) {
+			*out_return_code = process->return_status;
 		}
 
 		return 0;
 #endif
 	}
 
-	int subprocess_destroy(struct subprocess_s* process) {
+	int subprocess_destroy(struct subprocess_s* const process) {
 		if (process->stdin_file) {
 			fclose(process->stdin_file);
 			process->stdin_file = SUBPROCESS_NULL;
@@ -925,7 +945,6 @@ extern "C" {
 
 			if (process->hStdInput) {
 				CloseHandle(process->hStdInput);
-				process->hStdInput = SUBPROCESS_NULL;
 			}
 
 			if (process->hEventOutput) {
@@ -937,7 +956,7 @@ extern "C" {
 			}
 		}
 #endif
-		process->alive = 0;
+
 		return 0;
 	}
 
