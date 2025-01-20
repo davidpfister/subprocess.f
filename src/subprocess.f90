@@ -66,7 +66,11 @@ contains
         code = 0
 
         this%pid = process_start(cmd, 'r', this%ptr, code)
-
+        if (code /= 0) then
+            success = .false.
+            return
+        end if
+        
         do while (code == 0)
             call process_readline(line, this%ptr, code) ! read a line from the process
             if (code /= 0) then

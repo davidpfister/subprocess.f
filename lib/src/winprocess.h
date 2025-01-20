@@ -24,6 +24,4 @@ SUBPROCESS_C_API(HANDLE) winfgets(char*, unsigned int&, HANDLE);
 
 SUBPROCESS_C_API(int) winkill(DWORD, DWORD);
 
-SUBPROCESS_C_API(intptr_t) winfork(void);
-
 /*EOF*/
