@@ -4,6 +4,7 @@ module subprocess_handler
     implicit none; private
 
     public  :: internal_run, &
+               internal_runasync, &
                internal_finalize, &
                internal_wait, &
                internal_read_stdout, &
@@ -51,19 +52,19 @@ module subprocess_handler
     end enum
 
     interface
-        integer(c_int) function subprocess_create_c(command_line, options, out_process) bind(C, name='subprocess_create')
+        integer(c_int) function subprocess_create_c(cmd, options, process) bind(C, name='subprocess_create')
             import
-            character(c_char), dimension(*), intent(in) :: command_line
+            character(c_char), intent(in) :: cmd(*)
             integer(c_int), intent(in), value :: options
-            type(subprocess_s), intent(inout) :: out_process
+            type(subprocess_s), intent(inout) :: process
         end function
         
-        integer(c_int) function subprocess_create_ex_c(command_line, options, environment, out_process) bind(C, name='subprocess_create_ex')
+        integer(c_int) function subprocess_create_ex_c(cmd, options, environment, process) bind(C, name='subprocess_create_ex')
             import
-            character(c_char), dimension(*) :: command_line
+            character(c_char), dimension(*) :: cmd
             integer(c_int), intent(in), value :: options
             character(c_char), dimension(*) :: environment
-            type(subprocess_s), intent(inout) :: out_process
+            type(subprocess_s), intent(inout) :: process
         end function
     
         type(c_ptr) function subprocess_stdin_c(process) bind(C, name='subprocess_stdin')
@@ -125,7 +126,7 @@ module subprocess_handler
 
         integer(c_int) function fputs_c(buf, handle) bind(C, name='fputs')
             import
-            character(c_char), intent(inout) :: buf(*)
+            character(c_char), intent(in) :: buf(*)
             type(c_ptr), value :: handle
         end function
 
@@ -138,6 +139,10 @@ module subprocess_handler
 
     interface internal_run
         module procedure :: internal_run_default
+    end interface
+    
+    interface internal_runasync
+        module procedure :: internal_runasync_default
     end interface
         
 contains
@@ -152,15 +157,14 @@ contains
     !! termination of the cmd was detected.  This is based on the last
     !! line of text that was written by the program - if it is the same as
     !! success_text then it is assumed that the program succeeded.
-    integer function internal_run_default(cmd, options, fp, excode) result(pid)
+    integer function internal_run_default(cmd, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
-        integer, intent(in)                     :: options
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
         integer :: ierr
         
-        pid = subprocess_create_c(cmd//c_null_char, options, fp%handle)
+        pid = subprocess_create_c(to_c_string(cmd), 0, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -169,6 +173,31 @@ contains
         ierr = subprocess_join_c(fp%handle, excode)
         ierr = subprocess_terminate_c(fp%handle)
     end function
+    
+    integer function internal_runasync_default(cmd, fp, excode) result(pid)
+        character(*), intent(in)                :: cmd
+        type(handle_pointer), intent(inout)     :: fp
+        integer(c_int), intent(out)             :: excode
+        !private
+        integer :: ierr
+        
+        pid = subprocess_create_c(to_c_string(cmd), subprocess_option_enable_async, fp%handle)
+        if (pid < 0) then
+            write (*, *) '*process_run* ERROR: Could not create process!'
+            excode = -1
+        end if
+    end function
+    
+    subroutine internal_writeto_stdin(fp, msg)
+        type(handle_pointer), intent(inout) :: fp
+        character(*), intent(in)            :: msg
+        !private
+        integer(c_int) :: ierr
+        
+        if (c_associated(fp%handle%stdin_file)) then
+            ierr = fputs_c(to_c_string(msg), fp%handle%stdin_file)
+        end if
+    end subroutine
     
     function internal_read_stdout(fp) result(output)
         type(handle_pointer), intent(inout)     :: fp
@@ -219,7 +248,6 @@ contains
         !private
         integer :: ierr
         
-
         ierr = subprocess_join_c(fp%handle, excode)
     end subroutine
     
@@ -238,8 +266,20 @@ contains
         type(handle_pointer), intent(inout) :: fp
         !private
         integer(c_int) :: ierr
-        
+        if (internal_isalive(fp)) call internal_terminate(fp)
         ierr = subprocess_destroy_c(fp%handle)
     end subroutine
+    
+    function to_c_string(fstring)
+        character(*), intent(in) :: fstring
+        character(c_char) :: to_c_string(len(fstring) + 1)
+        !private
+        integer :: i
+        
+        do i = 1, len(fstring)
+            to_c_string(i) = fstring(i:i)
+        end do
+        to_c_string(len(fstring) + 1) = c_null_char
+    end function
 
 end module

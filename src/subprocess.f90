@@ -1,3 +1,11 @@
+#ifdef _WIN32
+#define PATH_MAX 255
+#define MAX_ARG_STRLEN 8191
+#else
+#define PATH_MAX 4095
+#define MAX_ARG_STRLEN 131071
+#endif
+
 module subprocess
     use subprocess_handler
     use, intrinsic :: iso_c_binding
@@ -7,6 +15,7 @@ module subprocess
     type, public :: process
         private
         integer, public                     :: pid
+        character(:), allocatable, public   :: filename
         integer, private                    :: excode
         double precision, private           :: begtime
         double precision, private           :: extime
@@ -71,7 +80,7 @@ module subprocess
     end type
     
     abstract interface 
-        subroutine onevent(sender, msg)
+        subroutine processio(sender, msg)
             class(*), intent(in)        :: sender
             character(*), intent(in)    :: msg
         end subroutine
@@ -94,10 +103,11 @@ contains
         lhs%ptr = rhs%ptr
     end subroutine
 
-    type(process) function process_new(prog, stdout, stderr) result(that)
+    type(process) function process_new(prog, stdin, stdout, stderr) result(that)
         character(*), intent(in)        :: prog
-        procedure(onevent), optional    :: stdout
-        procedure(onevent), optional    :: stderr
+        procedure(processio), intent(out), pointer, optional   :: stdin
+        procedure(processio), optional                :: stdout
+        procedure(processio), optional                :: stderr
 
         call internal_finalize(that%ptr)
         
@@ -105,7 +115,7 @@ contains
         that%excode = 0
         if (allocated(that%args)) deallocate (that%args)
         that%command = trim(prog)
-        
+        if (present(stdin)) stdin => process_writeto_stdin
         if (present(stdout)) that%stdout = c_funloc(stdout)
         if (present(stderr)) that%stderr = c_funloc(stderr)
     end function
@@ -183,12 +193,12 @@ contains
 
         this%excode = 0
         this%is_running = .true.
-        this%pid = internal_run(cmd, 0, this%ptr, this%excode)
+        this%pid = internal_run(cmd, this%ptr, this%excode)
         this%is_running = internal_isalive(this%ptr)
         
         if (c_associated(this%stdout)) then
             block
-                procedure(onevent), pointer :: fptr => null()
+                procedure(processio), pointer :: fptr => null()
                 call c_f_procpointer(this%stdout, fptr)
                 call fptr(this, internal_read_stdout(this%ptr))
                 nullify(fptr)
@@ -197,7 +207,7 @@ contains
         
         if (c_associated(this%stderr)) then
             block
-                procedure(onevent), pointer :: fptr => null()
+                procedure(processio), pointer :: fptr => null()
                 call c_f_procpointer(this%stderr, fptr)
                 call fptr(this, internal_read_stderr(this%ptr))
                 nullify(fptr)
@@ -218,6 +228,10 @@ contains
                 cmd = trim(cmd)//" "//trim(this%args(i)%chars)
             end do
         end if
+        
+        this%excode = 0
+        this%is_running = .true.
+        this%pid = internal_runasync(cmd, this%ptr, this%excode)
     end subroutine
     
     !> @brief Gets the value that the associated process specified when 
@@ -266,6 +280,16 @@ contains
             this%is_running = internal_isalive(this%ptr)
         end if
         call internal_finalize(this%ptr)
+    end subroutine
+    
+    subroutine process_writeto_stdin(sender, msg)
+        class(*), intent(in) :: sender
+        character(*), intent(in) :: msg
+        
+        select type(sender)
+        type is (process)
+            call internal_writeto_stdin(sender%ptr, msg)
+        end select
     end subroutine
     
     subroutine finalize(this)
