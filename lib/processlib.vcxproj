@@ -152,10 +152,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="subprocess.h" />
+    <ClInclude Include="include\subprocess.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="processlib.cpp" />
+    <ClCompile Include="src\processlib.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

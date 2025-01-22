@@ -1,15 +1,15 @@
 module subprocess_handler
     use, intrinsic :: iso_c_binding
 
-    implicit none
+    implicit none; private
 
     public  :: internal_run, &
                internal_finalize, &
                internal_wait, &
-               internal_read_stdout
-    !public  :: process_close
-    !public  :: process_readline
-    !public  :: process_kill
+               internal_read_stdout, &
+               internal_read_stderr, &
+               internal_isalive, &
+               internal_terminate
     
     type, bind(c) :: subprocess_s
         type(c_ptr) :: stdin_file   !FILE*
@@ -33,6 +33,22 @@ module subprocess_handler
         private
         type(subprocess_s) :: handle
     end type
+    
+    enum, bind(c)
+        !< stdout and stderr are the same FILE.
+        enumerator :: subprocess_option_combined_stdout_stderr = 1
+	    !< The child process should inherit the environment variables of the parent.
+	    enumerator :: subprocess_option_inherit_environment = 2
+	    !< Enable asynchronous reading of stdout/stderr before it has completed.
+	    enumerator :: subprocess_option_enable_async = 4
+	    !< Enable the child process to be spawned with no window visible if supported
+	    !< by the platform.
+	    enumerator :: subprocess_option_no_window = 8
+	    !< Search for program names in the PATH variable. Always enabled on Windows.
+	    !< Note: this will **not** search for paths in any provided custom environment
+	    !< and instead uses the PATH of the spawning process.
+	    enumerator :: subprocess_option_search_user_path = 16
+    end enum
 
     interface
         integer(c_int) function subprocess_create_c(command_line, options, out_process) bind(C, name='subprocess_create')
@@ -88,11 +104,11 @@ module subprocess_handler
             integer(c_long), value :: size
         end function
     
-        integer(c_int) function subprocess_read_stderr_c(process, buffer, size) bind(C, name='subprocess_read_stderr')
+        integer(c_long) function subprocess_read_stderr_c(process, buffer, size) bind(C, name='subprocess_read_stderr')
             import
             type(subprocess_s), intent(inout) :: process
             character(c_char), intent(inout) :: buffer(*)
-            integer(c_int), intent(out) :: size
+            integer(c_long), value :: size
         end function
     
         integer(c_int) function subprocess_alive_c(process) bind(C, name='subprocess_alive')
@@ -136,26 +152,22 @@ contains
     !! termination of the cmd was detected.  This is based on the last
     !! line of text that was written by the program - if it is the same as
     !! success_text then it is assumed that the program succeeded.
-    integer function internal_run_default(cmd, options, fp, ierr) result(pid)
+    integer function internal_run_default(cmd, options, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
         integer, intent(in)                     :: options
         type(handle_pointer), intent(inout)     :: fp
-        integer, intent(out), optional          :: ierr
+        integer(c_int), intent(out)             :: excode
         !private
-        integer :: istat
-        integer(c_int) :: rcode
-        
-        istat = 0
+        integer :: ierr
         
         pid = subprocess_create_c(cmd//c_null_char, options, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
-            istat = -1
+            excode = -1
         end if
         
-        istat = subprocess_join_c(fp%handle, rcode)
-        
-        if (present(ierr)) ierr = istat
+        ierr = subprocess_join_c(fp%handle, excode)
+        ierr = subprocess_terminate_c(fp%handle)
     end function
     
     function internal_read_stdout(fp) result(output)
@@ -174,6 +186,22 @@ contains
         end if
     end function
     
+    function internal_read_stderr(fp) result(output)
+        type(handle_pointer), intent(inout)     :: fp
+        character(:), allocatable :: output
+        !private
+        integer(c_long) :: l
+        character(BUFFER_SIZE) :: buf
+
+        l = -1
+        buf = ' '
+        allocate(character(0)::output)
+        l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
+        if (l > 0) then 
+            output = trim(buf(:l))
+        end if
+    end function
+    
     function internal_isalive(fp, ierr) result(alive)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
@@ -185,15 +213,24 @@ contains
         alive = (status /= 0)
     end function
     
-    subroutine internal_wait(fp, ierr)
+    subroutine internal_wait(fp, excode)
+        type(handle_pointer), intent(inout)     :: fp
+        integer(c_int), intent(out)             :: excode
+        !private
+        integer :: ierr
+        
+
+        ierr = subprocess_join_c(fp%handle, excode)
+    end subroutine
+    
+    subroutine internal_terminate(fp, ierr)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         !private
         integer :: istat
         integer(c_int) :: rcode
 
-        istat = 0
-        istat = subprocess_join_c(fp%handle, rcode)
+        istat = subprocess_terminate_c(fp%handle)
         if (present(ierr)) ierr = istat
     end subroutine
     
