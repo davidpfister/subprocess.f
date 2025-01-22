@@ -20,7 +20,6 @@ module subprocess
         double precision, private           :: begtime
         double precision, private           :: extime
         logical, private                    :: is_running
-        character(:), allocatable, public   :: command
         type(string), allocatable           :: args(:)
         type(c_funptr)                      :: stdout = c_null_funptr
         type(c_funptr)                      :: stderr = c_null_funptr
@@ -86,8 +85,8 @@ module subprocess
 
 contains
 
-    type(process) function process_new(prog, stdin, stdout, stderr) result(that)
-        character(*), intent(in)        :: prog
+    type(process) function process_new(name, stdin, stdout, stderr) result(that)
+        character(*), intent(in)        :: name
         procedure(process_io), intent(out), pointer, optional   :: stdin
         procedure(process_io), optional                :: stdout
         procedure(process_io), optional                :: stderr
@@ -97,7 +96,7 @@ contains
         that%is_running = .false.
         that%excode = 0
         if (allocated(that%args)) deallocate (that%args)
-        that%command = trim(prog)
+        that%filename = trim(name)
         if (present(stdin)) stdin => process_writeto_stdin
         if (present(stdout)) that%stdout = c_funloc(stdout)
         if (present(stderr)) that%stderr = c_funloc(stderr)
@@ -167,7 +166,7 @@ contains
         character(:), allocatable :: cmd
         integer :: i
 
-        cmd = this%command
+        cmd = this%filename
         if (allocated(this%args)) then
             do i = 1, size(this%args)
                 cmd = trim(cmd)//" "//trim(this%args(i)%chars)
@@ -205,7 +204,7 @@ contains
         character(:), allocatable :: cmd
         integer :: i
         
-        cmd = this%command
+        cmd = this%filename
         if (allocated(this%args)) then
             do i = 1, size(this%args)
                 cmd = trim(cmd)//" "//trim(this%args(i)%chars)
