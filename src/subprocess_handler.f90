@@ -7,6 +7,7 @@ module subprocess_handler
                internal_runasync, &
                internal_finalize, &
                internal_wait, &
+               internal_writeto_stdin, &
                internal_read_stdout, &
                internal_read_stderr, &
                internal_isalive, &
@@ -189,8 +190,8 @@ contains
     end function
     
     subroutine internal_writeto_stdin(fp, msg)
-        type(handle_pointer), intent(inout) :: fp
-        character(*), intent(in)            :: msg
+        type(handle_pointer), intent(in) :: fp
+        character(*), intent(in)         :: msg
         !private
         integer(c_int) :: ierr
         

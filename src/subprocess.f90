@@ -43,8 +43,6 @@ module subprocess
         procedure, pass(this), public       :: runasync => process_runasync
         procedure, pass(this), public       :: wait => process_wait
         procedure, pass(this), public       :: kill => process_kill
-        procedure, pass(lhs)                :: process_assign
-		generic :: assignment(=) => process_assign
         final :: finalize
     end type
     
@@ -80,34 +78,19 @@ module subprocess
     end type
     
     abstract interface 
-        subroutine processio(sender, msg)
+        subroutine process_io(sender, msg)
             class(*), intent(in)        :: sender
             character(*), intent(in)    :: msg
         end subroutine
     end interface
 
 contains
-    
-    subroutine process_assign(lhs, rhs)
-        use iso_c_binding
-		class(process), intent(inout)  :: lhs
-		class(process), intent(in)     :: rhs
-        
-		lhs%pid = rhs%pid
-        lhs%excode = rhs%excode
-        lhs%is_running = rhs%is_running
-        lhs%command = rhs%command
-        lhs%stdout = rhs%stdout
-        lhs%stderr = rhs%stderr
-        lhs%args = rhs%args
-        lhs%ptr = rhs%ptr
-    end subroutine
 
     type(process) function process_new(prog, stdin, stdout, stderr) result(that)
         character(*), intent(in)        :: prog
-        procedure(processio), intent(out), pointer, optional   :: stdin
-        procedure(processio), optional                :: stdout
-        procedure(processio), optional                :: stderr
+        procedure(process_io), intent(out), pointer, optional   :: stdin
+        procedure(process_io), optional                :: stdout
+        procedure(process_io), optional                :: stderr
 
         call internal_finalize(that%ptr)
         
@@ -198,7 +181,7 @@ contains
         
         if (c_associated(this%stdout)) then
             block
-                procedure(processio), pointer :: fptr => null()
+                procedure(process_io), pointer :: fptr => null()
                 call c_f_procpointer(this%stdout, fptr)
                 call fptr(this, internal_read_stdout(this%ptr))
                 nullify(fptr)
@@ -207,7 +190,7 @@ contains
         
         if (c_associated(this%stderr)) then
             block
-                procedure(processio), pointer :: fptr => null()
+                procedure(process_io), pointer :: fptr => null()
                 call c_f_procpointer(this%stderr, fptr)
                 call fptr(this, internal_read_stderr(this%ptr))
                 nullify(fptr)
