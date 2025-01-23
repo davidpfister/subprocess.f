@@ -40,6 +40,8 @@ module subprocess
         procedure, pass(this), private      :: process_run_default
         generic, public :: run => process_run_default
         procedure, pass(this), public       :: runasync => process_runasync
+        procedure, pass(this), public       :: read_stdout => process_read_stdout 
+        procedure, pass(this), public       :: read_stderr => process_read_stderr 
         procedure, pass(this), public       :: wait => process_wait
         procedure, pass(this), public       :: kill => process_kill
         final :: finalize
@@ -63,6 +65,14 @@ module subprocess
     
     interface wait 
         module procedure :: process_wait
+    end interface
+    
+    interface read_stdout
+        module procedure :: process_read_stdout
+    end interface
+    
+    interface read_stderr
+        module procedure :: process_read_stderr
     end interface
     
     interface with_arg
@@ -262,6 +272,20 @@ contains
             this%is_running = internal_isalive(this%ptr)
         end if
         call internal_finalize(this%ptr)
+    end subroutine
+    
+    subroutine process_read_stdout(this, output)
+        class(process), intent(inout)           :: this
+        character(:), allocatable, intent(out)  :: output
+        
+        output = internal_read_stdout(this%ptr)
+    end subroutine
+    
+    subroutine process_read_stderr(this, output)
+        class(process), intent(inout)           :: this
+        character(:), allocatable, intent(out)  :: output
+        
+        output = internal_read_stderr(this%ptr)
     end subroutine
     
     subroutine process_writeto_stdin(sender, msg)

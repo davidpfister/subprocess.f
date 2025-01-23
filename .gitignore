@@ -402,5 +402,4 @@ tests/info.sys
 sys.info
 *.fdz
 *.u2d
-tests/TestData/hello_world.exe
-tests/TestData/hello_world.exe
+tests/TestData/*.exe

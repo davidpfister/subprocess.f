@@ -172,7 +172,6 @@ contains
         end if
         
         ierr = subprocess_join_c(fp%handle, excode)
-        ierr = subprocess_terminate_c(fp%handle)
     end function
     
     integer function internal_runasync_default(cmd, fp, excode) result(pid)
@@ -206,14 +205,26 @@ contains
         !private
         integer(c_long) :: l
         character(BUFFER_SIZE) :: buf
+#ifdef _WIN32
+        character(*), parameter :: eol = char(13)//char(10)
+#else
+        character(*), parameter :: eol = char(10)
+#endif
+        integer :: n
 
-        l = -1
+        l = 1
         buf = ' '
         allocate(character(0)::output)
-        l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
-        if (l > 0) then 
-            output = trim(buf(:l))
-        end if
+        do while (l > 0)
+            l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
+            if (l > 0) then 
+                output = output // trim(buf(:l))
+            end if
+        end do
+        n = len(output)-len(eol)
+        if (output(n+1:) == eol) then
+            output = adjustl(output(:n))
+        end if  
     end function
     
     function internal_read_stderr(fp) result(output)
@@ -222,14 +233,26 @@ contains
         !private
         integer(c_long) :: l
         character(BUFFER_SIZE) :: buf
+        integer :: n
+#ifdef _WIN32
+        character(*), parameter :: eol = char(13)//char(10)
+#else
+        character(*), parameter :: eol = char(10)
+#endif
 
-        l = -1
+        l = 1
         buf = ' '
         allocate(character(0)::output)
-        l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
-        if (l > 0) then 
-            output = trim(buf(:l))
-        end if
+        do while (l > 0)
+            l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
+            if (l > 0) then 
+                output = output // trim(buf(:l))
+            end if
+        end do
+        n = len(output)-len(eol)
+        if (output(n+1:) == eol) then
+            output = adjustl(output(:n))
+        end if  
     end function
     
     function internal_isalive(fp, ierr) result(alive)

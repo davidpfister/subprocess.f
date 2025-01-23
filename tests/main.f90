@@ -1,5 +1,10 @@
 module test_subs
-    implicit none
+    implicit none; private
+    
+    public :: write_stdout, &
+              output
+    
+    character(:), allocatable :: output
     
     contains
     
@@ -7,7 +12,7 @@ module test_subs
         class(*), intent(in) :: sender
         character(*), intent(in) :: msg
     
-        print*, msg
+        output = trim(msg)
     end subroutine
 end module
     
@@ -34,6 +39,7 @@ TESTPROGRAM(main)
         call p%run()
         
         EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_STREQ(output, 'Hello from child!')
     END_TEST
 
     TEST(test_process_return_argc)
@@ -41,7 +47,7 @@ TESTPROGRAM(main)
         use test_subs
         
         type(process) :: p
-
+        character(:), allocatable :: argc
 #ifndef _FPM
         character(*), parameter :: dirpath = "TestData/"
         character(*), parameter :: incpath = "../include"
@@ -57,9 +63,12 @@ TESTPROGRAM(main)
 
         EXPECT_TRUE(p%exit_code() == 0)
         p = process(dirpath//"process_return_argc.exe")
+        call p%with_arg('--test')
         call p%run()
         
         EXPECT_TRUE(p%exit_code() == 0)
+        call p%read_stdout(argc)
+        EXPECT_STREQ(trim(argc), '1')
     END_TEST
 
 END_TESTPROGRAM
