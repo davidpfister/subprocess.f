@@ -228,8 +228,12 @@ contains
                 end if
             end do
             n = len(output)-len(eol)
-            if (output(n+1:) == eol) then
-                output = adjustl(output(:n))
+            if (n > 0) then
+                if (output(n+1:) == eol) then
+                    output = adjustl(output(:n))
+                end if
+            else
+                output = ''
             end if
         else
             output = ''
@@ -259,8 +263,12 @@ contains
                 end if
             end do
             n = len(output)-len(eol)
-            if (output(n+1:) == eol) then
-                output = adjustl(output(:n))
+            if (n > 0) then
+                if (output(n+1:) == eol) then
+                    output = adjustl(output(:n))
+                end if
+            else
+                output = ''
             end if
         else 
             output = ''
