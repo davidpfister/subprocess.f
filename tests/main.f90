@@ -20,54 +20,54 @@ end module
 TESTPROGRAM(main)
 
     TEST(test_gfortran)
-        use subprocess, only: process
+        use subprocess, only: process, run
         use test_subs
-        
-        type(process) :: p
+
+        type(process) :: p1, p2
 
 #ifndef _FPM
-        character(*), parameter :: dirpath = "TestData/"
+        character(*), parameter :: dirpath = 'TestData/'
 #else
-        character(*), parameter :: dirpath = "tests/TestData/"
+        character(*), parameter :: dirpath = 'tests/TestData/'
 #endif
-        p = process("gfortran")
-        call p%with_arg(dirpath//"hello_world.f90 -o "//dirpath//"hello_world") ! contains "print *, "Hello from child!"; end
-        call p%run()
+        p1 = process('gfortran')
+        call run(p1, dirpath//'hello_world.f90 -o '//dirpath//'hello_world')
 
-        EXPECT_TRUE(p%exit_code() == 0)
-        p = process(dirpath//"hello_world.exe", stdout=write_stdout)
-        call p%run()
-        
-        EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_TRUE(p1%exit_code() == 0)
+    
+        p2 = process(dirpath//'hello_world.exe', stdout=write_stdout)
+        call run(p2)
+    
+        EXPECT_TRUE(p2%exit_code() == 0)
         EXPECT_STREQ(output, 'Hello from child!')
     END_TEST
 
     TEST(test_process_return_argc)
-        use subprocess, only: process
+        use subprocess, only: process, run, read_stdout
         use test_subs
-        
-        type(process) :: p
+
+        type(process) :: p1, p2
+
         character(:), allocatable :: argc
 #ifndef _FPM
-        character(*), parameter :: dirpath = "TestData/"
-        character(*), parameter :: incpath = "../include"
+        character(*), parameter :: dirpath = 'TestData/'
+        character(*), parameter :: incpath = '../include'
 #else
-        character(*), parameter :: dirpath = "tests/TestData/"
-        character(*), parameter :: incpath = "include"
+        character(*), parameter :: dirpath = 'tests/TestData/'
+        character(*), parameter :: incpath = 'include'
 #endif
-        p = process("gfortran")
-        call p%with_arg(dirpath//"process_return_argc.f90", & 
-                        "-o "//dirpath//"process_return_argc", &
-                        "-cpp -I"//incpath) ! contains "print *, "Hello from child!"; end
-        call p%run()
+        p1 = process('gfortran')
+        call run(p1, dirpath//'process_return_argc.f90', & 
+                        '-o '//dirpath//'process_return_argc', &
+                        '-cpp -I'//incpath)
 
-        EXPECT_TRUE(p%exit_code() == 0)
-        p = process(dirpath//"process_return_argc.exe")
-        call p%with_arg('--test')
-        call p%run()
-        
-        EXPECT_TRUE(p%exit_code() == 0)
-        call p%read_stdout(argc)
+        EXPECT_TRUE(p1%exit_code() == 0)
+    
+        p2 = process(dirpath//'process_return_argc.exe')
+        call run(p2, '--test')
+    
+        EXPECT_TRUE(p2%exit_code() == 0)
+        call read_stdout(p2, argc)
         EXPECT_STREQ(trim(argc), '1')
     END_TEST
 

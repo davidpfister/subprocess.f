@@ -12,6 +12,13 @@ module subprocess
 
     implicit none; private
 
+    public :: kill, &
+              run, &
+              runasync, &
+              read_stderr, &
+              read_stdout, &
+              wait
+
     type, public :: process
         private
         integer, public                     :: pid
@@ -20,47 +27,57 @@ module subprocess
         double precision, private           :: begtime
         double precision, private           :: extime
         logical, private                    :: is_running
-        type(string), allocatable           :: args(:)
         type(c_funptr)                      :: stdout = c_null_funptr
         type(c_funptr)                      :: stderr = c_null_funptr
         type(handle_pointer)                :: ptr
     contains
         private
-        procedure, pass(this)               :: process_with_arg1
-        procedure, pass(this)               :: process_with_arg2
-        procedure, pass(this)               :: process_with_arg3
-        procedure, pass(this)               :: process_with_args
-        generic, public :: with_arg => process_with_arg1, &
-                                       process_with_arg2, &
-                                       process_with_arg3, &
-                                       process_with_args
+        procedure, pass(this)               :: process_run_default
+        procedure, pass(this)               :: process_run_with_arg1
+        procedure, pass(this)               :: process_run_with_arg2
+        procedure, pass(this)               :: process_run_with_arg3
+        procedure, pass(this)               :: process_run_with_arg4
+        procedure, pass(this)               :: process_run_with_arg5
+        procedure, pass(this)               :: process_run_with_args
         procedure, pass(this), public       :: exit_code => process_exit_code
         procedure, pass(this), public       :: exit_time => process_exit_time
         procedure, pass(this), public       :: has_exited => process_has_exited
-        procedure, pass(this), private      :: process_run_default
-        generic, public :: run => process_run_default
-        procedure, pass(this), public       :: runasync => process_runasync
+        
+        generic, public :: run => process_run_default, &
+                                  process_run_with_arg1, &
+                                  process_run_with_arg2, &
+                                  process_run_with_arg3, &
+                                  process_run_with_arg4, &
+                                  process_run_with_arg5, &
+                                  process_run_with_args
+        procedure, pass(this), public       :: runasync => process_runasync_with_args
         procedure, pass(this), public       :: read_stdout => process_read_stdout 
         procedure, pass(this), public       :: read_stderr => process_read_stderr 
         procedure, pass(this), public       :: wait => process_wait
         procedure, pass(this), public       :: kill => process_kill
         final :: finalize
     end type
-    
-    interface kill
-        module procedure :: process_kill
-    end interface
 
     interface process
         module procedure :: process_new
     end interface
     
+    interface kill
+        module procedure :: process_kill
+    end interface
+
     interface run
-        module procedure :: process_run_default
+        module procedure :: process_run_default, &
+                            process_run_with_arg1, &
+                            process_run_with_arg2, &
+                            process_run_with_arg3, &
+                            process_run_with_arg4, &
+                            process_run_with_arg5, &
+                            process_run_with_args
     end interface
     
     interface runasync
-        module procedure :: process_runasync
+        module procedure :: process_runasync_with_args
     end interface
     
     interface wait 
@@ -73,13 +90,6 @@ module subprocess
     
     interface read_stderr
         module procedure :: process_read_stderr
-    end interface
-    
-    interface with_arg
-        module procedure :: process_with_arg1, &
-                            process_with_arg2, &
-                            process_with_arg3, &
-                            process_with_args
     end interface
     
     type :: string
@@ -95,93 +105,116 @@ module subprocess
 
 contains
 
-    type(process) function process_new(name, stdin, stdout, stderr) result(that)
+    function process_new(name, stdin, stdout, stderr) result(that)
         character(*), intent(in)        :: name
         procedure(process_io), intent(out), pointer, optional   :: stdin
         procedure(process_io), optional                :: stdout
         procedure(process_io), optional                :: stderr
-
+        type(process) :: that
+        
         call internal_finalize(that%ptr)
         
         that%is_running = .false.
         that%excode = 0
-        if (allocated(that%args)) deallocate (that%args)
         that%filename = trim(name)
         if (present(stdin)) stdin => process_writeto_stdin
         if (present(stdout)) that%stdout = c_funloc(stdout)
         if (present(stderr)) that%stderr = c_funloc(stderr)
     end function
-
-    subroutine process_with_arg1(this, arg1)
+   
+    subroutine process_run_default(this)
+        class(process), intent(inout)   :: this !< process object type
+        !private
+        type(string), allocatable :: args(:)
+        
+        allocate(args(0))
+        call process_run_with_args(this, args)
+    end subroutine
+    
+    subroutine process_run_with_arg1(this, arg1)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         !private
-        type(string) :: vs
+        type(string) :: args
 
-        vs%chars = arg1
-        if (allocated(this%args)) then
-            this%args = [this%args, vs]
-        else
-            allocate (this%args(1))
-            this%args(1)%chars = arg1
-        end if
+        args%chars = arg1
+        call process_run_with_args(this, [args])
     end subroutine
     
-    subroutine process_with_arg2(this, arg1, arg2)
+    subroutine process_run_with_arg2(this, arg1, arg2)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         !private
-        type(string) :: vs
+        type(string) :: args(2)
 
-        call process_with_arg1(this, arg1)
-        vs%chars = arg2
-        this%args = [this%args, vs]
+        args(1)%chars = arg1
+        args(2)%chars = arg2
+        call process_run_with_args(this, args)
     end subroutine
     
-    subroutine process_with_arg3(this, arg1, arg2, arg3)
+    subroutine process_run_with_arg3(this, arg1, arg2, arg3)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         !private
-        type(string) :: vs
+        !private
+        type(string) :: args(3)
 
-        call process_with_arg2(this, arg1, arg2)
-        vs%chars = arg3
-        this%args = [this%args, vs]
+        args(1)%chars = arg1
+        args(2)%chars = arg2
+        args(3)%chars = arg3
+        call process_run_with_args(this, args)
     end subroutine
     
-    subroutine process_with_args(this, args)
+    subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4)
         class(process), intent(inout)   :: this
+        character(*), intent(in)        :: arg1
+        character(*), intent(in)        :: arg2
+        character(*), intent(in)        :: arg3
+        character(*), intent(in)        :: arg4
+        !private
+        !private
+        type(string) :: args(4)
+
+        args(1)%chars = arg1
+        args(2)%chars = arg2
+        args(3)%chars = arg3
+        args(4)%chars = arg4
+        call process_run_with_args(this, args)
+    end subroutine
+    
+    subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5)
+        class(process), intent(inout)   :: this
+        character(*), intent(in)        :: arg1
+        character(*), intent(in)        :: arg2
+        character(*), intent(in)        :: arg3
+        character(*), intent(in)        :: arg4
+        character(*), intent(in)        :: arg5
+        !private
+        type(string) :: args(5)
+
+        args(1)%chars = arg1
+        args(2)%chars = arg2
+        args(3)%chars = arg3
+        args(4)%chars = arg4
+        args(5)%chars = arg5
+        call process_run_with_args(this, args)
+    end subroutine
+    
+    subroutine process_run_with_args(this, args)
+        class(process), intent(inout)   :: this !< process object type
         type(string), intent(in)        :: args(:)
         !private
-        integer :: i
-
-        if (allocated(this%args)) then
-            do i = 1, size(args)
-                this%args = [this%args, args(i)]
-            end do
-        else
-            allocate (this%args(size(args)))
-            do i = 1, size(args)
-                this%args(i)%chars = args(i)%chars
-            end do
-        end if
-    end subroutine
-
-    subroutine process_run_default(this)
-        class(process), intent(inout)   :: this !< process object type
-        !private
         character(:), allocatable :: cmd
+        procedure(process_io), pointer :: fptr => null()
         integer :: i
 
         cmd = this%filename
-        if (allocated(this%args)) then
-            do i = 1, size(this%args)
-                cmd = trim(cmd)//" "//trim(this%args(i)%chars)
-            end do
-        end if
+        do i = 1, size(args)
+            cmd = trim(cmd)//" "//trim(args(i)%chars)
+        end do
 
         this%excode = 0
         this%is_running = .true.
@@ -189,37 +222,29 @@ contains
         this%is_running = internal_isalive(this%ptr)
         
         if (c_associated(this%stdout)) then
-            block
-                procedure(process_io), pointer :: fptr => null()
-                call c_f_procpointer(this%stdout, fptr)
-                call fptr(this, internal_read_stdout(this%ptr))
-                nullify(fptr)
-            end block
+            call c_f_procpointer(this%stdout, fptr)
+            call fptr(this, internal_read_stdout(this%ptr))
+            nullify(fptr)
         end if
         
         if (c_associated(this%stderr)) then
-            block
-                procedure(process_io), pointer :: fptr => null()
-                call c_f_procpointer(this%stderr, fptr)
-                call fptr(this, internal_read_stderr(this%ptr))
-                nullify(fptr)
-            end block
+            call c_f_procpointer(this%stderr, fptr)
+            call fptr(this, internal_read_stderr(this%ptr))
+            nullify(fptr)
         end if
-        
     end subroutine
     
-    subroutine process_runasync(this)
+    subroutine process_runasync_with_args(this, args)
         class(process), intent(inout)   :: this !< process object type
+        type(string), intent(in)        :: args(:)
         !private
         character(:), allocatable :: cmd
         integer :: i
         
         cmd = this%filename
-        if (allocated(this%args)) then
-            do i = 1, size(this%args)
-                cmd = trim(cmd)//" "//trim(this%args(i)%chars)
-            end do
-        end if
+        do i = 1, size(args)
+            cmd = trim(cmd)//" "//trim(args(i)%chars)
+        end do
         
         this%excode = 0
         this%is_running = .true.

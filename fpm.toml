@@ -8,9 +8,7 @@ keywords = ["subprocess", "fork"]
 homepage = "https://github.com/davidpfister/subprocess.f"
 
 [build]
-auto-executables = true
 auto-tests = true
-auto-examples = true
 [dependencies]
 processlib = { path = "./lib" }
 
@@ -28,4 +26,3 @@ library = false
 [[test]]
 name = "test"
 source-dir = "tests"
-main="main.f90"

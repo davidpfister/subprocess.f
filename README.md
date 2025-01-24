@@ -27,13 +27,13 @@
 # Introduction
 <!-- ABOUT THE PROJECT -->
 ## About the Project
-<center>
+<p align="center">
+  <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/image.png?raw=true">
+</p>
 
-![Screen Shot](https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/image.png?raw=true)
-</center>
-
-This project aims at providing some ideas and experiments to create child processes in Fortran. <br><br>
-On  Linux, it makes use of `fork` and `execl` to spawn a child process. On Windows, we make use of `CreateProcess`.
+This project aims at providing some ideas to create child processes in Fortran. <br><br>
+It is quite experimental at the moment, but looks promising. <br>
+The development of this repo is link to the discussion on the Fortran discourse about the [Stdlib system interaction API](https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037)
 
 * [![fpm][fpm]][fpm-url]
 * [![ifort][ifort]][ifort-url]
@@ -46,7 +46,7 @@ On  Linux, it makes use of `fork` and `execl` to spawn a child process. On Windo
 
 To build that library you need
 
-- a Fortran 2008 compliant compiler, or better, a Fortran 2018 compliant compiler (Intel Fortran compiler is known to work well for _subprocess.f_.
+- a Fortran 2008 compliant compiler, or better, a Fortran 2018 compliant compiler (Intel Fortran compiler is known to work well for _subprocess.f_).
 
 The following compilers are tested on the default branch of _subprocess.f_:
 <center>
@@ -58,8 +58,10 @@ The following compilers are tested on the default branch of _subprocess.f_:
 
 </center>
 
+At the moment, it only seems to work fine with intel compiler. Some investigations are ongoing to make it work with gfortran.
+
 - a preprocessor. The units tests of _subprocess.f_ use quite some preprocessor macros. It is known to work both with intel `fpp` and `cpp`.  
-Unit test rely on the the file [`assertion.inc`](https://github.com/davidpfister/fortiche/tree/master/src/assertion). Since the whole framework fits in a single file, it has been added directly to the repo. 
+Unit test rely on the the files [`assertion.inc`](https://github.com/davidpfister/fortiche/tree/master/src/assertion) and [`app.inc`](https://github.com/davidpfister/fortiche/tree/master/src/app). 
 
 ### Installation
 
@@ -111,11 +113,8 @@ type(process) :: p
 logical :: succ
 integer :: code
 
-p = process("gfortran")
-call p%with_arg("hello_world.f90")
-call p%with_arg("-o")
-call p%with_arg("hello_world")
-call p%run(success=succ, code=code)
+p = process('gfortran')
+call p%run('hello_world.f90 -o hello_world')
 ```
 <!-- CONTRIBUTING -->
 ### Contributing

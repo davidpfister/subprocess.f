@@ -152,7 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\subprocess.h" />
+    <ClInclude Include="include\processlib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\processlib.cpp" />

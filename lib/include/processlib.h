@@ -64,31 +64,28 @@
 #error Non clang, non gcc, non MSVC compiler found!
 #endif
 
-struct subprocess_s;
-
-enum subprocess_option_e {
-	// stdout and stderr are the same FILE.
-	subprocess_option_combined_stdout_stderr = 0x1,
-
-	// The child process should inherit the environment variables of the parent.
-	subprocess_option_inherit_environment = 0x2,
-
-	// Enable asynchronous reading of stdout/stderr before it has completed.
-	subprocess_option_enable_async = 0x4,
-
-	// Enable the child process to be spawned with no window visible if supported
-	// by the platform.
-	subprocess_option_no_window = 0x8,
-
-	// Search for program names in the PATH variable. Always enabled on Windows.
-	// Note: this will **not** search for paths in any provided custom environment
-	// and instead uses the PATH of the spawning process.
-	subprocess_option_search_user_path = 0x10
-};
-
-#if defined(__cplusplus)
 extern "C" {
-#endif
+
+	enum subprocess_option_e {
+		// stdout and stderr are the same FILE.
+		subprocess_option_combined_stdout_stderr = 0x1,
+
+		// The child process should inherit the environment variables of the parent.
+		subprocess_option_inherit_environment = 0x2,
+
+		// Enable asynchronous reading of stdout/stderr before it has completed.
+		subprocess_option_enable_async = 0x4,
+
+		// Enable the child process to be spawned with no window visible if supported
+		// by the platform.
+		subprocess_option_no_window = 0x8,
+
+		// Search for program names in the PATH variable. Always enabled on Windows.
+		// Note: this will **not** search for paths in any provided custom environment
+		// and instead uses the PATH of the spawning process.
+		subprocess_option_search_user_path = 0x10
+	};
+
 	/// @brief Create a process.
 	/// @param command_line An array of strings for the command line to execute for
 	/// this process. The last element must be NULL to signify the end of the array.
@@ -127,7 +124,7 @@ extern "C" {
 	/// The file returned can be written to by the parent process to feed data to
 	/// the standard input of the process.
 	__declspec(dllexport) subprocess_pure FILE* __cdecl
-		subprocess_stdin(const struct subprocess_s* process);
+		subprocess_stdin(struct subprocess_s* process);
 
 	/// @brief Get the standard output file for a process.
 	/// @param process The process to query.
@@ -136,7 +133,7 @@ extern "C" {
 	/// The file returned can be read from by the parent process to read data from
 	/// the standard output of the child process.
 	__declspec(dllexport) subprocess_pure FILE* __cdecl
-		subprocess_stdout(const struct subprocess_s* process);
+		subprocess_stdout(struct subprocess_s* process);
 
 	/// @brief Get the standard error file for a process.
 	/// @param process The process to query.
@@ -149,7 +146,7 @@ extern "C" {
 	/// option bit set, this function will return NULL, and the subprocess_stdout
 	/// function should be used for both the standard output and error combined.
 	__declspec(dllexport) subprocess_pure FILE* __cdecl
-		subprocess_stderr(const struct subprocess_s* process);
+		subprocess_stderr(struct subprocess_s* process);
 
 	/// @brief Wait for a process to finish execution.
 	/// @param process The process to wait for.
@@ -843,15 +840,15 @@ extern "C" {
 #endif
 	}
 
-	FILE* subprocess_stdin(const struct subprocess_s* process) {
+	FILE* subprocess_stdin(struct subprocess_s* process) {
 		return process->stdin_file;
 	}
 
-	FILE* subprocess_stdout(const struct subprocess_s* process) {
+	FILE* subprocess_stdout(struct subprocess_s* process) {
 		return process->stdout_file;
 	}
 
-	FILE* subprocess_stderr(const struct subprocess_s* process) {
+	FILE* subprocess_stderr(struct subprocess_s* process) {
 		if (process->stdout_file != process->stderr_file) {
 			return process->stderr_file;
 		}
@@ -921,7 +918,7 @@ extern "C" {
 #endif
 	}
 
-	int subprocess_destroy(struct subprocess_s* const process) {
+	int subprocess_destroy(struct subprocess_s* process) {
 		if (process->stdin_file) {
 			fclose(process->stdin_file);
 			process->stdin_file = SUBPROCESS_NULL;
@@ -1118,6 +1115,4 @@ extern "C" {
 #pragma clang diagnostic pop
 #endif
 #endif
-#if defined(__cplusplus)
 } // extern "C"
-#endif

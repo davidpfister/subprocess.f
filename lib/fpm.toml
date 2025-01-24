@@ -7,6 +7,10 @@ categories = ["process"]
 keywords = ["subprocess"]
 homepage = "https://github.com/davidpfister/subprocess.f"
 
+[library]
+source-dir = "src"
+include-dir = ["include"]
+
 [preprocess]
-cpp.suffixes = ["cpp", "h"]
-cpp.macros = ["_WIN32", "_FPM", "_MSC_VER"]
+cpp.suffixes = ["F90", "f90"]
+cpp.macros = ["_WIN32", "_FPM"]

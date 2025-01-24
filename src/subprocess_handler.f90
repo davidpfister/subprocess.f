@@ -260,7 +260,7 @@ contains
         integer, intent(out), optional          :: ierr
         logical :: alive
         !private
-        integer :: status
+        integer(c_int) :: status
         
         status = subprocess_alive_c(fp%handle)
         alive = (status /= 0)
@@ -291,6 +291,17 @@ contains
         !private
         integer(c_int) :: ierr
         if (internal_isalive(fp)) call internal_terminate(fp)
+#ifdef __INTEL_COMPILER
+        ! that call generates a SEGFAULT with gfortran
+        ! There is probably some memory leakage here
+        call internal_destroy(fp)
+#endif
+    end subroutine
+
+    subroutine internal_destroy(fp)
+        type(handle_pointer), intent(inout) :: fp
+        !private
+        integer(c_int) :: ierr
         ierr = subprocess_destroy_c(fp%handle)
     end subroutine
     
