@@ -31,9 +31,12 @@ module subprocess_handler
 
     integer, parameter :: BUFFER_SIZE = 4095
 
+    ! The component `handle` was made allocatable as a work around with gfortran
+    ! If not allocatable, the call the the `finalize` subroutine generates a spurious
+    ! SEGFAULT. This issue may (or may not) be related to [Bug 82996](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82996)
     type, public :: handle_pointer
         private
-        type(subprocess_s) :: handle
+        type(subprocess_s), allocatable :: handle
     end type
     
     enum, bind(c)
@@ -165,6 +168,7 @@ contains
         !private
         integer :: ierr
         
+        if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(to_c_string(cmd), 0, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
@@ -180,7 +184,7 @@ contains
         integer(c_int), intent(out)             :: excode
         !private
         integer :: ierr
-        
+        if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(to_c_string(cmd), subprocess_option_enable_async, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
@@ -193,9 +197,10 @@ contains
         character(*), intent(in)         :: msg
         !private
         integer(c_int) :: ierr
-        
-        if (c_associated(fp%handle%stdin_file)) then
-            ierr = fputs_c(to_c_string(msg), fp%handle%stdin_file)
+        if (allocated(fp%handle)) then
+            if (c_associated(fp%handle%stdin_file)) then
+                ierr = fputs_c(to_c_string(msg), fp%handle%stdin_file)
+            end if
         end if
     end subroutine
     
@@ -212,19 +217,23 @@ contains
 #endif
         integer :: n
 
-        l = 1
-        buf = ' '
-        allocate(character(0)::output)
-        do while (l > 0)
-            l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
-            if (l > 0) then 
-                output = output // trim(buf(:l))
+        if (allocated(fp%handle)) then
+            l = 1
+            buf = ' '
+            allocate(character(0)::output)
+            do while (l > 0)
+                l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
+                if (l > 0) then 
+                    output = output // trim(buf(:l))
+                end if
+            end do
+            n = len(output)-len(eol)
+            if (output(n+1:) == eol) then
+                output = adjustl(output(:n))
             end if
-        end do
-        n = len(output)-len(eol)
-        if (output(n+1:) == eol) then
-            output = adjustl(output(:n))
-        end if  
+        else
+            output = ''
+        end if
     end function
     
     function internal_read_stderr(fp) result(output)
@@ -239,20 +248,23 @@ contains
 #else
         character(*), parameter :: eol = char(10)
 #endif
-
-        l = 1
-        buf = ' '
-        allocate(character(0)::output)
-        do while (l > 0)
-            l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
-            if (l > 0) then 
-                output = output // trim(buf(:l))
+        if (allocated(fp%handle)) then
+            l = 1
+            buf = ' '
+            allocate(character(0)::output)
+            do while (l > 0)
+                l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
+                if (l > 0) then 
+                    output = output // trim(buf(:l))
+                end if
+            end do
+            n = len(output)-len(eol)
+            if (output(n+1:) == eol) then
+                output = adjustl(output(:n))
             end if
-        end do
-        n = len(output)-len(eol)
-        if (output(n+1:) == eol) then
-            output = adjustl(output(:n))
-        end if  
+        else 
+            output = ''
+        end if
     end function
     
     function internal_isalive(fp, ierr) result(alive)
@@ -260,9 +272,10 @@ contains
         integer, intent(out), optional          :: ierr
         logical :: alive
         !private
-        integer(c_int) :: status
-        
-        status = subprocess_alive_c(fp%handle)
+        integer(c_int) :: status = 0
+        if (allocated(fp%handle)) then
+            status = subprocess_alive_c(fp%handle)
+        end if
         alive = (status /= 0)
     end function
     
@@ -270,19 +283,21 @@ contains
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
-        integer :: ierr
-        
-        ierr = subprocess_join_c(fp%handle, excode)
+        integer :: ierr = 0
+        if (allocated(fp%handle)) then
+            ierr = subprocess_join_c(fp%handle, excode)
+        end if
     end subroutine
     
     subroutine internal_terminate(fp, ierr)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         !private
-        integer :: istat
+        integer :: istat = 0
         integer(c_int) :: rcode
-
-        istat = subprocess_terminate_c(fp%handle)
+        if (allocated(fp%handle)) then
+            istat = subprocess_terminate_c(fp%handle)
+        end if
         if (present(ierr)) ierr = istat
     end subroutine
     
@@ -291,18 +306,17 @@ contains
         !private
         integer(c_int) :: ierr
         if (internal_isalive(fp)) call internal_terminate(fp)
-#ifdef __INTEL_COMPILER
-        ! that call generates a SEGFAULT with gfortran
-        ! There is probably some memory leakage here
         call internal_destroy(fp)
-#endif
     end subroutine
 
     subroutine internal_destroy(fp)
         type(handle_pointer), intent(inout) :: fp
         !private
-        integer(c_int) :: ierr
-        ierr = subprocess_destroy_c(fp%handle)
+        integer(c_int) :: ierr = 0
+        if (allocated(fp%handle)) then
+            ierr = subprocess_destroy_c(fp%handle)
+            deallocate(fp%handle)
+        end if
     end subroutine
     
     function to_c_string(fstring)

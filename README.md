@@ -46,7 +46,7 @@ The development of this repo is link to the discussion on the Fortran discourse 
 
 To build that library you need
 
-- a Fortran 2008 compliant compiler, or better, a Fortran 2018 compliant compiler (Intel Fortran compiler is known to work well for _subprocess.f_).
+- a Fortran 2008 compliant compiler, or better, a Fortran 2018 compliant compiler.
 
 The following compilers are tested on the default branch of _subprocess.f_:
 <center>
@@ -55,10 +55,9 @@ The following compilers are tested on the default branch of _subprocess.f_:
 |:--:|:--:|:--:|:--:|
 | GCC Fortran (MinGW) | 14 | Windows 10 | x86_64 |
 | Intel oneAPI classic	| 2021.5	| Windows 10 |	x86_64 |
+| Intel oneAPI classic	| 2021.13	| Windows 10 |	x86_64 |
 
 </center>
-
-At the moment, it only seems to work fine with intel compiler. Some investigations are ongoing to make it work with gfortran.
 
 - a preprocessor. The units tests of _subprocess.f_ use quite some preprocessor macros. It is known to work both with intel `fpp` and `cpp`.  
 Unit test rely on the the files [`assertion.inc`](https://github.com/davidpfister/fortiche/tree/master/src/assertion) and [`app.inc`](https://github.com/davidpfister/fortiche/tree/master/src/app). 
