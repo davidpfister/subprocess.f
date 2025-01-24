@@ -17,7 +17,7 @@ module subprocess_handler
         type(c_ptr) :: stdin_file   !FILE*
 		type(c_ptr) :: stdout_file  !FILE*
 		type(c_ptr) :: stderr_file  !FILE*
-#if defined(_WIN32)
+#ifdef _WIN32
 		type(c_ptr) :: hProcess     !void*
 		type(c_ptr) :: hStdInput    !void*
 		type(c_ptr) :: hEventOutput !void*
@@ -60,13 +60,13 @@ module subprocess_handler
             type(subprocess_s), intent(inout) :: process
         end function
         
-        integer(c_int) function subprocess_create_ex_c(cmd, options, environment, process) bind(C, name='subprocess_create_ex')
-            import
-            character(c_char), dimension(*) :: cmd
-            integer(c_int), intent(in), value :: options
-            character(c_char), dimension(*) :: environment
-            type(subprocess_s), intent(inout) :: process
-        end function
+        !integer(c_int) function subprocess_create_ex_c(cmd, options, environment, process) bind(C, name='subprocess_create_ex')
+        !    import
+        !    character(c_char), intent(in) :: cmd(*)
+        !    integer(c_int), intent(in), value :: options
+        !    character(c_char), dimension(*) :: environment
+        !    type(subprocess_s), intent(inout) :: process
+        !end function
     
         type(c_ptr) function subprocess_stdin_c(process) bind(C, name='subprocess_stdin')
             import
@@ -83,10 +83,10 @@ module subprocess_handler
             type(subprocess_s), intent(inout) :: process
         end function
     
-        integer(c_int) function subprocess_join_c(process, out_return_code) bind(C, name='subprocess_join')
+        integer(c_int) function subprocess_join_c(process, exit_code) bind(C, name='subprocess_join')
             import
             type(subprocess_s), intent(inout) :: process
-            integer(c_int), intent(out) :: out_return_code
+            integer(c_int), intent(out) :: exit_code
         end function
     
         integer(c_int) function subprocess_destroy_c(process) bind(C, name='subprocess_destroy')
