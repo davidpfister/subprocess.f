@@ -1,7 +1,6 @@
 #include <app.inc> 
 console(process_return_arg)
-    subroutine main(args)
-        type(string), intent(in) :: args(:)
+    main(args)
         integer :: i, nargs
         
         
@@ -9,5 +8,5 @@ console(process_return_arg)
         print*, nargs
         
         stop 0
-    end subroutine
+    endmain
 end
