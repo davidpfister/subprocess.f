@@ -416,7 +416,7 @@ extern "C" {
 		const unsigned long pipeAccessInbound = 0x00000001;
 		const unsigned long fileFlagOverlapped = 0x40000000;
 		const unsigned long pipeTypeByte = 0x00000000;
-		const unsigned long pipeWait = 0x00000000;
+		const unsigned long pipeNoWait = 0x00000001;
 		const unsigned long genericWrite = 0x40000000;
 		const unsigned long openExisting = 3;
 		const unsigned long fileAttributeNormal = 0x00000080;
@@ -443,7 +443,7 @@ extern "C" {
 
 		* rd =
 			CreateNamedPipeA(name, pipeAccessInbound | fileFlagOverlapped,
-				pipeTypeByte | pipeWait, 1, 4096, 4096, SUBPROCESS_NULL,
+				pipeTypeByte | pipeNoWait, 1, 4096, 4096, SUBPROCESS_NULL,
 				SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr));
 
 		if (invalidHandleValue == *rd) {
@@ -684,6 +684,7 @@ extern "C" {
 		int stdinfd[2];
 		int stdoutfd[2];
 		int stderrfd[2];
+		int fd, fd_flags;
 		pid_t child;
 		extern char** environ;
 		char* const empty_environment[1] = { SUBPROCESS_NULL };
@@ -819,6 +820,13 @@ extern "C" {
 		// Store the stdout read end
 		out_process->stdout_file = fdopen(stdoutfd[0], "rb");
 
+		// Set non blocking if we are async
+		if (options & subprocess_option_enable_async) {
+			fd = fileno(out_process->stdout_file);
+			fd_flags = fcntl(fd, F_GETFL, 0);
+			fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+		}
+
 		if (subprocess_option_combined_stdout_stderr ==
 			(options & subprocess_option_combined_stdout_stderr)) {
 			out_process->stderr_file = out_process->stdout_file;
@@ -828,6 +836,12 @@ extern "C" {
 			close(stderrfd[1]);
 			// Store the stderr read end
 			out_process->stderr_file = fdopen(stderrfd[0], "rb");
+			// Set non blocking if we are async
+			if (options & subprocess_option_enable_async) {
+				fd = fileno(out_process->stderr_file);
+				fd_flags = fcntl(fd, F_GETFL, 0);
+				fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+			}
 		}
 
 		// Store the child's pid
@@ -993,14 +1007,19 @@ extern "C" {
 
 			// Means we've got an async read!
 			if (error == errorIoPending) {
+				const uintptr_t statusPending = 0x00000103;
+
+				const int wait = statusPending == overlapped.Internal;
+
 				if (!GetOverlappedResult(handle,
 					SUBPROCESS_PTR_CAST(LPOVERLAPPED, &overlapped),
-					&bytes_read, 1)) {
-					const unsigned long errorIoIncomplete = 996;
+					&bytes_read, wait)) {
 					const unsigned long errorHandleEOF = 38;
+					const unsigned long errorBrokenPipe = 109;
+					const unsigned long errorIoIncomplete = 996;
 					error = GetLastError();
 
-					if ((error != errorIoIncomplete) && (error != errorHandleEOF)) {
+					if ((errorHandleEOF != error) && (errorBrokenPipe != error) && (errorIoIncomplete != error)) {
 						return 0;
 					}
 				}
