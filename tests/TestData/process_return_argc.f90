@@ -1,12 +1,6 @@
 #include <app.inc> 
-console(process_return_arg)
+console(process_return_argc)
     main(args)
-        integer :: i, nargs
-        
-        
-        nargs = size(args)
-        print*, nargs
-        
-        stop 0
+        print*, size(args)
     endmain
 end
