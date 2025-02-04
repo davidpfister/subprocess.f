@@ -2,7 +2,6 @@
 console(process_stdout_poll)
 
     main(args)
-        use unix_stdio
         use, intrinsic :: iso_c_binding
         use, intrinsic :: iso_fortran_env, only: stdout => output_unit, &
                                                  stderr => error_unit , &

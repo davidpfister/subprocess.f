@@ -27,20 +27,20 @@ console(process_return_arg)
         return_0_non_optimizable = result - 36
     end function
   
-    integer function fun(x)
-        integer :: x
+    integer recursive function fun(x) result(res)
+        integer, intent(inout) :: x
     
         if (x == 1) then
-        fun = 5
+        res = 5
         return
         end if
         
         x = 6
         if (return_0_non_optimizable() == 0) then
-        fun = fun(x)
+        res = fun(x)
         return
         end if
         
-        fun = x
+        res = x
     end function
 end

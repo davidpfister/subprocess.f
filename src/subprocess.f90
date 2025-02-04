@@ -9,6 +9,7 @@
 module subprocess
     use subprocess_handler
     use, intrinsic :: iso_c_binding
+    use, intrinsic :: iso_fortran_env, only: r8 => real64, i8 => int64
 
     implicit none; private
 
@@ -18,16 +19,17 @@ module subprocess
               read_stderr, &
               read_stdout, &
               wait, &
+              waitall, &
               process_io
 
     type, public :: process
         private
         integer, public                     :: pid
         character(:), allocatable, public   :: filename
-        integer, private                    :: excode
-        double precision, private           :: begtime
-        double precision, private           :: extime
-        logical, private                    :: is_running
+        integer                             :: excode
+        real(r8)                            :: begtime
+        real(r8)                            :: extime
+        logical                             :: is_running
         type(c_funptr)                      :: stdout = c_null_funptr
         type(c_funptr)                      :: stderr = c_null_funptr
         type(handle_pointer)                :: ptr
@@ -104,6 +106,10 @@ module subprocess
         module procedure :: process_wait
     end interface
     
+    interface waitall
+        module procedure :: process_waitall
+    end interface
+    
     interface read_stdout
         module procedure :: process_read_stdout
     end interface
@@ -113,8 +119,16 @@ module subprocess
     end interface
     
     type :: string
-        character(:), allocatable :: chars
+        private
+        character(:), allocatable, public :: chars
+    contains
+        procedure, private, pass(lhs) :: string_assign_character
+        generic :: assignment(=)      => string_assign_character
     end type
+
+    interface trim
+        module procedure :: string_trim
+    end interface
     
     abstract interface 
         subroutine process_io(sender, msg)
@@ -158,7 +172,7 @@ contains
         !private
         type(string) :: args
 
-        args%chars = arg1
+        args = arg1
         call process_run_with_args(this, [args])
     end subroutine
     
@@ -169,8 +183,8 @@ contains
         !private
         type(string) :: args(2)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
+        args(1) = arg1
+        args(2) = arg2
         call process_run_with_args(this, args)
     end subroutine
     
@@ -183,9 +197,9 @@ contains
         !private
         type(string) :: args(3)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
         call process_run_with_args(this, args)
     end subroutine
     
@@ -199,10 +213,10 @@ contains
         !private
         type(string) :: args(4)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
-        args(4)%chars = arg4
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
+        args(4) = arg4
         call process_run_with_args(this, args)
     end subroutine
     
@@ -216,11 +230,11 @@ contains
         !private
         type(string) :: args(5)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
-        args(4)%chars = arg4
-        args(5)%chars = arg5
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
+        args(4) = arg4
+        args(5) = arg5
         call process_run_with_args(this, args)
     end subroutine
     
@@ -234,12 +248,15 @@ contains
 
         cmd = this%filename
         do i = 1, size(args)
-            cmd = trim(cmd)//" "//trim(args(i)%chars)
+            cmd = trim(cmd)//' '//trim(args(i))
         end do
 
         this%excode = 0
         this%is_running = .true.
+        
+        call get_time(this%begtime)
         this%pid = internal_run(cmd, this%ptr, this%excode)
+        call get_time(this%extime)
         this%is_running = internal_isalive(this%ptr)
         
         if (c_associated(this%stdout)) then
@@ -270,7 +287,7 @@ contains
         !private
         type(string) :: args
 
-        args%chars = arg1
+        args = arg1
         call process_runasync_with_args(this, [args])
     end subroutine
     
@@ -281,8 +298,8 @@ contains
         !private
         type(string) :: args(2)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
+        args(1) = arg1
+        args(2) = arg2
         call process_runasync_with_args(this, args)
     end subroutine
     
@@ -295,9 +312,9 @@ contains
         !private
         type(string) :: args(3)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
         call process_runasync_with_args(this, args)
     end subroutine
     
@@ -308,13 +325,12 @@ contains
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
         !private
-        !private
         type(string) :: args(4)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
-        args(4)%chars = arg4
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
+        args(4) = arg4
         call process_runasync_with_args(this, args)
     end subroutine
     
@@ -328,11 +344,11 @@ contains
         !private
         type(string) :: args(5)
 
-        args(1)%chars = arg1
-        args(2)%chars = arg2
-        args(3)%chars = arg3
-        args(4)%chars = arg4
-        args(5)%chars = arg5
+        args(1) = arg1
+        args(2) = arg2
+        args(3) = arg3
+        args(4) = arg4
+        args(5) = arg5
         call process_runasync_with_args(this, args)
     end subroutine
     
@@ -345,11 +361,12 @@ contains
         
         cmd = this%filename
         do i = 1, size(args)
-            cmd = trim(cmd)//" "//trim(args(i)%chars)
+            cmd = trim(cmd)//' '//trim(args(i))
         end do
         
         this%excode = 0
         this%is_running = .true.
+        call get_time(this%begtime)
         this%pid = internal_runasync(cmd, this%ptr, this%excode)
     end subroutine
     
@@ -365,9 +382,14 @@ contains
     !> @brief Gets the time that the associated process exited.
     function process_exit_time(this) result(res)
         class(process), intent(inout)   :: this !< process object type
-        double precision :: res
+        real(r8) :: res
         
-        res = this%excode
+        if (this%has_exited()) then
+            res = this%extime - this%begtime
+        else 
+            call get_time(res)
+            res = res - this%begtime
+        end if
     end function
     
     !> @brief Gets a value indicating whether the associated process has 
@@ -386,6 +408,18 @@ contains
         call internal_wait(this%ptr, this%excode)
         this%is_running = internal_isalive(this%ptr)
     end subroutine
+    
+    subroutine process_waitall(processes)
+        class(process), intent(inout) :: processes(:)
+        !private
+        integer :: i
+        
+        do i = 1, size(processes)
+            if (.not. processes(i)%has_exited()) then
+                call processes(i)%wait()
+            end if
+        end do
+    end subroutine
 
     subroutine process_kill(this)
         class(process), intent(inout) :: this
@@ -398,6 +432,7 @@ contains
         else
             this%is_running = internal_isalive(this%ptr)
         end if
+        if (.not. this%is_running) call get_time(this%extime)
         call internal_finalize(this%ptr)
     end subroutine
     
@@ -428,5 +463,28 @@ contains
         call internal_finalize(this%ptr)
         this%is_running = .false.
     end subroutine
+  
+    subroutine get_time(ctime) 
+        real(r8), intent(out)           :: ctime !< time in milliseconds
+        !private
+        integer(i8) :: dt(8)
+
+        call date_and_time(values=dt)
+        ctime = (dt(5) * 3600_r8 + dt(6) * 60_r8 + dt(7)) * 1000_r8 + dt(8) * 1_r8
+    end subroutine
+
+    pure subroutine string_assign_character(lhs, rhs)
+        class(string), intent(inout) :: lhs
+        character(*), intent(in)     :: rhs
+
+        lhs%chars = rhs
+    end subroutine
+
+    function string_trim(str) result(res)
+        class(string), intent(in) :: str
+        character(:), allocatable :: res
+        
+        res = trim(str%chars)
+    end function
 
 end module

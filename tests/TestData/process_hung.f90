@@ -3,15 +3,14 @@ console(process_hung)
     main(args)
         integer :: r
         r = 0
-    
         do while (return_0_non_optimizable() == 0)
-        r = r + 1
+            r = r + 1
         end do
     
         print *, "r=", r
     endmain
 
-    function return_0_non_optimizable() result(res)
+    integer function return_0_non_optimizable() result(res)
         character(len=100) :: buffer
         integer :: value
         character(len=1) :: c

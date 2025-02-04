@@ -403,3 +403,4 @@ sys.info
 *.fdz
 *.u2d
 tests/TestData/*.exe
+tests/applibrary.mod

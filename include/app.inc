@@ -26,33 +26,49 @@
 ! (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ! OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 module applibrary
-	implicit none; private
+    implicit none; private
 
-	public :: split_commandline_into_args
+    public :: split_commandline_into_args
 
-	interface
-		subroutine exit_x(context)
-			class(*), intent(inout) :: context
-		end subroutine
-	end interface
+    public :: trim, &
+              index
 
-	type, public :: string
+    interface
+        subroutine exit_x(context)
+            class(*), intent(inout) :: context
+        end subroutine
+    end interface
+
+    type, public :: string
         private
         character(:), allocatable, public :: chars
+    contains
+        procedure, private, pass(lhs) :: string_assign_string
+        procedure, private, pass(lhs) :: string_assign_character
+        generic :: assignment(=)      => string_assign_string,    &  
+                                         string_assign_character
+        procedure, private, pass(dtv) :: string_read_formatted
+        procedure, private, pass(dtv) :: string_write_formatted
+        procedure, private, pass(dtv) :: string_read_unformatted !! Unformatted input.
+        procedure, private, pass(dtv) :: string_write_unformatted
+        generic :: read (formatted)   => string_read_formatted
+        generic :: write (formatted)  => string_write_formatted
+        generic :: read (unformatted) => string_read_unformatted
+        generic :: write (unformatted)=> string_write_unformatted
     end type
     
     type, public :: application
         private
-		character(:), allocatable, private :: username_
-		character(:), allocatable, private :: location_
-		class(*), pointer, private :: context_ => null()
-		procedure(exit_x), nopass, pointer, private :: onexit_ => null()
+        character(:), allocatable           :: username_
+        character(:), allocatable           :: location_
+        class(*), pointer                   :: context_ => null()
+        procedure(exit_x), nopass, pointer  :: onexit_ => null()
         contains
-		procedure, pass(this), public :: username => app_username
-		procedure, pass(this), public :: location => app_location
-		procedure, pass(this), public :: abort => app_abort
-		procedure, pass(this), public :: shutdown => app_shutdown
-		procedure, pass(this), public :: onexit => app_onexit
+        procedure, pass(this), public :: username => app_username
+        procedure, pass(this), public :: location => app_location
+        procedure, pass(this), public :: abort => app_abort
+        procedure, pass(this), public :: shutdown => app_shutdown
+        procedure, pass(this), public :: onexit => app_onexit
         final :: app_finalize
     end type
 
@@ -63,74 +79,82 @@ module applibrary
         module procedure split_commandline_into_args3
     end interface
 
+    interface trim
+        module procedure :: string_trim
+    end interface
+    
+    interface index
+        module procedure :: string_index
+    end interface
+
     contains
 
-	function app_username(this) result(username)
-		class(application), intent(inout) :: this
-		!private
-		character(:), allocatable :: username
+    function app_username(this) result(username)
+        class(application), intent(inout) :: this
+        !private
+        character(:), allocatable :: username
 
-		if (.not. allocated(this%username_)) then
-			this%username_ = get_username()
-		end if
-		username = this%username_
-	end function
+        if (.not. allocated(this%username_)) then
+            this%username_ = get_username()
+        end if
+        username = this%username_
+    end function
 
-	function app_location(this) result(location)
-		class(application), intent(inout) :: this
-		!private
-		character(:), allocatable :: location
-		integer :: n
+    function app_location(this) result(location)
+        class(application), intent(inout) :: this
+        !private
+        character(:), allocatable :: location
+        integer :: n
 
-		if (.not. allocated(this%location_)) then
-			call get_command_argument(0,length=n)
-			allocate(character(n) :: this%location_)
-			call get_command_argument(0,value=this%location_)
-		end if
-		location = this%location_
-	end function
+        if (.not. allocated(this%location_)) then
+            call get_command_argument(0,length=n)
+            allocate(character(n) :: this%location_)
+            call get_command_argument(0,value=this%location_)
+        end if
+        location = this%location_
+    end function
 
-	subroutine app_abort(this)
-		class(application), intent(inout) :: this
-		interface
-			subroutine abort() bind(C, name="abort")
-			end subroutine
-		end interface
+    subroutine app_abort(this)
+        class(application), intent(inout) :: this
+        interface
+            subroutine abort() bind(C, name="abort")
+            end subroutine
+        end interface
 
-		call app_finalize(this)
-		call abort()
-	end subroutine
+        call app_finalize(this)
+        call abort()
+    end subroutine
 
-	subroutine app_shutdown(this, code)
+    subroutine app_shutdown(this, code)
         class(application), intent(inout) :: this
         integer, intent(in), optional :: code
 
-		call app_finalize(this)
+        call app_finalize(this)
 
-		if (present(code)) then
-			error stop code
+        if (present(code)) then
+            error stop code
         else
-			stop 0
-		end if
+            stop 0
+        end if
     end subroutine
 
-	subroutine app_onexit(this, context, event)
+    subroutine app_onexit(this, context, event)
         class(application), intent(inout) :: this
         class(*), intent(in), target :: context
-		procedure(exit_x) :: event
+        procedure(exit_x) :: event
 
-		nullify(this%context_); this%context_ => context
-		nullify(this%onexit_); this%onexit_ => event
+        nullify(this%context_); this%context_ => context
+        nullify(this%onexit_); this%onexit_ => event
     end subroutine
     
     subroutine app_finalize(this)
         type(application), intent(inout) :: this
         
         if (associated(this%onexit_)) then 
-			call this%onexit_(this%context_)
-			nullify(this%context_)
-			nullify(this%onexit_)
-		end if
+            call this%onexit_(this%context_)
+            nullify(this%context_)
+            nullify(this%onexit_)
+        end if
     end subroutine
 
     function split_commandline_into_args0() result(args)
@@ -169,6 +193,33 @@ module applibrary
         args = split_commandline_into_args3(commandline, .true., dummy)
     end function
 
+    !> @brief The following command line parsing algorithm is similar to the one
+    !! used by Microsoft. The rules used by Microsoft C/C++ code are 
+    !! Microsoft-specific. The runtime startup code uses these rules when 
+    !! interpreting arguments given on the operating system command line:
+    !!  - Arguments are delimited by white space, which is either a space or a tab.
+    !!  - The first argument (args[0]) is treated specially. It represents the program name. 
+    !!    Because it must be a valid pathname, parts surrounded by double quote marks (") 
+    !!    are allowed. The double quote marks aren't included in the args[0] output. 
+    !!    The parts surrounded by double quote marks prevent interpretation of a space or 
+    !!    tab character as the end of the argument. The later rules in this list don't apply.
+    !!  - A string surrounded by double quote marks is interpreted as a single argument, 
+    !!    which may contain white-space characters. A quoted string can be embedded in 
+    !!    an argument. The caret (^) isn't recognized as an escape character or delimiter. 
+    !!    Within a quoted string, a pair of double quote marks is interpreted as a single 
+    !!    escaped double quote mark. If the command line ends before a closing double quote 
+    !!    mark is found, then all the characters read so far are output as the last argument.
+    !!  - A double quote mark preceded by a backslash (\") is interpreted as a literal 
+    !!    double quote mark (").
+    !!  - Backslashes are interpreted literally, unless they immediately precede a double quote mark.
+    !!  - If an even number of backslashes is followed by a double quote mark, then one backslash (\) 
+    !!    is placed in the argv array for every pair of backslashes (\\), and the double quote mark 
+    !!    (") is interpreted as a string delimiter.
+    !!  - If an odd number of backslashes is followed by a double quote mark, then one backslash (\) 
+    !!    is placed in the argv array for every pair of backslashes (\\). The double quote mark is 
+    !!    interpreted as an escape sequence by the remaining backslash, causing a literal double 
+    !!    quote mark (") to be placed in argv.
+    !! @note The original code (in C#) can be found here: https://github.com/dotnet/roslyn/blob/46c8f4f56765e16b92759de8098494b36cfb84f5/src/Compilers/Core/Portable/InternalUtilities/CommandLineUtilities.cs
     function split_commandline_into_args3(commandline, removeHashComments, illegalChar) result(args)
         character(*), intent(in)                :: commandline
         logical, intent(in)                     :: removeHashComments
@@ -177,7 +228,7 @@ module applibrary
         type(string), allocatable   :: args(:)
         character(:), allocatable :: builder
         integer :: i, j, k, n, quoteCount, slashCount
-		character(1) :: current
+        character(1) :: current
         character(1), parameter :: SPACE = char(32)
         character(1), parameter :: BACKSLASH = char(92)
         character(1), parameter :: QUOTE = char(34)
@@ -253,19 +304,108 @@ module applibrary
         end do
     end function
 
-	function get_username() result(username)
+    function get_username() result(username)
         character(255) :: tmp
         character(:), allocatable :: username
         integer :: sts
 #ifdef _WIN32
         call get_environment_variable(name="USERNAME", value=tmp, status=sts)
 #else
-	    call get_environment_variable(name="USER", value=tmp, status=sts)
+        call get_environment_variable(name="USER", value=tmp, status=sts)
 #endif
         if (sts == 0) then
             username = trim(tmp)
         end if
     end function
+
+    pure subroutine string_assign_string(lhs, rhs)
+        class(string), intent(inout) :: lhs
+        type(string),  intent(in)    :: rhs
+
+        if (allocated(rhs%chars)) lhs%chars = rhs%chars
+    end subroutine
+
+    pure subroutine string_assign_character(lhs, rhs)
+        class(string), intent(inout) :: lhs
+        character(*), intent(in)     :: rhs
+
+        lhs%chars = rhs
+    end subroutine
+    
+    function string_trim(str) result(res)
+        class(string), intent(in) :: str
+        character(:), allocatable :: res
+        
+        res = trim(str%chars)
+    end function
+    
+    integer function string_index(str, substr, back) result(res)
+        type(string), intent(in) :: str
+        character(*), intent(in) :: substr
+        logical, optional, intent(in) :: back
+        
+        res = index(str%chars, substr, back)
+    end function
+    
+    subroutine string_write_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(string), intent(in)   :: dtv !< The string.
+        integer, intent(in)         :: unit !< Logical unit.
+        character(*), intent(in)    :: iotype !< Edit descriptor.
+        integer, intent(in)         :: v_list(:) !< Edit descriptor list.
+        integer, intent(out)        :: iostat !< IO status code.
+        character(*), intent(inout) :: iomsg !< IO status message.
+
+        if (allocated(dtv%chars)) then
+            write (unit, '(A)', iostat=iostat, iomsg=iomsg) dtv%chars
+        else
+            write (unit, '(A)', iostat=iostat, iomsg=iomsg) ''
+        end if
+    end subroutine
+    
+    subroutine string_read_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(string), intent(inout)    :: dtv !< The string.
+        integer, intent(in)             :: unit !< Logical unit.
+        character(*), intent(in)        :: iotype !< Edit descriptor.
+        integer, intent(in)             :: v_list(:) !< Edit descriptor list.
+        integer, intent(out)            :: iostat !< IO status code.
+        character(*), intent(inout)     :: iomsg !< IO status message.
+        !private
+        character(:), allocatable :: buffer
+        integer :: n
+
+        inquire(unit, size=n)
+        allocate(character(len=n) :: buffer)
+        read (unit, '(A)', iostat=iostat, iomsg=iomsg) buffer
+        dtv%chars = buffer
+    end subroutine
+
+    subroutine string_read_unformatted(dtv, unit, iostat, iomsg)
+        class(string), intent(inout)    :: dtv !< The string.
+        integer, intent(in)             :: unit !< Logical unit.
+        integer, intent(out)            :: iostat !< IO status code.
+        character(*), intent(inout)     :: iomsg !< IO status message.
+        !private
+        character(:), allocatable :: buffer
+        integer :: n
+
+        inquire(unit, size=n)
+        allocate(character(len=n) :: buffer)
+        read (unit, iostat=iostat, iomsg=iomsg) buffer
+        dtv%chars = buffer
+      end subroutine
+  
+      subroutine string_write_unformatted(dtv, unit, iostat, iomsg)
+          class(string), intent(in)     :: dtv !! The string.
+          integer, intent(in)           :: unit !! Logical unit.
+          integer, intent(out)          :: iostat !! IO status code.
+          character(*), intent(inout)   :: iomsg !! IO status message.
+  
+          if (allocated(dtv%chars)) then
+              write (unit, iostat=iostat, iomsg=iomsg) dtv%chars
+          else
+              write (unit, iostat=iostat, iomsg=iomsg) ''
+          end if
+      end subroutine
 end module
 
 #define console(name) \

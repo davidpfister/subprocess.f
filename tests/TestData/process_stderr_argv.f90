@@ -5,8 +5,8 @@ console(process_stderr_argv)
                                                  stderr => error_unit , &
                                                  stdin => input_unit
         integer :: i
-        do i = 1, size(argv)
-            write(stderr, '(A)') args(i)%chars
+        do i = 1, size(args)
+            write(stderr, '(A)') args(i)
         end do
     endmain
 end

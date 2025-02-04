@@ -4,14 +4,14 @@ console(process_inherit_environment)
         character(len=100) :: str
         integer :: status, return_value
 
-        if (size(args) > 1 .and. trim(args(2)%char) == "all") then
-            if (get_environment_variable("PROCESS_ENV_TEST", str) == 0) then
+        if (size(args) > 1 .and. trim(args(2)%chars) == "all") then
+            if (get_env("PROCESS_ENV_TEST", str) == 0) then
                 return_value = 0
             else
                 return_value = 1
             end if
         else
-            status = get_environment_variable("PROCESS_ENV_TEST", str)
+            status = get_env("PROCESS_ENV_TEST", str)
             if (len_trim(str) > 0) then
                 return_value = atoi(trim(str))
             else
@@ -22,12 +22,12 @@ console(process_inherit_environment)
         print *, return_value
     endmain
 
-    function get_environment_variable(var_name, value) result(status)
+    function get_env(var_name, value) result(status)
         character(*), intent(in)    :: var_name
-        character(100), intent(out) :: value
+        character(255), intent(out) :: value
         integer :: status
         
-        value = getenv(var_name)
+        call get_environment_variable(var_name, value)
         if (len_trim(value) > 0) then
             status = 0
         else

@@ -5,7 +5,7 @@ console(process_stdout_data)
                                                  stderr => error_unit , &
                                                  stdin => input_unit
         integer :: i, e
-        read(args(1)%char, *) e
+        read(args(1)%chars, *) e
 #if defined(__GFORTRAN__)
         call sleep(2)
 #elif defined(__INTEL_COMPILER)
@@ -16,7 +16,7 @@ console(process_stdout_data)
 #endif
 
         do i = 0, e - 1
-            write(stderr, '(Z1)') i mod 16
+            write(stderr, '(Z1)') i - (i / 16) * 16
         end do
         stop 0
     endmain
