@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{EA46B9B4-F034-4117-95DD-5A9D5279DCF6}</ProjectGuid>
-    <RootNamespace>FxProcessCxx</RootNamespace>
+    <RootNamespace>processlib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>processlib</ProjectName>
   </PropertyGroup>
