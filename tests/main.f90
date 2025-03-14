@@ -58,7 +58,7 @@ TESTPROGRAM(main)
             space = index(files(prev:idx-1), ' ', back=.true.) + prev
             file = files(space:idx-1)
             if (len_trim(file) == 0 .or. file == 'main') exit
-
+        
             block
                 type(process) :: pg
                 pg = process('gfortran')
@@ -78,7 +78,7 @@ TESTPROGRAM(main)
     END_TEST
 
     TEST(test_hello_world)
-        use subprocess, only: process, run
+        use subprocess
         use test_subs
 
         type(process) :: p
@@ -89,104 +89,89 @@ TESTPROGRAM(main)
         character(*), parameter :: dirpath = 'tests/TestData/'
 #endif
     
-        p = process(dirpath//'hello_world.exe', stdout=write_stdout)
+        p = process(dirpath//'hello_world', stdout=write_stdout)
         call run(p)
     
         EXPECT_TRUE(p%exit_code() == 0)
         EXPECT_STREQ(output, 'Hello from child!')
     END_TEST
-!
-!    TEST(test_process_return_argc)
-!        use subprocess, only: process, run, read_stdout
-!        use test_subs
-!
-!        type(process) :: p1, p2
-!
-!        character(:), allocatable :: argc
-!#ifndef _FPM
-!        character(*), parameter :: dirpath = 'TestData/'
-!        character(*), parameter :: incpath = '../include'
-!#else
-!        character(*), parameter :: dirpath = 'tests/TestData/'
-!        character(*), parameter :: incpath = 'include'
-!#endif
-!        p1 = process('gfortran')
-!        call run(p1, dirpath//'process_return_argc.f90', & 
-!                        '-o '//dirpath//'process_return_argc', &
-!                        '-cpp -I'//incpath)
-!
-!        EXPECT_TRUE(p1%exit_code() == 0)
-!    
-!        p2 = process(dirpath//'process_return_argc.exe')
-!        call run(p2, '--test')
-!    
-!        EXPECT_TRUE(p2%exit_code() == 0)
-!        call read_stdout(p2, argc)
-!        EXPECT_STREQ(trim(argc), '1')
-!    END_TEST
-
-!     TEST(process_stdout_large)
-!         use subprocess, only: process, run, read_stdout
-!         use test_subs
-
-!         type(process) :: p1, p2
-
-!         character(:), allocatable :: stdout
-! #ifndef _FPM
-!         character(*), parameter :: dirpath = 'TestData/'
-!         character(*), parameter :: incpath = '../include'
-! #else
-!         character(*), parameter :: dirpath = 'tests/TestData/'
-!         character(*), parameter :: incpath = 'include'
-! #endif
-!         p1 = process('gfortran')
-!         call run(p1, dirpath//'process_stdout_large.f90', & 
-!                         '-o '//dirpath//'process_stdout_large', &
-!                         '-cpp -I'//incpath)
-
-!         EXPECT_TRUE(p1%exit_code() == 0)
     
-!         p2 = process(dirpath//'process_stdout_large.exe')
-!         call p2%run('5')
-    
-!         EXPECT_TRUE(p2%exit_code() == 0)
-!         call p2%read_stdout(stdout)
-!         EXPECT_STREQ(trim(stdout), '1')
-!     END_TEST
+    TEST(process_return_zero)
+        use subprocess
+        use test_subs
 
-!    TEST(process_stdout_poll)
-!        use subprocess, only: process, run, read_stdout
-!        use test_subs
-!
-!        type(process) :: p1, p2
-!        procedure(process_io), pointer :: winput
-!
-!        character(:), allocatable :: data
-!#ifndef _FPM
-!        character(*), parameter :: dirpath = 'TestData/'
-!        character(*), parameter :: incpath = '../include'
-!#else
-!        character(*), parameter :: dirpath = 'tests/TestData/'
-!        character(*), parameter :: incpath = 'include'
-!#endif
-!        p1 = process('gfortran')
-!        call run(p1, dirpath//'process_stdout_poll.f90', & 
-!                        '-o '//dirpath//'process_stdout_poll', &
-!                        '-cpp -I'//incpath)
-!
-!        EXPECT_TRUE(p1%exit_code() == 0)
-!
-!        p2 = process(dirpath//'process_stdout_poll.exe', winput)
-!        call p2%runasync('1')
-!
-!        do while(.not. allocated(data))
-!            call p2%read_stdout(data)
-!            if (allocated(data)) then
-!                call winput(p2, 's')
-!            end if
-!        end do
-!
-!        call p2%wait()
-!    END_TEST
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_return_zero'
+
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+
+        p = process(dirpath//commandline)
+        call runasync(p, '0')
+        EXPECT_TRUE(p%pid /= 0)
+        call wait(p)
+        EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_TRUE(p%has_exited())
+    END_TEST
+    
+    TEST(subprocess_return_fortytwo)
+        use subprocess
+        use test_subs
+
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'process_return_fortytwo'
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p)
+        call read_stdout(p, res)
+        EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_STREQ(res, '42')
+    END_TEST
+    
+    TEST(subprocess_return_argc)
+        use subprocess
+        use test_subs
+
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'process_return_argc'
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, 'foo', 'bar', 'baz', 'faz')
+        call read_stdout(p, res)
+        EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_STREQ(res, '4')
+    END_TEST
+    
+    TEST(subprocess_return_argv)
+        use subprocess
+        use test_subs
+
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'process_return_argv'
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, '13')
+        call read_stdout(p, res)
+        EXPECT_TRUE(p%exit_code() == 0)
+        EXPECT_STREQ(res, '13')
+    END_TEST
 
 END_TESTPROGRAM
