@@ -21,6 +21,7 @@ end module
 #include <assertion.inc>
 TESTPROGRAM(main)
 
+#ifdef COMPILE_EXAMPLES
     TEST(test_gfortran)
         use subprocess, only: process, run, read_stderr, read_stdout
         use test_subs
@@ -76,13 +77,13 @@ TESTPROGRAM(main)
             if (idx >= len(files) - len(extension)) exit
         end do
     END_TEST
+#endif
 
     TEST(test_hello_world)
         use subprocess
         use test_subs
 
         type(process) :: p
-
 #ifndef _FPM
         character(*), parameter :: dirpath = 'TestData/'
 #else
@@ -98,11 +99,9 @@ TESTPROGRAM(main)
     
     TEST(process_return_zero)
         use subprocess
-        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_return_zero'
-
 #ifndef _FPM
         character(*), parameter :: dirpath = 'TestData/'
 #else
@@ -119,7 +118,6 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_fortytwo)
         use subprocess
-        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
@@ -138,7 +136,6 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_argc)
         use subprocess
-        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
@@ -157,7 +154,6 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_argv)
         use subprocess
-        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
@@ -168,10 +164,83 @@ TESTPROGRAM(main)
         character(*), parameter :: dirpath = 'tests/TestData/'
 #endif
         p = process(dirpath//commandline)
-        call run(p, '13')
+        call run(p, char(10)//char(13)//char(10)//'13')
         call read_stdout(p, res)
         EXPECT_TRUE(p%exit_code() == 0)
         EXPECT_STREQ(res, '13')
+    END_TEST
+    
+    TEST(subprocess_return_stdin)
+        use subprocess
+
+        type(process) :: p
+        procedure(process_io), pointer :: stdin => null()
+        character(*), parameter :: commandline = 'process_return_stdin'
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline, stdin=stdin)
+        call runasync(p)
+        
+        call stdin(p, 'a')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'b')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'b')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'a')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, ' ')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'a')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'r')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'e')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, ' ')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'g')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'r')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'e')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 'a')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, 't')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, '!')
+        EXPECT_FALSE(p%has_exited())
+        call stdin(p, '@')
+
+        call wait(p)
+        EXPECT_TRUE(p%has_exited())
+    END_TEST
+    
+    TEST(subprocess_return_stdin_count)
+        use subprocess
+
+        type(process) :: p
+        procedure(process_io), pointer :: stdin => null()
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'process_return_stdin_count'
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        character(*), parameter :: temp = "Wee, sleekit, cow'rin, tim'rous beastie!"
+
+        p = process(dirpath//commandline, stdin=stdin)
+        call runasync(p)
+
+        call stdin(p, temp)
+        call wait(p)
+        call read_stdout(p, res)
+        EXPECT_EQ('40', res);
     END_TEST
 
 END_TESTPROGRAM

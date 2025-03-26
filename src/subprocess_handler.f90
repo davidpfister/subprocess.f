@@ -13,6 +13,10 @@ module subprocess_handler
                internal_isalive, &
                internal_terminate
     
+    character(*), parameter :: CR = char(13)
+    character(*), parameter :: LF = char(10)
+    character(*), parameter :: SPACE = char(32) 
+    
     type, bind(c) :: subprocess_s
         type(c_ptr) :: stdin_file   !FILE*
 		type(c_ptr) :: stdout_file  !FILE*
@@ -169,7 +173,7 @@ contains
         integer :: ierr
         
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(to_c_string(cmd), 0, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, 0, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -185,7 +189,7 @@ contains
         !private
         integer :: ierr
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(to_c_string(cmd), subprocess_option_enable_async, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, subprocess_option_enable_async, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -199,7 +203,7 @@ contains
         integer(c_int) :: ierr
         if (allocated(fp%handle)) then
             if (c_associated(fp%handle%stdin_file)) then
-                ierr = fputs_c(to_c_string(msg), fp%handle%stdin_file)
+                ierr = fputs_c(trim(msg) // c_null_char, fp%handle%stdin_file)
             end if
         end if
     end subroutine
@@ -211,9 +215,9 @@ contains
         integer(c_long) :: l
         character(BUFFER_SIZE) :: buf
 #ifdef _WIN32
-        character(*), parameter :: eol = char(13)//char(10)
+        character(*), parameter :: eol = CR//LF
 #else
-        character(*), parameter :: eol = char(10)
+        character(*), parameter :: eol = LF
 #endif
         integer :: n
 
@@ -248,9 +252,9 @@ contains
         character(BUFFER_SIZE) :: buf
         integer :: n
 #ifdef _WIN32
-        character(*), parameter :: eol = char(13)//char(10)
+        character(*), parameter :: eol = CR//LF
 #else
-        character(*), parameter :: eol = char(10)
+        character(*), parameter :: eol = LF
 #endif
         if (allocated(fp%handle)) then
             l = 1
@@ -275,9 +279,8 @@ contains
         end if
     end function
     
-    function internal_isalive(fp, ierr) result(alive)
+    function internal_isalive(fp) result(alive)
         type(handle_pointer), intent(inout)     :: fp
-        integer, intent(out), optional          :: ierr
         logical :: alive
         !private
         integer(c_int) :: status = 0
@@ -326,17 +329,5 @@ contains
             deallocate(fp%handle)
         end if
     end subroutine
-    
-    function to_c_string(fstring)
-        character(*), intent(in) :: fstring
-        character(c_char) :: to_c_string(len(fstring) + 1)
-        !private
-        integer :: i
-        
-        do i = 1, len(fstring)
-            to_c_string(i) = fstring(i:i)
-        end do
-        to_c_string(len(fstring) + 1) = c_null_char
-    end function
 
 end module

@@ -26,7 +26,7 @@ module subprocess
         private
         integer, public                     :: pid
         character(:), allocatable, public   :: filename
-        integer                             :: excode
+        integer, allocatable                :: excode
         real(r8)                            :: begtime
         real(r8)                            :: extime
         logical                             :: is_running
@@ -150,7 +150,6 @@ contains
         call internal_finalize(that%ptr)
         
         that%is_running = .false.
-        that%excode = 0
         that%filename = trim(name)
         if (present(stdin)) stdin => process_writeto_stdin
         if (present(stdout)) that%stdout = c_funloc(stdout)
@@ -251,7 +250,9 @@ contains
             cmd = trim(cmd)//' '//trim(args(i))
         end do
 
-        this%excode = 0
+        if (allocated(this%excode)) deallocate(this%excode)
+        allocate(this%excode, source = 0)
+        
         this%is_running = .true.
         
         call get_time(this%begtime)
@@ -364,10 +365,14 @@ contains
             cmd = trim(cmd)//' '//trim(args(i))
         end do
         
-        this%excode = 0
+        if (allocated(this%excode)) deallocate(this%excode)
+        allocate(this%excode, source = 0)
         this%is_running = .true.
         call get_time(this%begtime)
         this%pid = internal_runasync(cmd, this%ptr, this%excode)
+        if (this%excode == 0) then 
+            deallocate(this%excode)
+        end if
     end subroutine
     
     !> @brief Gets the value that the associated process specified when 
@@ -376,7 +381,15 @@ contains
         class(process), intent(inout)   :: this !< process object type
         integer :: res
         
-        res = this%excode
+        if (allocated(this%excode)) then
+            res = this%excode
+        else
+            if (this%has_exited()) then
+                res = 0
+            else
+                res = int(z'017F') !the process is still running
+            end if
+        end if
     end function
     
     !> @brief Gets the time that the associated process exited.
