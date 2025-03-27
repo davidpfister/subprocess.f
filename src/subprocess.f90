@@ -52,21 +52,20 @@ module subprocess
         procedure, pass(this), public       :: exit_code => process_exit_code
         procedure, pass(this), public       :: exit_time => process_exit_time
         procedure, pass(this), public       :: has_exited => process_has_exited
-        
-        generic, public :: run => process_run_default, &
-                                  process_run_with_arg1, &
-                                  process_run_with_arg2, &
-                                  process_run_with_arg3, &
-                                  process_run_with_arg4, &
-                                  process_run_with_arg5, &
-                                  process_run_with_args
-        generic, public :: runasync => process_runasync_default, &
-                                       process_runasync_with_arg1, &
-                                       process_runasync_with_arg2, &
-                                       process_runasync_with_arg3, &
-                                       process_runasync_with_arg4, &
-                                       process_runasync_with_arg5, &
-                                       process_runasync_with_args
+        generic, public :: run              => process_run_default,             &
+                                               process_run_with_arg1,           &
+                                               process_run_with_arg2,           &
+                                               process_run_with_arg3,           &
+                                               process_run_with_arg4,           &
+                                               process_run_with_arg5,           &
+                                               process_run_with_args
+        generic, public :: runasync         => process_runasync_default,        &
+                                               process_runasync_with_arg1,      &
+                                               process_runasync_with_arg2,      &
+                                               process_runasync_with_arg3,      &
+                                               process_runasync_with_arg4,      &
+                                               process_runasync_with_arg5,      &
+                                               process_runasync_with_args
         procedure, pass(this), public       :: read_stdout => process_read_stdout 
         procedure, pass(this), public       :: read_stderr => process_read_stderr 
         procedure, pass(this), public       :: wait => process_wait
@@ -310,7 +309,6 @@ contains
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         !private
-        !private
         type(string) :: args(3)
 
         args(1) = arg1
@@ -478,7 +476,7 @@ contains
     end subroutine
   
     subroutine get_time(ctime) 
-        real(r8), intent(out)           :: ctime !< time in milliseconds
+        real(r8), intent(out) :: ctime !< time in milliseconds
         !private
         integer(i8) :: dt(8)
 

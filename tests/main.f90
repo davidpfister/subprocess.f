@@ -242,5 +242,119 @@ TESTPROGRAM(main)
         call read_stdout(p, res)
         EXPECT_EQ('40', res);
     END_TEST
+    
+    TEST(subprocess_stdout_argc)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stdout_argc'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, 'foo', 'bar', 'baz', 'faz')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stdout(p, res)
+        EXPECT_STREQ(res, '4')
+    END_TEST
+    
+    TEST(subprocess_stdout_argc_with_empty_strings)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stdout_argc'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, '', '', '', '')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stdout(p, res)
+        EXPECT_STREQ(res, '0')
+    END_TEST
+    
+    TEST(subprocess_stdout_argv)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stdout_argv'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, 'foo', 'bar', 'baz', 'faz')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stdout(p, res)
+        EXPECT_STREQ(res, 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
+    END_TEST
+    
+    TEST(subprocess_stderr_argc)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stderr_argc'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, 'foo', 'bar', 'baz', 'faz')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stderr(p, res)
+        EXPECT_STREQ(res, '4')
+    END_TEST
+    
+    TEST(subprocess_stderr_argc_with_empty_strings)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stderr_argc'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, '', '', '', '')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stderr(p, res)
+        EXPECT_STREQ(res, '0')
+    END_TEST
+    
+    TEST(subprocess_stderr_argv)
+        use subprocess
+
+        type(process) :: p
+        character(*), parameter :: commandline = 'process_stderr_argv'
+        character(:), allocatable :: res
+#ifndef _FPM
+        character(*), parameter :: dirpath = 'TestData/'
+#else
+        character(*), parameter :: dirpath = 'tests/TestData/'
+#endif
+        p = process(dirpath//commandline)
+        call run(p, 'foo', 'bar', 'baz', 'faz')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stderr(p, res)
+        EXPECT_STREQ(res, 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
+    END_TEST
 
 END_TESTPROGRAM
