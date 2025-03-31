@@ -17,45 +17,59 @@ module subprocess_handler
     character(*), parameter :: LF = char(10)
     character(*), parameter :: SPACE = char(32) 
     
+    !> @brief A C-bound derived type representing the internal state of a subprocess.
+    !! This type is used to interface with C functions for managing subprocesses, holding file pointers
+    !! for I/O streams and platform-specific process handles. It is not intended for direct user manipulation.
     type, bind(c) :: subprocess_s
-        type(c_ptr) :: stdin_file   !FILE*
-		type(c_ptr) :: stdout_file  !FILE*
-		type(c_ptr) :: stderr_file  !FILE*
+        !> @brief Pointer to the subprocess's stdin file stream (FILE* in C).
+        type(c_ptr) :: stdin_file 
+        !> @brief Pointer to the subprocess's stdout file stream (FILE* in C).
+		type(c_ptr) :: stdout_file
+        !> @brief Pointer to the subprocess's stderr file stream (FILE* in C).
+		type(c_ptr) :: stderr_file
 #ifdef _WIN32
-		type(c_ptr) :: hProcess     !void*
-		type(c_ptr) :: hStdInput    !void*
-		type(c_ptr) :: hEventOutput !void*
-		type(c_ptr) :: hEventError  !void*
+        !> @brief Windows-specific handle to the subprocess (void* in C).
+		type(c_ptr) :: hProcess
+        !> @brief Windows-specific handle to the standard input (void* in C).
+		type(c_ptr) :: hStdInput
+        !> @brief Windows-specific event handle for output (void* in C).
+		type(c_ptr) :: hEventOutput
+        !> @brief Windows-specific event handle for error (void* in C).
+		type(c_ptr) :: hEventError
 #else
+        !> @brief POSIX-specific child process ID (pid_t in C).
 		integer(c_int) :: child
+        !> @brief POSIX-specific return status of the child process.
 		integer(c_int) :: return_status
 #endif
+        !> @brief Flag indicating if the subprocess is alive (non-zero means alive).
         integer(c_int) :: alive
     end type
 
     integer, parameter :: BUFFER_SIZE = 4095
 
-    ! The component `handle` was made allocatable as a work around with gfortran
-    ! If not allocatable, the call the the `finalize` subroutine generates a spurious
-    ! SEGFAULT. This issue may (or may not) be related to [Bug 82996](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82996)
+    !> @brief A derived type wrapping a subprocess handle to manage its lifecycle.
+    !! This type encapsulates a `subprocess_s` handle, making it allocatable to avoid gfortran-specific
+    !! segmentation faults during finalization (see [Bug 82996](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82996)).
+    !! It serves as a Fortran-friendly interface to the C-bound subprocess structure.
     type, public :: handle_pointer
         private
         type(subprocess_s), allocatable :: handle
     end type
     
     enum, bind(c)
-        !< stdout and stderr are the same FILE.
+        !> @brief stdout and stderr are the same FILE.
         enumerator :: subprocess_option_combined_stdout_stderr = 1
-	    !< The child process should inherit the environment variables of the parent.
+	    !> @brief The child process should inherit the environment variables of the parent.
 	    enumerator :: subprocess_option_inherit_environment = 2
-	    !< Enable asynchronous reading of stdout/stderr before it has completed.
+	    !> @brief Enable asynchronous reading of stdout/stderr before it has completed.
 	    enumerator :: subprocess_option_enable_async = 4
-	    !< Enable the child process to be spawned with no window visible if supported
-	    !< by the platform.
+	    !> @brief Enable the child process to be spawned with no window visible if supported
+	    !! by the platform.
 	    enumerator :: subprocess_option_no_window = 8
-	    !< Search for program names in the PATH variable. Always enabled on Windows.
-	    !< Note: this will **not** search for paths in any provided custom environment
-	    !< and instead uses the PATH of the spawning process.
+	    !> @brief Search for program names in the PATH variable. Always enabled on Windows.
+	    !! Note: this will **not** search for paths in any provided custom environment
+	    !! and instead uses the PATH of the spawning process.
 	    enumerator :: subprocess_option_search_user_path = 16
     end enum
 
@@ -145,26 +159,29 @@ module subprocess_handler
         end function
     end interface
 
+    !> @brief Interface for synchronously running a subprocess.
+    !! This generic interface provides a single procedure for executing a command synchronously,
+    !! waiting for its completion, and retrieving its exit code.
     interface internal_run
         module procedure :: internal_run_default
     end interface
     
+    !> @brief Interface for asynchronously running a subprocess.
+    !! This generic interface provides a single procedure for executing a command asynchronously,
+    !! allowing it to run in the background without waiting for completion.
     interface internal_runasync
         module procedure :: internal_runasync_default
     end interface
         
 contains
 
-    !> @brief Execute a child program, determine whether it succeeded or failed based
-    !! on the last line of text that the program wrote to its standard output.
-    !!
-    !! @param[in]     cmd     The command line to execute.  Typically
-    !! the first argument would be the same as @a name.
-    !!
-    !! @param[out]    success_flag      Flag to indicate whether successful
-    !! termination of the cmd was detected.  This is based on the last
-    !! line of text that was written by the program - if it is the same as
-    !! success_text then it is assumed that the program succeeded.
+    !> @brief Executes a command synchronously and waits for its completion.
+    !! This function creates a subprocess, runs the specified command, and waits for it to finish,
+    !! returning the process ID and setting the exit code.
+    !! @param[in] cmd The command line string to execute (e.g., "ls -l" or "dir").
+    !! @param[in,out] fp The handle pointer to manage the subprocess.
+    !! @param[out] excode The exit code of the subprocess (0 typically indicates success).
+    !! @return pid The process ID of the created subprocess, or a negative value on error.
     integer function internal_run_default(cmd, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
         type(handle_pointer), intent(inout)     :: fp
@@ -182,6 +199,13 @@ contains
         ierr = subprocess_join_c(fp%handle, excode)
     end function
     
+    !> @brief Executes a command asynchronously without waiting for completion.
+    !! This function creates a subprocess with asynchronous capabilities and returns immediately,
+    !! allowing the command to run in the background.
+    !! @param[in] cmd The command line string to execute (e.g., "notepad.exe").
+    !! @param[in,out] fp The handle pointer to manage the subprocess.
+    !! @param[out] excode The initial exit code (set to -1 if creation fails).
+    !! @return pid The process ID of the created subprocess, or a negative value on error.
     integer function internal_runasync_default(cmd, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
         type(handle_pointer), intent(inout)     :: fp
@@ -196,6 +220,10 @@ contains
         end if
     end function
     
+    !> @brief Writes a message to the standard input of a subprocess.
+    !! This subroutine sends the provided message to the stdin of the subprocess if it is active.
+    !! @param[in] fp The handle pointer to the subprocess.
+    !! @param[in] msg The message to write to stdin.
     subroutine internal_writeto_stdin(fp, msg)
         type(handle_pointer), intent(in) :: fp
         character(*), intent(in)         :: msg
@@ -208,6 +236,11 @@ contains
         end if
     end subroutine
     
+    !> @brief Reads the standard output from a subprocess.
+    !! This function captures all available output from the subprocess's stdout, trimming trailing
+    !! end-of-line characters based on the platform (CRLF on Windows, LF on others).
+    !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @return output The captured stdout as an allocatable character string (empty if no output or handle not allocated).
     function internal_read_stdout(fp) result(output)
         type(handle_pointer), intent(inout)     :: fp
         character(:), allocatable :: output
@@ -244,6 +277,11 @@ contains
         end if
     end function
     
+    !> @brief Reads the standard error from a subprocess.
+    !! This function captures all available error messages from the subprocess's stderr, trimming
+    !! trailing end-of-line characters based on the platform (CRLF on Windows, LF on others).
+    !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @return output The captured stderr as an allocatable character string (empty if no output or handle not allocated).
     function internal_read_stderr(fp) result(output)
         type(handle_pointer), intent(inout)     :: fp
         character(:), allocatable :: output
@@ -279,6 +317,10 @@ contains
         end if
     end function
     
+    !> @brief Checks if a subprocess is still running.
+    !! This function queries the subprocess's alive status and returns a logical value.
+    !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @return alive True if the subprocess is still running, false otherwise.
     function internal_isalive(fp) result(alive)
         type(handle_pointer), intent(inout)     :: fp
         logical :: alive
@@ -290,6 +332,10 @@ contains
         alive = (status /= 0)
     end function
     
+    !> @brief Waits for a subprocess to complete and retrieves its exit code.
+    !! This subroutine blocks until the subprocess finishes and updates the provided exit code.
+    !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @param[out] excode The exit code of the subprocess (0 typically indicates success).
     subroutine internal_wait(fp, excode)
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
@@ -300,6 +346,10 @@ contains
         end if
     end subroutine
     
+    !> @brief Terminates a running subprocess.
+    !! This subroutine attempts to terminate the subprocess and optionally returns an error status.
+    !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @param[out] ierr Optional error status (0 indicates success, non-zero indicates failure).
     subroutine internal_terminate(fp, ierr)
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
@@ -312,6 +362,9 @@ contains
         if (present(ierr)) ierr = istat
     end subroutine
     
+    !> @brief Finalizes a subprocess by terminating it if running and releasing resources.
+    !! This subroutine ensures the subprocess is stopped and its resources are cleaned up.
+    !! @param[in,out] fp The handle pointer to the subprocess.
     subroutine internal_finalize(fp)
         type(handle_pointer), intent(inout) :: fp
         !private
@@ -320,6 +373,9 @@ contains
         call internal_destroy(fp)
     end subroutine
 
+    !> @brief Destroys a subprocess and deallocates its handle.
+    !! This private subroutine releases the subprocess resources and deallocates the handle.
+    !! @param[in,out] fp The handle pointer to the subprocess.
     subroutine internal_destroy(fp)
         type(handle_pointer), intent(inout) :: fp
         !private

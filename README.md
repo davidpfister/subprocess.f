@@ -28,7 +28,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About the Project
 <p align="center">
-  <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/image.png?raw=true">
+  <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/logo.png?raw=true">
 </p>
 
 This project aims at providing some ideas to create child processes in Fortran. <br><br>
@@ -109,11 +109,11 @@ The project was originally developed on Windows with Visual Studio 2019. The rep
 use subprocess, only: process
 
 type(process) :: p
-logical :: succ
-integer :: code
 
 p = process('gfortran')
 call p%run('hello_world.f90 -o hello_world')
+!
+
 ```
 <!-- CONTRIBUTING -->
 ### Contributing
