@@ -1,3 +1,6 @@
+!> @defgroup group_subprocess subprocess
+!! @brief @link subprocess::process Subprocess @endlink module
+!> @cond
 #ifdef _WIN32
 #define PATH_MAX 255
 #define MAX_ARG_STRLEN 8191
@@ -5,7 +8,7 @@
 #define PATH_MAX 4095
 #define MAX_ARG_STRLEN 131071
 #endif
-
+!> @endcond
 module subprocess
     use subprocess_handler
     use, intrinsic :: iso_c_binding
@@ -24,11 +27,49 @@ module subprocess
               writeto, &
               process_io
 
-    !> @brief A derived type representing a subprocess with associated properties and methods.
-    !! This type encapsulates the state and behavior of a subprocess, including its process ID,
-    !! path, execution status, and I/O handlers. It provides methods to run, manage, and
-    !! interact with the subprocess.
-    !! @note Fields marked as `public` are accessible outside the module, while others are private.
+    !> @class process
+    !! @ingroup group_subprocess
+    !> @brief   A derived type representing a subprocess with associated properties and methods.
+    !!          This type encapsulates the state and behavior of a subprocess, including its process ID,
+    !!          path, execution status, and I/O handlers. It provides methods to run, manage, and
+    !!          interact with the subprocess.
+    !! <h2>Examples</h2>
+    !! The following examples demonstrate some of the main members of the @ref process. 
+    !! @n
+    !! The first example shows a simple usage of the process type. It creates a child process
+    !! to list the files in a given folder. 
+    !! @n
+    !! @snippet snippet.f90 process_ex1
+    !! @n
+    !! The second example demonstrates how to run a process asynchronously. The standard input
+    !! is redirected to a procedure pointer returned from the constructor.
+    !! @n
+    !! @snippet snippet.f90 process_ex2
+    !! @n
+    !! The third example demonstrate how functions can be passed to the process constructor
+    !! to redirect the standard output.
+    !! @n
+    !! @snippet snippet.f90 process_ex3
+    !! @par
+    !! <h2>Constructors</h2>
+    !! Constructs a new process object with the specified path 
+    !! and optional I/O handlers.
+    !! <h3>process(character(*), procedure(process_io), procedure(process_io), procedure(process_io))</h3>
+    !! @verbatim type(process) function process(character(*) path) @endverbatim
+    !!
+    !! @param[in] path The path or command to execute.
+    !! @param[out] stdin Optional pointer to a procedure for handling stdin.
+    !! @param[in] stdout Optional procedure for handling stdout.
+    !! @param[in] stderr Optional procedure for handling stderr.
+    !!
+    !! @b Examples
+    !! ```fortran
+    !! type(process) :: p
+    !! p = process('cmd') 
+    !! ```
+    !! @return The constructed process object.
+    !!
+    !! @b Remarks
     type, public :: process
         private
         !> @brief The process ID of the subprocess.
@@ -99,9 +140,11 @@ module subprocess
         final :: finalize
     end type
 
+    !> @cond
     interface process
         module procedure :: process_new
     end interface
+    !> @endcond
     
     interface kill
         module procedure :: process_kill
@@ -158,12 +201,6 @@ module subprocess
 
 contains
 
-    !> @brief Constructs a new process object with the specified path and optional I/O handlers.
-    !! @param[in] path The path or command to execute.
-    !! @param[out] stdin Optional pointer to a procedure for handling stdin.
-    !! @param[in] stdout Optional procedure for handling stdout.
-    !! @param[in] stderr Optional procedure for handling stderr.
-    !! @return that The constructed process object.
     function process_new(path, stdin, stdout, stderr) result(that)
         character(*), intent(in)                                :: path
         procedure(process_io), intent(out), pointer, optional   :: stdin
@@ -184,7 +221,10 @@ contains
     end function
    
     !> @brief Runs a process synchronously with no arguments.
+    !!
     !! @param[in,out] this The process object to run.
+    !!
+    !! @b Remarks
     subroutine process_run_default(this)
         class(process), intent(inout)   :: this !< process object type
         !private
@@ -195,8 +235,11 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with one argument.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_arg1(this, arg1)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -208,9 +251,12 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with two arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_arg2(this, arg1, arg2)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -224,16 +270,18 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with three arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_arg3(this, arg1, arg2, arg3)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
-        !private
         !private
         type(string) :: args(3)
 
@@ -244,18 +292,20 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with four arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
-        !private
         !private
         type(string) :: args(4)
 
@@ -267,12 +317,15 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with five arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -292,8 +345,11 @@ contains
     end subroutine
     
     !> @brief Runs a process synchronously with an array of arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
+    !!
+    !! @b Remarks
     subroutine process_run_with_args(this, args)
         class(process), intent(inout)   :: this !< process object type
         type(string), intent(in)        :: args(:)
@@ -327,7 +383,10 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with no arguments.
+    !!
     !! @param[in,out] this The process object to run.
+    !!
+    !! @b Remarks
     subroutine process_runasync_default(this)
         class(process), intent(inout)   :: this !< process object type
         !private
@@ -338,8 +397,11 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with one argument.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_arg1(this, arg1)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -351,9 +413,12 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with two arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_arg2(this, arg1, arg2)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -367,10 +432,13 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with three arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_arg3(this, arg1, arg2, arg3)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -386,11 +454,14 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with four arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_arg4(this, arg1, arg2, arg3, arg4)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -408,12 +479,15 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with five arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_arg5(this, arg1, arg2, arg3, arg4, arg5)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
@@ -433,10 +507,13 @@ contains
     end subroutine
     
     !> @brief Runs a process asynchronously with an array of arguments.
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
+    !!
+    !! @b Remarks
     subroutine process_runasync_with_args(this, args)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         type(string), intent(in)        :: args(:)
         !private
         character(:), allocatable :: cmd
@@ -458,10 +535,14 @@ contains
     end subroutine
     
     !> @brief Gets the exit code of the associated process.
+    !!
     !! @param[in,out] this The process object.
-    !! @return res The exit code of the process, or 0 if exited successfully, or 383 (0x017F) if still running.
+    !!
+    !! @return The exit code of the process, or 0 if exited successfully, or 383 (0x017F) if still running.
+    !!
+    !! @b Remarks
     function process_exit_code(this) result(res)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         integer :: res
         
         if (allocated(this%excode)) then
@@ -476,10 +557,14 @@ contains
     end function
     
     !> @brief Gets the elapsed time since the process started or until it exited.
+    !!
     !! @param[in,out] this The process object.
-    !! @return res The elapsed time in milliseconds.
+    !!
+    !! @return The elapsed time in milliseconds.
+    !!
+    !! @b Remarks
     function process_exit_time(this) result(res)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         real(r8) :: res
         
         if (this%has_exited()) then
@@ -491,8 +576,12 @@ contains
     end function
     
     !> @brief Checks if the associated process has terminated.
+    !!
     !! @param[in,out] this The process object.
-    !! @return res True if the process has exited, false otherwise.
+    !!
+    !! @return True if the process has exited, false otherwise.
+    !!
+    !! @b Remarks
     function process_has_exited(this) result(res)
         class(process), intent(inout)   :: this !< process object type
         logical :: res
@@ -502,7 +591,10 @@ contains
     end function
     
     !> @brief Waits for the associated process to complete.
+    !!
     !! @param[in,out] this The process object to wait for.
+    !!
+    !! @b Remarks
     subroutine process_wait(this)
         class(process), intent(inout) :: this
         
@@ -511,7 +603,10 @@ contains
     end subroutine
     
     !> @brief Waits for all processes in an array to complete.
+    !!
     !! @param[in,out] processes Array of process objects to wait for.
+    !!
+    !! @b Remarks
     subroutine process_waitall(processes)
         class(process), intent(inout) :: processes(:)
         !private
@@ -525,7 +620,10 @@ contains
     end subroutine
 
     !> @brief Terminates the associated process.
+    !!
     !! @param[in,out] this The process object to terminate.
+    !!
+    !! @b Remarks
     subroutine process_kill(this)
         class(process), intent(inout) :: this
         !private
@@ -542,8 +640,11 @@ contains
     end subroutine
     
     !> @brief Reads the standard output of the associated process.
+    !!
     !! @param[in,out] this The process object.
     !! @param[out] output The captured stdout as a character string.
+    !!
+    !! @b Remarks
     subroutine process_read_stdout(this, output)
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
@@ -552,8 +653,11 @@ contains
     end subroutine
     
     !> @brief Reads the standard error of the associated process.
+    !!
     !! @param[in,out] this The process object.
     !! @param[out] output The captured stderr as a character string.
+    !!
+    !! @b Remarks
     subroutine process_read_stderr(this, output)
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
@@ -562,8 +666,11 @@ contains
     end subroutine
     
     !> @brief Writes a message to the standard input of the associated process.
+    !!
     !! @param[in] sender The process object sending the message.
     !! @param[in] msg The message to write to stdin.
+    !!
+    !! @b Remarks
     subroutine process_writeto_stdin(sender, msg)
         type(process), intent(in)   :: sender
         character(*), intent(in)    :: msg
@@ -572,7 +679,10 @@ contains
     end subroutine
     
     !> @brief Finalizes the process object, releasing resources.
+    !!
     !! @param[in,out] this The process object to finalize.
+    !!
+    !! @b Remarks
     subroutine finalize(this)
         type(process), intent(inout) :: this
 
@@ -584,7 +694,10 @@ contains
     end subroutine
   
     !> @brief Gets the current time in milliseconds.
+    !!
     !! @param[out] ctime The current time in milliseconds.
+    !!
+    !! @b Remarks
     subroutine get_time(ctime) 
         real(r8), intent(out) :: ctime !< time in milliseconds
         !private
