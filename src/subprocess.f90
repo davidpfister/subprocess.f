@@ -21,33 +21,34 @@ module subprocess
               read_stdout, &
               wait, &
               waitall, &
+              writeto, &
               process_io
 
     !> @brief A derived type representing a subprocess with associated properties and methods.
     !! This type encapsulates the state and behavior of a subprocess, including its process ID,
-    !! filename, execution status, and I/O handlers. It provides methods to run, manage, and
+    !! path, execution status, and I/O handlers. It provides methods to run, manage, and
     !! interact with the subprocess.
     !! @note Fields marked as `public` are accessible outside the module, while others are private.
     type, public :: process
         private
         !> @brief The process ID of the subprocess.
-        integer, public                     :: pid
-        !> @brief The filename or command associated with the subprocess.
-        character(:), allocatable, public   :: filename
+        integer, public                                 :: pid
+        !> @brief The path or command associated with the subprocess.
+        character(:), allocatable, public               :: path
         !> @brief The exit code of the subprocess (allocated when set).
-        integer, allocatable                :: excode
+        integer, allocatable                            :: excode
         !> @brief The start time of the subprocess (in milliseconds).
-        real(r8)                            :: begtime
+        real(r8)                                        :: begtime
         !> @brief The exit time of the subprocess (in milliseconds).
-        real(r8)                            :: extime
+        real(r8)                                        :: extime
         !> @brief Logical flag indicating if the subprocess is currently running.
-        logical                             :: is_running
+        logical                                         :: is_running
         !> @brief C function pointer to the stdout handler (default: null).
-        type(c_funptr)                      :: stdout = c_null_funptr
+        procedure(process_io), pointer, nopass, private :: stdout => null()
         !> @brief C function pointer to the stderr handler (default: null).
-        type(c_funptr)                      :: stderr = c_null_funptr
+        procedure(process_io), pointer, nopass, private :: stderr => null()
         !> @brief Internal handle pointer for subprocess management.
-        type(handle_pointer)                :: ptr
+        type(handle_pointer)                            :: ptr
     contains
         private
         procedure, pass(this)               :: process_run_default
@@ -141,10 +142,15 @@ module subprocess
     interface read_stderr
         module procedure :: process_read_stderr
     end interface
+
+    interface writeto
+        module procedure :: process_writeto_stdin
+    end interface
         
     abstract interface 
         subroutine process_io(sender, msg)
             import
+            implicit none
             type(process), intent(in)   :: sender
             character(*), intent(in)    :: msg
         end subroutine
@@ -152,26 +158,29 @@ module subprocess
 
 contains
 
-    !> @brief Constructs a new process object with the specified filename and optional I/O handlers.
-    !! @param[in] name The filename or command to execute.
+    !> @brief Constructs a new process object with the specified path and optional I/O handlers.
+    !! @param[in] path The path or command to execute.
     !! @param[out] stdin Optional pointer to a procedure for handling stdin.
     !! @param[in] stdout Optional procedure for handling stdout.
     !! @param[in] stderr Optional procedure for handling stderr.
     !! @return that The constructed process object.
-    function process_new(name, stdin, stdout, stderr) result(that)
-        character(*), intent(in)        :: name
+    function process_new(path, stdin, stdout, stderr) result(that)
+        character(*), intent(in)                                :: path
         procedure(process_io), intent(out), pointer, optional   :: stdin
-        procedure(process_io), optional                :: stdout
-        procedure(process_io), optional                :: stderr
+        procedure(process_io), optional                         :: stdout
+        procedure(process_io), optional                         :: stderr
         type(process) :: that
         
         call internal_finalize(that%ptr)
         
         that%is_running = .false.
-        that%filename = trim(name)
-        if (present(stdin)) stdin => process_writeto_stdin
-        if (present(stdout)) that%stdout = c_funloc(stdout)
-        if (present(stderr)) that%stderr = c_funloc(stderr)
+        that%path = trim(path)
+        if (present(stdin)) then
+            nullify(stdin)
+            stdin => process_writeto_stdin
+        end if
+        if (present(stdout)) that%stdout => stdout
+        if (present(stderr)) that%stderr => stderr
     end function
    
     !> @brief Runs a process synchronously with no arguments.
@@ -293,7 +302,7 @@ contains
         procedure(process_io), pointer :: fptr => null()
         integer :: i
 
-        cmd = this%filename
+        cmd = this%path
         do i = 1, size(args)
             cmd = trim(cmd)//' '//trim(args(i))
         end do
@@ -308,16 +317,12 @@ contains
         call get_time(this%extime)
         this%is_running = internal_isalive(this%ptr)
         
-        if (c_associated(this%stdout)) then
-            call c_f_procpointer(this%stdout, fptr)
-            call fptr(this, internal_read_stdout(this%ptr))
-            nullify(fptr)
+        if (associated(this%stdout)) then
+            call this%stdout(this, internal_read_stdout(this%ptr))
         end if
         
-        if (c_associated(this%stderr)) then
-            call c_f_procpointer(this%stderr, fptr)
-            call fptr(this, internal_read_stderr(this%ptr))
-            nullify(fptr)
+        if (associated(this%stderr)) then
+            call this%stderr(this, internal_read_stderr(this%ptr))
         end if
     end subroutine
     
@@ -437,7 +442,7 @@ contains
         character(:), allocatable :: cmd
         integer :: i
         
-        cmd = this%filename
+        cmd = this%path
         do i = 1, size(args)
             cmd = trim(cmd)//' '//trim(args(i))
         end do
@@ -570,6 +575,9 @@ contains
     !! @param[in,out] this The process object to finalize.
     subroutine finalize(this)
         type(process), intent(inout) :: this
+
+        nullify(this%stdout)
+        nullify(this%stdout)
         
         call internal_finalize(this%ptr)
         this%is_running = .false.

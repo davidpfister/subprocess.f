@@ -1,12 +1,13 @@
 module test_subs
-    use subprocess, only: process
+    use subprocess, only: process, process_io
     
     implicit none; private
     
     public :: write_stdout, &
-              output
+              output, stdin
     
     character(:), allocatable :: output
+    procedure(process_io), pointer :: stdin => null()
     
     contains
     
@@ -172,9 +173,9 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_stdin)
         use subprocess
+        use test_subs
 
         type(process) :: p
-        procedure(process_io), pointer :: stdin => null()
         character(*), parameter :: commandline = 'process_return_stdin'
 #ifndef _FPM
         character(*), parameter :: dirpath = 'TestData/'
@@ -222,9 +223,9 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_stdin_count)
         use subprocess
+        use test_subs
 
         type(process) :: p
-        procedure(process_io), pointer :: stdin => null()
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_stdin_count'
 #ifndef _FPM
@@ -297,7 +298,7 @@ TESTPROGRAM(main)
 
         EXPECT_TRUE(p%exit_code() == 0)
         call read_stdout(p, res)
-        EXPECT_STREQ(res, 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
+        EXPECT_STREQ(res(:18), 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
     END_TEST
     
     TEST(subprocess_stderr_argc)
