@@ -1,0 +1,17 @@
+var searchData=
+[
+  ['read_5fstderr_0',['read_stderr',['../interfacesubprocess_1_1read__stderr.html',1,'read_stderr'],['../structsubprocess_1_1process.html#a1e9d2b2d3c1483de2a861f433ed19584',1,'subprocess::process::read_stderr()']]],
+  ['read_5fstdout_1',['read_stdout',['../interfacesubprocess_1_1read__stdout.html',1,'read_stdout'],['../structsubprocess_1_1process.html#a04e6d69b014f2fcf956156a8a5c42ad5',1,'subprocess::process::read_stdout()']]],
+  ['reading_20asynchronously_2',['Reading Asynchronously',['../cheatsheet.html#autotoc_md7',1,'']]],
+  ['reading_20from_20the_20standard_20error_20of_20a_20process_3',['Reading from the Standard Error of a Process',['../cheatsheet.html#autotoc_md3',1,'']]],
+  ['reading_20from_20the_20standard_20output_20of_20a_20process_4',['Reading from the Standard Output of a Process',['../cheatsheet.html#autotoc_md2',1,'']]],
+  ['reporting_20a_20bug_5',['Reporting a bug',['../index.html#autotoc_md35',1,'']]],
+  ['request_6',['Pull request',['../index.html#autotoc_md36',1,'']]],
+  ['requirements_7',['Requirements',['../index.html#autotoc_md27',1,'']]],
+  ['results_8',['6. Checking Results',['../manual.html#autotoc_md19',1,'']]],
+  ['run_9',['run',['../interfacesubprocess_1_1run.html',1,'run'],['../structsubprocess_1_1process.html#a78f40e97f2bed80cc3eeb360479dd058',1,'subprocess::process::run(this)'],['../structsubprocess_1_1process.html#a976361ff8e5ed1cef979b9c2ccced6d3',1,'subprocess::process::run(this, arg1)'],['../structsubprocess_1_1process.html#a14cc0fdda765a1d45817647f2f543dae',1,'subprocess::process::run(this, arg1, arg2)'],['../structsubprocess_1_1process.html#a36c50486fe24f0bf7d742f0b9fcec245',1,'subprocess::process::run(this, arg1, arg2, arg3)'],['../structsubprocess_1_1process.html#a0abd90afc533dd0347cadbb37b9bdd97',1,'subprocess::process::run(this, arg1, arg2, arg3, arg4)'],['../structsubprocess_1_1process.html#ad8eef71963ac2f9d3b8fb90f30555ae0',1,'subprocess::process::run(this, arg1, arg2, arg3, arg4, arg5)'],['../structsubprocess_1_1process.html#afacd02b7eb137ed8cc7c7a308317419b',1,'subprocess::process::run(this, args)']]],
+  ['runasync_10',['runasync',['../interfacesubprocess_1_1runasync.html',1,'runasync'],['../structsubprocess_1_1process.html#afec903e32d799616b36ab273a1d005e6',1,'subprocess::process::runasync(this)'],['../structsubprocess_1_1process.html#a745dcb0d0a832972b61d6e4ab16482a5',1,'subprocess::process::runasync(this, arg1)'],['../structsubprocess_1_1process.html#adced174b7ba6866c785ff867aa5ec7bb',1,'subprocess::process::runasync(this, arg1, arg2)'],['../structsubprocess_1_1process.html#a424ed3833c65b608d16d2afdea6f8183',1,'subprocess::process::runasync(this, arg1, arg2, arg3)'],['../structsubprocess_1_1process.html#a56afd03885cd52ef97f2ea5191921534',1,'subprocess::process::runasync(this, arg1, arg2, arg3, arg4)'],['../structsubprocess_1_1process.html#ae56fc4a654a10d6d08a13cefd145409b',1,'subprocess::process::runasync(this, arg1, arg2, arg3, arg4, arg5)'],['../structsubprocess_1_1process.html#ae1d0387a52e262b2e8972d5ebd302311',1,'subprocess::process::runasync(this, args)']]],
+  ['running_20a_20command_20and_20waiting_20for_20it_20to_20finish_11',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md14',1,'']]],
+  ['running_20a_20command_20in_20the_20background_12',['2. Running a Command in the Background',['../manual.html#autotoc_md15',1,'']]],
+  ['running_20a_20script_20with_20arguments_13',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]]
+];
