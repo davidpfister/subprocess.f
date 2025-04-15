@@ -6,7 +6,7 @@ console(process_stdout_argv)
                                                  stdin => input_unit
         integer :: i
         do i = 1, size(args)
-            write(stdout, *) args(i)
+            write(stdout, fmt='(dt, A)', advance='no') args(i), ' '
         end do
     endmain
 end

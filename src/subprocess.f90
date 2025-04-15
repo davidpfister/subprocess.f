@@ -354,7 +354,7 @@ contains
         class(process), intent(inout)   :: this !< process object type
         type(string), intent(in)        :: args(:)
         !private
-        character(:), allocatable :: cmd
+        character(:), allocatable :: cmd, arg
         procedure(process_io), pointer :: fptr => null()
         integer :: i
 
@@ -516,7 +516,7 @@ contains
         class(process), intent(inout)   :: this
         type(string), intent(in)        :: args(:)
         !private
-        character(:), allocatable :: cmd
+        character(:), allocatable :: cmd, arg
         integer :: i
         
         cmd = this%path

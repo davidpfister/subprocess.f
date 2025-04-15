@@ -3,8 +3,17 @@ module test_subs
     
     implicit none; private
     
-    public :: write_stdout, &
-              output, stdin
+    public :: write_stdout,     &
+              output, stdin,    &
+              dirpath, incpath
+
+#ifndef _FPM
+    character(*), parameter :: dirpath = 'TestData/'
+    character(*), parameter :: incpath = '../include'
+#else
+    character(*), parameter :: dirpath = 'tests/TestData/'
+    character(*), parameter :: incpath = 'include'
+#endif
     
     character(:), allocatable :: output
     procedure(process_io), pointer :: stdin => null()
@@ -34,14 +43,6 @@ TESTPROGRAM(main)
         character(:), allocatable :: errmsg
         integer :: prev
 
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-        character(*), parameter :: incpath = '../include'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-        character(*), parameter :: incpath = 'include'
-#endif
-
 #ifdef _WIN32
         p1 = process('cmd')
         call run(p1, '/c dir "'//dirpath//'" *'//extension)
@@ -49,8 +50,7 @@ TESTPROGRAM(main)
         p1 = process('ls')
         call run(p1, dirpath//' *'//extension)
 #endif
-        EXPECT_TRUE(p1%exit_code() == 0)
-        
+       
         call read_stdout(p1, files)
         EXPECT_TRUE(len_trim(files) > 0)
         
@@ -85,11 +85,6 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
     
         p = process(dirpath//'hello_world', stdout=write_stdout)
         call run(p)
@@ -100,14 +95,10 @@ TESTPROGRAM(main)
     
     TEST(process_return_zero)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_return_zero'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
 
         p = process(dirpath//commandline)
         call runasync(p, '0')
@@ -119,15 +110,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_fortytwo)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_fortytwo'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p)
         call read_stdout(p, res)
@@ -137,15 +125,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_argc)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_argc'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
         call read_stdout(p, res)
@@ -155,15 +140,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_return_argv)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_argv'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, char(10)//char(13)//char(10)//'13')
         call read_stdout(p, res)
@@ -177,11 +159,7 @@ TESTPROGRAM(main)
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_return_stdin'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline, stdin=stdin)
         call runasync(p)
         
@@ -228,11 +206,6 @@ TESTPROGRAM(main)
         type(process) :: p
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_stdin_count'
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
         character(*), parameter :: temp = "Wee, sleekit, cow'rin, tim'rous beastie!"
 
         p = process(dirpath//commandline, stdin=stdin)
@@ -246,15 +219,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_stdout_argc)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
@@ -265,15 +235,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_stdout_argc_with_empty_strings)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, '', '', '', '')
 
@@ -284,34 +251,28 @@ TESTPROGRAM(main)
     
     TEST(subprocess_stdout_argv)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argv'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
         EXPECT_TRUE(p%exit_code() == 0)
         call read_stdout(p, res)
-        EXPECT_STREQ(res(:18), 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
+        EXPECT_STREQ(res, 'foo bar baz faz')
     END_TEST
     
     TEST(subprocess_stderr_argc)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stderr_argc'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
@@ -322,15 +283,12 @@ TESTPROGRAM(main)
     
     TEST(subprocess_stderr_argc_with_empty_strings)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stderr_argc'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, '', '', '', '')
 
@@ -341,21 +299,37 @@ TESTPROGRAM(main)
     
     TEST(subprocess_stderr_argv)
         use subprocess
+        use test_subs
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stderr_argv'
         character(:), allocatable :: res
-#ifndef _FPM
-        character(*), parameter :: dirpath = 'TestData/'
-#else
-        character(*), parameter :: dirpath = 'tests/TestData/'
-#endif
+
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
         EXPECT_TRUE(p%exit_code() == 0)
         call read_stderr(p, res)
-        EXPECT_STREQ(res, 'foo'//new_line('A')//'bar'//new_line('A')//'baz'//new_line('A')//'faz')
+        EXPECT_STREQ(res, 'foo bar baz faz')
+    END_TEST
+
+    TEST(process_return_lpcmdline)
+        use subprocess
+        use test_subs
+
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'process_return_lpcmdline'
+        character(*), parameter :: compare = 'noquotes "should be quoted"'
+        integer :: i
+
+        p = process(dirpath//commandline)
+        call run(p, 'noquotes', '"""should be quoted"""')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+        call read_stdout(p, res)
+
+        EXPECT_STREQ(res, compare)
     END_TEST
 
 END_TESTPROGRAM

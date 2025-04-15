@@ -24,23 +24,23 @@ module subprocess_handler
         !> @brief Pointer to the subprocess's stdin file stream (FILE* in C).
         type(c_ptr) :: stdin_file 
         !> @brief Pointer to the subprocess's stdout file stream (FILE* in C).
-		type(c_ptr) :: stdout_file
+        type(c_ptr) :: stdout_file
         !> @brief Pointer to the subprocess's stderr file stream (FILE* in C).
-		type(c_ptr) :: stderr_file
+        type(c_ptr) :: stderr_file
 #ifdef _WIN32
         !> @brief Windows-specific handle to the subprocess (void* in C).
-		type(c_ptr) :: hProcess
+        type(c_ptr) :: hProcess
         !> @brief Windows-specific handle to the standard input (void* in C).
-		type(c_ptr) :: hStdInput
+        type(c_ptr) :: hStdInput
         !> @brief Windows-specific event handle for output (void* in C).
-		type(c_ptr) :: hEventOutput
+        type(c_ptr) :: hEventOutput
         !> @brief Windows-specific event handle for error (void* in C).
-		type(c_ptr) :: hEventError
+        type(c_ptr) :: hEventError
 #else
         !> @brief POSIX-specific child process ID (pid_t in C).
-		integer(c_int) :: child
+        integer(c_int) :: child
         !> @brief POSIX-specific return status of the child process.
-		integer(c_int) :: return_status
+        integer(c_int) :: return_status
 #endif
         !> @brief Flag indicating if the subprocess is alive (non-zero means alive).
         integer(c_int) :: alive
@@ -60,17 +60,17 @@ module subprocess_handler
     enum, bind(c)
         !> @brief stdout and stderr are the same FILE.
         enumerator :: subprocess_option_combined_stdout_stderr = 1
-	    !> @brief The child process should inherit the environment variables of the parent.
-	    enumerator :: subprocess_option_inherit_environment = 2
-	    !> @brief Enable asynchronous reading of stdout/stderr before it has completed.
-	    enumerator :: subprocess_option_enable_async = 4
-	    !> @brief Enable the child process to be spawned with no window visible if supported
-	    !! by the platform.
-	    enumerator :: subprocess_option_no_window = 8
-	    !> @brief Search for program names in the PATH variable. Always enabled on Windows.
-	    !! Note: this will **not** search for paths in any provided custom environment
-	    !! and instead uses the PATH of the spawning process.
-	    enumerator :: subprocess_option_search_user_path = 16
+        !> @brief The child process should inherit the environment variables of the parent.
+        enumerator :: subprocess_option_inherit_environment = 2
+        !> @brief Enable asynchronous reading of stdout/stderr before it has completed.
+        enumerator :: subprocess_option_enable_async = 4
+        !> @brief Enable the child process to be spawned with no window visible if supported
+        !! by the platform.
+        enumerator :: subprocess_option_no_window = 8
+        !> @brief Search for program names in the PATH variable. Always enabled on Windows.
+        !! Note: this will **not** search for paths in any provided custom environment
+        !! and instead uses the PATH of the spawning process.
+        enumerator :: subprocess_option_search_user_path = 16
     end enum
 
     interface

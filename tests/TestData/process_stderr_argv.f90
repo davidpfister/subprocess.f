@@ -6,7 +6,7 @@ console(process_stderr_argv)
                                                  stdin => input_unit
         integer :: i
         do i = 1, size(args)
-            write(stderr, *) args(i)
+            write(stderr, fmt='(dt, A)', advance='no') args(i), ' '
         end do
     endmain
 end
