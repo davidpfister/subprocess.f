@@ -62,6 +62,21 @@ The following compilers are tested on the default branch of _subprocess.f_:
 - a preprocessor. The units tests of _subprocess.f_ use quite some preprocessor macros. It is known to work both with intel `fpp` and `cpp`.  
 Unit test rely on the the files [`assertion.inc`](https://github.com/davidpfister/fortiche/tree/master/src/assertion) and [`app.inc`](https://github.com/davidpfister/fortiche/tree/master/src/app). 
 
+<!-- USAGE EXAMPLES -->
+## Usage
+
+
+```fortran
+use subprocess, only: process
+
+type(process) :: p
+
+p = process('gfortran')
+call p%run('hello_world.f90 -o hello_world')
+!
+
+```
+
 ### Installation
 
 #### Get the code
@@ -100,21 +115,6 @@ The `_WIN32` macro is used only on Windows system. It should be removed otherwis
 
 The project was originally developed on Windows with Visual Studio 2019. The repo contains the solution file (_subprocess.f.sln_) to get you started with Visual Studio 2019. 
 
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-
-```fortran
-use subprocess, only: process
-
-type(process) :: p
-
-p = process('gfortran')
-call p%run('hello_world.f90 -o hello_world')
-!
-
-```
 <!-- CONTRIBUTING -->
 ### Contributing
 

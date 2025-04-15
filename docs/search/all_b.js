@@ -7,7 +7,7 @@ var searchData=
   ['for_20it_20to_20finish_4',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md14',1,'']]],
   ['for_20multiple_20commands_5',['5. Waiting for Multiple Commands',['../manual.html#autotoc_md18',1,'']]],
   ['for_20using_20the_20module_6',['Tips for Using the Module',['../manual.html#autotoc_md20',1,'']]],
-  ['fpm_7',['Build with fpm',['../index.html#autotoc_md30',1,'']]],
+  ['fpm_7',['Build with fpm',['../index.html#autotoc_md31',1,'']]],
   ['from_20the_20standard_20error_20of_20a_20process_8',['Reading from the Standard Error of a Process',['../cheatsheet.html#autotoc_md3',1,'']]],
   ['from_20the_20standard_20output_20of_20a_20process_9',['Reading from the Standard Output of a Process',['../cheatsheet.html#autotoc_md2',1,'']]]
 ];

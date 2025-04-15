@@ -2,7 +2,7 @@ var searchData=
 [
   ['terminating_20a_20process_0',['Terminating a Process',['../cheatsheet.html#autotoc_md6',1,'']]],
   ['the_20background_1',['2. Running a Command in the Background',['../manual.html#autotoc_md15',1,'']]],
-  ['the_20code_2',['Get the code',['../index.html#autotoc_md29',1,'']]],
+  ['the_20code_2',['Get the code',['../index.html#autotoc_md30',1,'']]],
   ['the_20module_3',['Tips for Using the Module',['../manual.html#autotoc_md20',1,'']]],
   ['the_20project_4',['About the Project',['../index.html#autotoc_md25',1,'']]],
   ['the_20standard_20error_20of_20a_20process_5',['Reading from the Standard Error of a Process',['../cheatsheet.html#autotoc_md3',1,'']]],
