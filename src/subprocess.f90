@@ -136,6 +136,15 @@ module subprocess
         procedure, pass(this), public       :: wait => process_wait
         !> @brief Terminates the subprocess.
         procedure, pass(this), public       :: kill => process_kill
+        ! IO
+        procedure, private, pass(dtv)       :: read_formatted
+        procedure, private, pass(dtv)       :: write_formatted
+        procedure, private, pass(dtv)       :: read_unformatted
+        procedure, private, pass(dtv)       :: write_unformatted
+        generic, public :: read(formatted)      => read_formatted
+        generic, public :: write(formatted)     => write_formatted
+        generic, public :: read(unformatted)    => read_unformatted
+        generic, public :: write(unformatted)   => write_unformatted
         !> @brief Finalizer to release resources when the subprocess object is destroyed.
         final :: finalize
     end type
@@ -194,7 +203,7 @@ module subprocess
         subroutine process_io(sender, msg)
             import
             implicit none
-            type(process), intent(in)   :: sender
+            class(process), intent(in)  :: sender
             character(*), intent(in)    :: msg
         end subroutine
     end interface
@@ -672,10 +681,68 @@ contains
     !!
     !! @b Remarks
     subroutine process_writeto_stdin(sender, msg)
-        type(process), intent(in)   :: sender
+        class(process), intent(in)  :: sender
         character(*), intent(in)    :: msg
         
         call internal_writeto_stdin(sender%ptr, msg)
+    end subroutine
+
+    subroutine read_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(process), intent(inout)   :: dtv         !< The string.
+        integer, intent(in)             :: unit        !< Logical unit.
+        character(*), intent(in)        :: iotype      !< Edit descriptor.
+        integer, intent(in)             :: v_list(:)   !< Edit descriptor list.
+        integer, intent(out)            :: iostat      !< IO status code.
+        character(*), intent(inout)     :: iomsg       !< IO status message.
+        !private
+        character(4096) :: tmp   !< Temporary storage string.
+
+        read(unit, *, iostat=iostat, iomsg=iomsg) tmp
+        call process_writeto_stdin(dtv, trim(tmp))
+    end subroutine
+    
+    subroutine write_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
+        class(process), intent(in), target     :: dtv       !< The string.
+        integer, intent(in)             :: unit      !< Logical unit.
+        character(*), intent(in)        :: iotype    !< Edit descriptor.
+        integer, intent(in)             :: v_list(:) !< Edit descriptor list.
+        integer, intent(out)            :: iostat    !< IO status code.
+        character(*), intent(inout)     :: iomsg     !< IO status message.
+        !private
+        character(:), allocatable :: output
+        class(process), pointer :: p => null()    !< The string.
+
+        p => dtv
+        output = internal_read_stdout(p%ptr)
+        write(unit, '(A)', iostat=iostat, iomsg=iomsg) output
+        nullify(p)
+    end subroutine
+
+    subroutine read_unformatted(dtv, unit, iostat, iomsg)
+        class(process), intent(inout)   :: dtv       !< The string.
+        integer, intent(in)             :: unit      !< Logical unit.
+        integer, intent(out)            :: iostat    !< IO status code.
+        character(*), intent(inout)     :: iomsg     !< IO status message.
+        !private
+        character(4096) :: temporary !< Temporary storage string.
+
+        read(unit, iostat=iostat, iomsg=iomsg) temporary
+        call process_writeto_stdin(dtv, trim(temporary))
+    end subroutine
+
+    subroutine write_unformatted(dtv, unit, iostat, iomsg)
+        class(process), intent(in), target :: dtv    !< The string.
+        integer, intent(in)             :: unit   !< Logical unit.
+        integer, intent(out)            :: iostat !< IO status code.
+        character(*), intent(inout)     :: iomsg  !< IO status message.
+        !private
+        character(:), allocatable :: output
+        class(process), pointer :: p => null()    !< The string.
+
+        p => dtv
+        output = internal_read_stdout(p%ptr)
+        write(unit, iostat=iostat, iomsg=iomsg) output
+        nullify(p)
     end subroutine
     
     !> @brief Finalizes the process object, releasing resources.

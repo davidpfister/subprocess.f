@@ -21,7 +21,7 @@ module test_subs
     contains
     
     subroutine write_stdout(sender, msg)
-        type(process), intent(in)   :: sender
+        class(process), intent(in)  :: sender
         character(*), intent(in)    :: msg
     
         output = trim(msg)
@@ -37,7 +37,8 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p1
-        character(:), allocatable :: files, file
+        character(4096) :: files
+        character(:), allocatable :: file
         character(*), parameter :: extension = '.f90'
         integer :: idx, code, space
         character(:), allocatable :: errmsg
@@ -51,7 +52,7 @@ TESTPROGRAM(main)
         call run(p1, dirpath//' *'//extension)
 #endif
        
-        call read_stdout(p1, files)
+        write(files, *) p1
         EXPECT_TRUE(len_trim(files) > 0)
         
         idx = index(files, extension)
@@ -113,12 +114,12 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(:), allocatable :: res
+        character(20) :: res
         character(*), parameter :: commandline = 'process_return_fortytwo'
 
         p = process(dirpath//commandline)
         call run(p)
-        call read_stdout(p, res)
+        write(res, *) p
         EXPECT_TRUE(p%exit_code() == 0)
         EXPECT_STREQ(res, '42')
     END_TEST
@@ -158,6 +159,7 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
+        character(20) :: cmd = '@'
         character(*), parameter :: commandline = 'process_return_stdin'
 
         p = process(dirpath//commandline, stdin=stdin)
@@ -193,7 +195,7 @@ TESTPROGRAM(main)
         EXPECT_FALSE(p%has_exited())
         call stdin(p, '!')
         EXPECT_FALSE(p%has_exited())
-        call stdin(p, '@')
+        read(cmd, *) p
 
         call wait(p)
         EXPECT_TRUE(p%has_exited())
@@ -204,7 +206,7 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(:), allocatable :: res
+        character(20) :: res
         character(*), parameter :: commandline = 'process_return_stdin_count'
         character(*), parameter :: temp = "Wee, sleekit, cow'rin, tim'rous beastie!"
 
@@ -213,7 +215,7 @@ TESTPROGRAM(main)
 
         call stdin(p, temp)
         call wait(p)
-        call read_stdout(p, res)
+        write(res, *) p
         EXPECT_EQ('40', res);
     END_TEST
     
@@ -223,13 +225,13 @@ TESTPROGRAM(main)
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
-        character(:), allocatable :: res
+        character(20) :: res
 
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        call read_stdout(p, res)
+        write(res, *) p
         EXPECT_STREQ(res, '4')
     END_TEST
     
@@ -239,13 +241,13 @@ TESTPROGRAM(main)
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
-        character(:), allocatable :: res
+        character(1) :: res
 
         p = process(dirpath//commandline)
         call run(p, '', '', '', '')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        call read_stdout(p, res)
+        write(res, *) p
         EXPECT_STREQ(res, '0')
     END_TEST
     
@@ -318,16 +320,15 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(:), allocatable :: res
+        character(100) :: res
         character(*), parameter :: commandline = 'process_return_lpcmdline'
         character(*), parameter :: compare = 'noquotes "should be quoted"'
-        integer :: i
 
         p = process(dirpath//commandline)
         call run(p, 'noquotes', '"""should be quoted"""')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        call read_stdout(p, res)
+        write(res, *) p
 
         EXPECT_STREQ(res, compare)
     END_TEST
