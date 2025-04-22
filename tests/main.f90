@@ -114,12 +114,12 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(20) :: res
+        character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_fortytwo'
 
         p = process(dirpath//commandline)
         call run(p)
-        write(res, *) p
+        call read_stdout(p, res)
         EXPECT_TRUE(p%exit_code() == 0)
         EXPECT_STREQ(res, '42')
     END_TEST
@@ -159,7 +159,6 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(20) :: cmd = '@'
         character(*), parameter :: commandline = 'process_return_stdin'
 
         p = process(dirpath//commandline, stdin=stdin)
@@ -195,7 +194,7 @@ TESTPROGRAM(main)
         EXPECT_FALSE(p%has_exited())
         call stdin(p, '!')
         EXPECT_FALSE(p%has_exited())
-        read(cmd, *) p
+        call stdin(p, '@')
 
         call wait(p)
         EXPECT_TRUE(p%has_exited())
@@ -206,7 +205,7 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(20) :: res
+        character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_stdin_count'
         character(*), parameter :: temp = "Wee, sleekit, cow'rin, tim'rous beastie!"
 
@@ -215,8 +214,8 @@ TESTPROGRAM(main)
 
         call stdin(p, temp)
         call wait(p)
-        write(res, *) p
-        EXPECT_EQ('40', res);
+        call read_stdout(p, res)
+        EXPECT_EQ(res, '40');
     END_TEST
     
     TEST(subprocess_stdout_argc)
@@ -225,13 +224,13 @@ TESTPROGRAM(main)
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
-        character(20) :: res
+        character(:), allocatable :: res
 
         p = process(dirpath//commandline)
         call run(p, 'foo', 'bar', 'baz', 'faz')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        write(res, *) p
+        call read_stdout(p, res)
         EXPECT_STREQ(res, '4')
     END_TEST
     
@@ -241,13 +240,13 @@ TESTPROGRAM(main)
 
         type(process) :: p
         character(*), parameter :: commandline = 'process_stdout_argc'
-        character(1) :: res
+        character(:), allocatable :: res
 
         p = process(dirpath//commandline)
         call run(p, '', '', '', '')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        write(res, *) p
+        call read_stdout(p, res)
         EXPECT_STREQ(res, '0')
     END_TEST
     
@@ -320,7 +319,7 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
-        character(100) :: res
+        character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_lpcmdline'
         character(*), parameter :: compare = 'noquotes "should be quoted"'
 
@@ -328,9 +327,29 @@ TESTPROGRAM(main)
         call run(p, 'noquotes', '"""should be quoted"""')
 
         EXPECT_TRUE(p%exit_code() == 0)
-        write(res, *) p
+        call read_stdout(p, res)
 
         EXPECT_STREQ(res, compare)
     END_TEST
+
+    TEST(process_combined_stdout_stderr)
+        use subprocess
+        use test_subs
+
+        character(*), parameter :: commandline = 'process_combined_stdout_stderr'
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: compare = "Hello,It's me!world!Yay!"
+
+        p = process(dirpath//commandline)
+        call run(p, option_combined_stdout_stderr)
+
+        EXPECT_TRUE(p%exit_code() == 0)
+
+        call read_stdout(p, res)
+
+        EXPECT_STREQ(res, compare);
+    END_TEST
+
 
 END_TESTPROGRAM

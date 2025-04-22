@@ -3,15 +3,23 @@ module subprocess_handler
 
     implicit none; private
 
-    public  :: internal_run, &
-               internal_runasync, &
-               internal_finalize, &
-               internal_wait, &
-               internal_writeto_stdin, &
-               internal_read_stdout, &
-               internal_read_stderr, &
-               internal_isalive, &
-               internal_terminate
+    public  ::  internal_run,           &
+                internal_runasync,      &
+                internal_finalize,      &
+                internal_wait,          &
+                internal_writeto_stdin, &
+                internal_read_stdout,   &
+                internal_read_stderr,   &
+                internal_isalive,       &
+                internal_terminate
+
+    public ::   option_none,                     &
+                option_combined_stdout_stderr,   &
+                option_inherit_environment,      &
+                option_enable_async,             &
+                option_no_window,                &
+                option_search_user_path,         &
+                option_enum
     
     character(*), parameter :: CR = char(13)
     character(*), parameter :: LF = char(10)
@@ -58,20 +66,24 @@ module subprocess_handler
     end type
     
     enum, bind(c)
+        !> @brief default option
+        enumerator :: option_none = 0
         !> @brief stdout and stderr are the same FILE.
-        enumerator :: subprocess_option_combined_stdout_stderr = 1
+        enumerator :: option_combined_stdout_stderr = 1
         !> @brief The child process should inherit the environment variables of the parent.
-        enumerator :: subprocess_option_inherit_environment = 2
+        enumerator :: option_inherit_environment = 2
         !> @brief Enable asynchronous reading of stdout/stderr before it has completed.
-        enumerator :: subprocess_option_enable_async = 4
+        enumerator :: option_enable_async = 4
         !> @brief Enable the child process to be spawned with no window visible if supported
         !! by the platform.
-        enumerator :: subprocess_option_no_window = 8
+        enumerator :: option_no_window = 8
         !> @brief Search for program names in the PATH variable. Always enabled on Windows.
         !! Note: this will **not** search for paths in any provided custom environment
         !! and instead uses the PATH of the spawning process.
-        enumerator :: subprocess_option_search_user_path = 16
+        enumerator :: option_search_user_path = 16
     end enum
+
+    integer, parameter :: option_enum = kind(option_none)
 
     interface
         integer(c_int) function subprocess_create_c(cmd, options, process) bind(C, name='subprocess_create')
@@ -163,7 +175,8 @@ module subprocess_handler
     !! This generic interface provides a single procedure for executing a command synchronously,
     !! waiting for its completion, and retrieving its exit code.
     interface internal_run
-        module procedure :: internal_run_default
+        module procedure :: internal_run_default,   &
+                            internal_run_with_option
     end interface
     
     !> @brief Interface for asynchronously running a subprocess.
@@ -198,6 +211,32 @@ contains
         
         ierr = subprocess_join_c(fp%handle, excode)
     end function
+
+    !> @brief Executes a command synchronously and waits for its completion.
+    !! This function creates a subprocess, runs the specified command, and waits for it to finish,
+    !! returning the process ID and setting the exit code.
+    !! @param[in] cmd The command line string to execute (e.g., "ls -l" or "dir").
+    !! @param[in] option integer option
+    !! @param[in,out] fp The handle pointer to manage the subprocess.
+    !! @param[out] excode The exit code of the subprocess (0 typically indicates success).
+    !! @return pid The process ID of the created subprocess, or a negative value on error.
+    integer function internal_run_with_option(cmd, option, fp, excode) result(pid)
+        character(*), intent(in)                :: cmd
+        integer(option_enum), intent(in)        :: option
+        type(handle_pointer), intent(inout)     :: fp
+        integer(c_int), intent(out)             :: excode
+        !private
+        integer :: ierr
+        
+        if (.not. allocated(fp%handle)) allocate(fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, option, fp%handle)
+        if (pid < 0) then
+            write (*, *) '*process_run* ERROR: Could not create process!'
+            excode = -1
+        end if
+        
+        ierr = subprocess_join_c(fp%handle, excode)
+    end function
     
     !> @brief Executes a command asynchronously without waiting for completion.
     !! This function creates a subprocess with asynchronous capabilities and returns immediately,
@@ -213,7 +252,30 @@ contains
         !private
         integer :: ierr
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(cmd // c_null_char, subprocess_option_enable_async, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, option_enable_async, fp%handle)
+        if (pid < 0) then
+            write (*, *) '*process_run* ERROR: Could not create process!'
+            excode = -1
+        end if
+    end function
+
+    !> @brief Executes a command asynchronously without waiting for completion.
+    !! This function creates a subprocess with asynchronous capabilities and returns immediately,
+    !! allowing the command to run in the background.
+    !! @param[in] cmd The command line string to execute (e.g., "notepad.exe").
+    !! @param[in] option integer option  
+    !! @param[in,out] fp The handle pointer to manage the subprocess.
+    !! @param[out] excode The initial exit code (set to -1 if creation fails).
+    !! @return pid The process ID of the created subprocess, or a negative value on error.
+    integer function internal_runasync_with_option(cmd, option, fp, excode) result(pid)
+        character(*), intent(in)                :: cmd
+        integer(option_enum), intent(in)        :: option
+        type(handle_pointer), intent(inout)     :: fp
+        integer(c_int), intent(out)             :: excode
+        !private
+        integer :: ierr
+        if (.not. allocated(fp%handle)) allocate(fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option), fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1

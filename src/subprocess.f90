@@ -27,6 +27,14 @@ module subprocess
               writeto, &
               process_io
 
+    public :: option_none,                     &
+              option_combined_stdout_stderr,   &
+              option_inherit_environment,      &
+              option_enable_async,             &
+              option_no_window,                &
+              option_search_user_path,         &
+              option_enum
+
     !> @class process
     !! @ingroup group_subprocess
     !> @brief   A derived type representing a subprocess with associated properties and methods.
@@ -136,15 +144,6 @@ module subprocess
         procedure, pass(this), public       :: wait => process_wait
         !> @brief Terminates the subprocess.
         procedure, pass(this), public       :: kill => process_kill
-        ! IO
-        procedure, private, pass(dtv)       :: read_formatted
-        procedure, private, pass(dtv)       :: write_formatted
-        procedure, private, pass(dtv)       :: read_unformatted
-        procedure, private, pass(dtv)       :: write_unformatted
-        generic, public :: read(formatted)      => read_formatted
-        generic, public :: write(formatted)     => write_formatted
-        generic, public :: read(unformatted)    => read_unformatted
-        generic, public :: write(unformatted)   => write_unformatted
         !> @brief Finalizer to release resources when the subprocess object is destroyed.
         final :: finalize
     end type
@@ -234,13 +233,14 @@ contains
     !! @param[in,out] this The process object to run.
     !!
     !! @b Remarks
-    subroutine process_run_default(this)
+    subroutine process_run_default(this, option)
         class(process), intent(inout)   :: this !< process object type
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
         
         allocate(args(0))
-        call process_run_with_args(this, args)
+        call process_run_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process synchronously with one argument.
@@ -249,14 +249,15 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_arg1(this, arg1)
+    subroutine process_run_with_arg1(this, arg1, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args
 
         args = arg1
-        call process_run_with_args(this, [args])
+        call process_run_with_args(this, [args], option)
     end subroutine
     
     !> @brief Runs a process synchronously with two arguments.
@@ -266,16 +267,17 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_arg2(this, arg1, arg2)
+    subroutine process_run_with_arg2(this, arg1, arg2, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(2)
 
         args(1) = arg1
         args(2) = arg2
-        call process_run_with_args(this, args)
+        call process_run_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process synchronously with three arguments.
@@ -286,18 +288,19 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_arg3(this, arg1, arg2, arg3)
+    subroutine process_run_with_arg3(this, arg1, arg2, arg3, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(3)
 
         args(1) = arg1
         args(2) = arg2
         args(3) = arg3
-        call process_run_with_args(this, args)
+        call process_run_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process synchronously with four arguments.
@@ -309,12 +312,13 @@ contains
     !! @param[in] arg4 The fourth argument to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4)
+    subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(4)
 
@@ -322,7 +326,7 @@ contains
         args(2) = arg2
         args(3) = arg3
         args(4) = arg4
-        call process_run_with_args(this, args)
+        call process_run_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process synchronously with five arguments.
@@ -335,13 +339,14 @@ contains
     !! @param[in] arg5 The fifth argument to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5)
+    subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
         character(*), intent(in)        :: arg5
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(5)
 
@@ -350,7 +355,7 @@ contains
         args(3) = arg3
         args(4) = arg4
         args(5) = arg5
-        call process_run_with_args(this, args)
+        call process_run_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process synchronously with an array of arguments.
@@ -359,9 +364,10 @@ contains
     !! @param[in] args Array of arguments to pass to the process.
     !!
     !! @b Remarks
-    subroutine process_run_with_args(this, args)
+    subroutine process_run_with_args(this, args, option)
         class(process), intent(inout)   :: this !< process object type
         type(string), intent(in)        :: args(:)
+        integer(option_enum), intent(in), optional :: option
         !private
         character(:), allocatable :: cmd, arg
         procedure(process_io), pointer :: fptr => null()
@@ -378,7 +384,11 @@ contains
         this%is_running = .true.
         
         call get_time(this%begtime)
-        this%pid = internal_run(cmd, this%ptr, this%excode)
+        if (present(option)) then
+            this%pid = internal_run(cmd, option, this%ptr, this%excode)
+        else
+            this%pid = internal_run(cmd, this%ptr, this%excode)
+        end if
         call get_time(this%extime)
         this%is_running = internal_isalive(this%ptr)
         
@@ -396,13 +406,14 @@ contains
     !! @param[in,out] this The process object to run.
     !!
     !! @b Remarks
-    subroutine process_runasync_default(this)
+    subroutine process_runasync_default(this, option)
         class(process), intent(inout)   :: this !< process object type
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
         
         allocate(args(0))
-        call process_runasync_with_args(this, args)
+        call process_runasync_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process asynchronously with one argument.
@@ -411,14 +422,15 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_arg1(this, arg1)
+    subroutine process_runasync_with_arg1(this, arg1, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args
 
         args = arg1
-        call process_runasync_with_args(this, [args])
+        call process_runasync_with_args(this, [args], option)
     end subroutine
     
     !> @brief Runs a process asynchronously with two arguments.
@@ -428,16 +440,17 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_arg2(this, arg1, arg2)
+    subroutine process_runasync_with_arg2(this, arg1, arg2, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(2)
 
         args(1) = arg1
         args(2) = arg2
-        call process_runasync_with_args(this, args)
+        call process_runasync_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process asynchronously with three arguments.
@@ -448,18 +461,19 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_arg3(this, arg1, arg2, arg3)
+    subroutine process_runasync_with_arg3(this, arg1, arg2, arg3, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(3)
 
         args(1) = arg1
         args(2) = arg2
         args(3) = arg3
-        call process_runasync_with_args(this, args)
+        call process_runasync_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process asynchronously with four arguments.
@@ -471,12 +485,13 @@ contains
     !! @param[in] arg4 The fourth argument to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_arg4(this, arg1, arg2, arg3, arg4)
+    subroutine process_runasync_with_arg4(this, arg1, arg2, arg3, arg4, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(4)
 
@@ -484,7 +499,7 @@ contains
         args(2) = arg2
         args(3) = arg3
         args(4) = arg4
-        call process_runasync_with_args(this, args)
+        call process_runasync_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process asynchronously with five arguments.
@@ -497,13 +512,14 @@ contains
     !! @param[in] arg5 The fifth argument to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_arg5(this, arg1, arg2, arg3, arg4, arg5)
+    subroutine process_runasync_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
         class(process), intent(inout)   :: this
         character(*), intent(in)        :: arg1
         character(*), intent(in)        :: arg2
         character(*), intent(in)        :: arg3
         character(*), intent(in)        :: arg4
         character(*), intent(in)        :: arg5
+        integer(option_enum), intent(in), optional :: option
         !private
         type(string) :: args(5)
 
@@ -512,7 +528,7 @@ contains
         args(3) = arg3
         args(4) = arg4
         args(5) = arg5
-        call process_runasync_with_args(this, args)
+        call process_runasync_with_args(this, args, option)
     end subroutine
     
     !> @brief Runs a process asynchronously with an array of arguments.
@@ -521,9 +537,10 @@ contains
     !! @param[in] args Array of arguments to pass to the process.
     !!
     !! @b Remarks
-    subroutine process_runasync_with_args(this, args)
+    subroutine process_runasync_with_args(this, args, option)
         class(process), intent(inout)   :: this
         type(string), intent(in)        :: args(:)
+        integer(option_enum), intent(in), optional :: option
         !private
         character(:), allocatable :: cmd, arg
         integer :: i
@@ -537,7 +554,11 @@ contains
         allocate(this%excode, source = 0)
         this%is_running = .true.
         call get_time(this%begtime)
-        this%pid = internal_runasync(cmd, this%ptr, this%excode)
+        if (present(option)) then
+            this%pid = internal_runasync(cmd, this%ptr, this%excode)
+        else
+            this%pid = internal_runasync(cmd, this%ptr, this%excode)
+        end if
         if (this%excode == 0) then 
             deallocate(this%excode)
         end if
@@ -685,64 +706,6 @@ contains
         character(*), intent(in)    :: msg
         
         call internal_writeto_stdin(sender%ptr, msg)
-    end subroutine
-
-    subroutine read_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
-        class(process), intent(inout)   :: dtv         !< The string.
-        integer, intent(in)             :: unit        !< Logical unit.
-        character(*), intent(in)        :: iotype      !< Edit descriptor.
-        integer, intent(in)             :: v_list(:)   !< Edit descriptor list.
-        integer, intent(out)            :: iostat      !< IO status code.
-        character(*), intent(inout)     :: iomsg       !< IO status message.
-        !private
-        character(4096) :: tmp   !< Temporary storage string.
-
-        read(unit, *, iostat=iostat, iomsg=iomsg) tmp
-        call process_writeto_stdin(dtv, trim(tmp))
-    end subroutine
-    
-    subroutine write_formatted(dtv, unit, iotype, v_list, iostat, iomsg)
-        class(process), intent(in), target     :: dtv       !< The string.
-        integer, intent(in)             :: unit      !< Logical unit.
-        character(*), intent(in)        :: iotype    !< Edit descriptor.
-        integer, intent(in)             :: v_list(:) !< Edit descriptor list.
-        integer, intent(out)            :: iostat    !< IO status code.
-        character(*), intent(inout)     :: iomsg     !< IO status message.
-        !private
-        character(:), allocatable :: output
-        class(process), pointer :: p => null()    !< The string.
-
-        p => dtv
-        output = internal_read_stdout(p%ptr)
-        write(unit, '(A)', iostat=iostat, iomsg=iomsg) output
-        nullify(p)
-    end subroutine
-
-    subroutine read_unformatted(dtv, unit, iostat, iomsg)
-        class(process), intent(inout)   :: dtv       !< The string.
-        integer, intent(in)             :: unit      !< Logical unit.
-        integer, intent(out)            :: iostat    !< IO status code.
-        character(*), intent(inout)     :: iomsg     !< IO status message.
-        !private
-        character(4096) :: temporary !< Temporary storage string.
-
-        read(unit, iostat=iostat, iomsg=iomsg) temporary
-        call process_writeto_stdin(dtv, trim(temporary))
-    end subroutine
-
-    subroutine write_unformatted(dtv, unit, iostat, iomsg)
-        class(process), intent(in), target :: dtv    !< The string.
-        integer, intent(in)             :: unit   !< Logical unit.
-        integer, intent(out)            :: iostat !< IO status code.
-        character(*), intent(inout)     :: iomsg  !< IO status message.
-        !private
-        character(:), allocatable :: output
-        class(process), pointer :: p => null()    !< The string.
-
-        p => dtv
-        output = internal_read_stdout(p%ptr)
-        write(unit, iostat=iostat, iomsg=iomsg) output
-        nullify(p)
     end subroutine
     
     !> @brief Finalizes the process object, releasing resources.
