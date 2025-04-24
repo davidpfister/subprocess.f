@@ -7,6 +7,5 @@ console(process_combined_stdout_stderr)
 		write(stderr, '(A)', advance='no') "It's me!"
 		write(stdout, '(A)', advance='no') "world!"
 		write(stderr, '(A)', advance='no') "Yay!"
-		stop 0
     endmain
 end

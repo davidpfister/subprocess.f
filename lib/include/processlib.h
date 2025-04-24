@@ -544,6 +544,11 @@ extern "C" {
 				used_environment[len++] = '\0';
 				used_environment[len++] = '\0';
 			}
+			else {
+				used_environment = SUBPROCESS_CAST(char*, _alloca(2));
+				used_environment[0] = '\0';
+				used_environment[1] = '\0';
+			}
 		}
 		else {
 			if (SUBPROCESS_NULL != environment) {

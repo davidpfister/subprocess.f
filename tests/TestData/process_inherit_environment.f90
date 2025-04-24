@@ -1,22 +1,14 @@
 #include <app.inc> 
 console(process_inherit_environment)
     main(args)
-        character(len=100) :: str
+        character(:), allocatable :: str
         integer :: status, return_value
 
-        if (size(args) > 1 .and. trim(args(2)%chars) == "all") then
-            if (get_env("PROCESS_ENV_TEST", str) == 0) then
-                return_value = 0
-            else
-                return_value = 1
-            end if
+        status = get_env('PROCESS_ENV_TEST', str)
+        if (len_trim(str) > 0) then
+            return_value = atoi(trim(str))
         else
-            status = get_env("PROCESS_ENV_TEST", str)
-            if (len_trim(str) > 0) then
-                return_value = atoi(trim(str))
-            else
-                return_value = 0
-            end if
+            return_value = 0
         end if
         
         print *, return_value
@@ -24,10 +16,13 @@ console(process_inherit_environment)
 
     function get_env(var_name, value) result(status)
         character(*), intent(in)    :: var_name
-        character(255), intent(out) :: value
+        character(:), allocatable, intent(out) :: value
         integer :: status
         
+        allocate(character(255) :: value)
         call get_environment_variable(var_name, value)
+
+        value = trim(value)
         if (len_trim(value) > 0) then
             status = 0
         else

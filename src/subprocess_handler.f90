@@ -176,14 +176,15 @@ module subprocess_handler
     !! waiting for its completion, and retrieving its exit code.
     interface internal_run
         module procedure :: internal_run_default,   &
-                            internal_run_with_option
+                            internal_run_with_options
     end interface
     
     !> @brief Interface for asynchronously running a subprocess.
     !! This generic interface provides a single procedure for executing a command asynchronously,
     !! allowing it to run in the background without waiting for completion.
     interface internal_runasync
-        module procedure :: internal_runasync_default
+        module procedure :: internal_runasync_default, &
+                            internal_runasync_with_options
     end interface
         
 contains
@@ -203,7 +204,7 @@ contains
         integer :: ierr
         
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(cmd // c_null_char, 0, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, option_inherit_environment, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -220,16 +221,33 @@ contains
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The exit code of the subprocess (0 typically indicates success).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
-    integer function internal_run_with_option(cmd, option, fp, excode) result(pid)
+    integer function internal_run_with_options(cmd, options, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
-        integer(option_enum), intent(in)        :: option
+        integer(option_enum), intent(in)        :: options(..)
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
-        integer :: ierr
+        integer :: ierr, i
+        integer(option_enum) :: opt
         
+        opt = option_inherit_environment
+        select rank(o => options)
+        rank(0)
+            opt = merge(ior(opt, o), option_none, o /= option_none)
+        rank(1)
+            do i = 1, size(o)
+                if (o(i) == option_none) then
+                    opt = option_none
+                    exit
+                end if
+                opt = ior(opt, o(i))
+            end do
+        rank default
+            opt = option_inherit_environment
+        end select
+
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(cmd // c_null_char, option, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -251,8 +269,9 @@ contains
         integer(c_int), intent(out)             :: excode
         !private
         integer :: ierr
+        
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(cmd // c_null_char, option_enable_async, fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option_inherit_environment), fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1
@@ -267,15 +286,33 @@ contains
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The initial exit code (set to -1 if creation fails).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
-    integer function internal_runasync_with_option(cmd, option, fp, excode) result(pid)
+    integer function internal_runasync_with_options(cmd, options, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
-        integer(option_enum), intent(in)        :: option
+        integer(option_enum), intent(in)        :: options(..)
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
-        integer :: ierr
+        integer :: ierr, i
+        integer(option_enum) :: opt
+        
+        opt = ior(option_enable_async, option_inherit_environment)
+        select rank(o => options)
+        rank(0)
+            opt = merge(ior(opt, o), option_enable_async, o /= option_none)
+        rank(1)
+            do i = 1, size(o)
+                if (o(i) == option_none) then
+                    opt = option_enable_async
+                    exit
+                end if
+                opt = ior(opt, o(i))
+            end do
+        rank default
+            opt = ior(option_enable_async, option_inherit_environment)
+        end select
+
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option), fp%handle)
+        pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
         if (pid < 0) then
             write (*, *) '*process_run* ERROR: Could not create process!'
             excode = -1

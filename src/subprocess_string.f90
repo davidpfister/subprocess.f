@@ -37,6 +37,6 @@ module subprocess_string
         class(string), intent(in) :: str
         character(:), allocatable :: res
         
-        res = trim(str%chars)
+        res = trim(adjustl(str%chars))
     end function
 end module

@@ -5,7 +5,8 @@ module test_subs
     
     public :: write_stdout,     &
               output, stdin,    &
-              dirpath, incpath
+              dirpath, incpath, &
+              setvar
 
 #ifndef _FPM
     character(*), parameter :: dirpath = 'TestData/'
@@ -26,18 +27,53 @@ module test_subs
     
         output = trim(msg)
     end subroutine
+
+    subroutine setvar(name, value, ierr)
+        use iso_c_binding
+        character(*), intent(in)        :: name
+        character(*), intent(in)        :: value
+        integer, intent(out), optional  :: ierr
+
+        interface
+#ifdef _WIN32
+        integer(c_int) function putenv_c(name, value) bind(c, name='_putenv_s')
+            import
+            implicit none
+            character(kind=c_char, len=1), intent(in) :: name(*)
+            character(kind=c_char, len=1), intent(in) :: value(*)
+        end function
+#else
+        integer(c_int) function setenv_c(name, value, overwrite) bind(c, name='setenv')
+            import
+            implicit none
+            character(kind=c_char, len=1), intent(in) :: name(*)
+            character(kind=c_char, len=1), intent(in) :: value(*)
+            integer(c_int), value :: overwrite
+        end function
+#endif
+    end interface
+
+        !private
+        integer(c_int) :: res, overwrite
+        overwrite = 1
+#ifdef _WIN32
+        res = putenv_c(name//c_null_char, value//c_null_char)
+#else
+        res = setenv_c(name//c_null_char, value//c_null_char, overwrite)
+#endif
+        if (present(ierr)) ierr = res
+    end subroutine
 end module
     
 #include <assertion.inc>
 TESTPROGRAM(main)
-
 #ifdef COMPILE_EXAMPLES
     TEST(test_gfortran)
         use subprocess, only: process, run, read_stderr, read_stdout
         use test_subs
 
         type(process) :: p1
-        character(4096) :: files
+        character(:), allocatable :: files
         character(:), allocatable :: file
         character(*), parameter :: extension = '.f90'
         integer :: idx, code, space
@@ -52,7 +88,7 @@ TESTPROGRAM(main)
         call run(p1, dirpath//' *'//extension)
 #endif
        
-        write(files, *) p1
+        call read_stdout(p1, files)
         EXPECT_TRUE(len_trim(files) > 0)
         
         idx = index(files, extension)
@@ -65,7 +101,7 @@ TESTPROGRAM(main)
             block
                 type(process) :: pg
                 pg = process('gfortran')
-                call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -I'//incpath)
+                call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -I'//incpath, '-static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive')
                 code = pg%exit_code()
                 EXPECT_TRUE(code == 0)
                 if (code /= 0) then 
@@ -351,5 +387,44 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, compare);
     END_TEST
 
+    TEST(process_not_inherit_environment)
+        use subprocess
+        use test_subs
+
+        character(*), parameter :: commandline = 'process_inherit_environment'
+        type(process) :: p
+        character(:), allocatable :: res
+        integer :: ierr
+
+        call setvar('PROCESS_ENV_TEST', '1', ierr)
+        EXPECT_EQ(ierr, 0)
+        p = process(dirpath//commandline)
+
+        call run(p, option_none)
+        call read_stdout(p, res)
+        EXPECT_STREQ(res, '0')
+
+        EXPECT_TRUE(p%exit_code() == 0)
+    END_TEST
+
+    TEST(process_inherit_environment)
+        use subprocess
+        use test_subs
+
+        character(*), parameter :: commandline = 'process_inherit_environment'
+        type(process) :: p
+        integer :: ierr
+        character(:), allocatable :: res
+        
+        call setvar('PROCESS_ENV_TEST', '42', ierr)
+        EXPECT_EQ(ierr, 0)
+        p = process(dirpath//commandline)
+        
+        call run(p, option_inherit_environment)
+        call read_stdout(p, res)
+        EXPECT_STREQ(res, '42')
+        
+        EXPECT_TRUE(p%exit_code() == 0)
+    END_TEST
 
 END_TESTPROGRAM
