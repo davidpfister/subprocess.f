@@ -1,3 +1,11 @@
+!> @defgroup group_subprocess_handler subprocess_handler
+!! @brief Provides the binding and wrapper functions to the processlib C library.
+!! @par
+!! <h2>Remarks</h2>
+!! The binding is obtained using the `iso_c_binding` intrinsic module. 
+!! If the compiler does not provide such intrinsic module then the 
+!! compilation will fail. 
+!! @{
 module subprocess_handler
     use, intrinsic :: iso_c_binding
 

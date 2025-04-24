@@ -209,7 +209,7 @@ The third example demonstrate how functions can be passed to the process constru
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>The constructed process object.</dd></dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00073">73</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00081">81</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this module was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -264,7 +264,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The exit code of the process, or 0 if exited successfully, or 383 (0x017F) if still running.</dd></dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00110">110</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00118">118</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -293,7 +293,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The elapsed time in milliseconds.</dd></dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00112">112</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00120">120</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -327,7 +327,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00114">114</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00122">122</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -355,12 +355,12 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00138">138</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00146">146</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a69c9f6c23c31d50029e15e64452a5e1a" name="a69c9f6c23c31d50029e15e64452a5e1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69c9f6c23c31d50029e15e64452a5e1a">&#9670;&#160;</a></span>process_run_with_arg1()</h2>
+<a id="a8ae377e7cc9d3cf3121bb5bcaa54cbc4" name="a8ae377e7cc9d3cf3121bb5bcaa54cbc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ae377e7cc9d3cf3121bb5bcaa54cbc4">&#9670;&#160;</a></span>process_run_with_arg1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -373,7 +373,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -382,18 +387,19 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00096">96</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00104">104</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a31a41010acab3891c7f19a0f93982e64" name="a31a41010acab3891c7f19a0f93982e64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31a41010acab3891c7f19a0f93982e64">&#9670;&#160;</a></span>process_run_with_arg2()</h2>
+<a id="a1b2c613c0884f34aa1e6563c91645299" name="a1b2c613c0884f34aa1e6563c91645299"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b2c613c0884f34aa1e6563c91645299">&#9670;&#160;</a></span>process_run_with_arg2()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,7 +417,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -421,18 +432,19 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00097">97</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00105">105</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ac6e7742669ba21c6a1923cb944940027" name="ac6e7742669ba21c6a1923cb944940027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6e7742669ba21c6a1923cb944940027">&#9670;&#160;</a></span>process_run_with_arg3()</h2>
+<a id="ac9fe5949101bea57bbfa8c5e02be5383" name="ac9fe5949101bea57bbfa8c5e02be5383"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9fe5949101bea57bbfa8c5e02be5383">&#9670;&#160;</a></span>process_run_with_arg3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -455,7 +467,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -466,18 +483,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00098">98</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00106">106</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ab251e5a077301e8a5a3feeeab8eabad5" name="ab251e5a077301e8a5a3feeeab8eabad5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab251e5a077301e8a5a3feeeab8eabad5">&#9670;&#160;</a></span>process_run_with_arg4()</h2>
+<a id="a8fb97a36b7afb0f7e9a26739b657cc60" name="a8fb97a36b7afb0f7e9a26739b657cc60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fb97a36b7afb0f7e9a26739b657cc60">&#9670;&#160;</a></span>process_run_with_arg4()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -505,7 +523,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -517,18 +540,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00099">99</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00107">107</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a4ea01a6d4674eb217cbed9717abe628b" name="a4ea01a6d4674eb217cbed9717abe628b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ea01a6d4674eb217cbed9717abe628b">&#9670;&#160;</a></span>process_run_with_arg5()</h2>
+<a id="a658049e15bdf121bf8c77360903763ce" name="a658049e15bdf121bf8c77360903763ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658049e15bdf121bf8c77360903763ce">&#9670;&#160;</a></span>process_run_with_arg5()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -561,7 +585,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -574,18 +603,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00100">100</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00108">108</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a014b9e6a24ae2635b9b5b92e0bb3fa91" name="a014b9e6a24ae2635b9b5b92e0bb3fa91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a014b9e6a24ae2635b9b5b92e0bb3fa91">&#9670;&#160;</a></span>process_run_with_args()</h2>
+<a id="aee7a25335ee4e92b717eccae9533c91a" name="aee7a25335ee4e92b717eccae9533c91a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee7a25335ee4e92b717eccae9533c91a">&#9670;&#160;</a></span>process_run_with_args()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -598,7 +628,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -607,7 +642,8 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -618,12 +654,12 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00101">101</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00109">109</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a99322cb527fb3280288666d8f4ba4a09" name="a99322cb527fb3280288666d8f4ba4a09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99322cb527fb3280288666d8f4ba4a09">&#9670;&#160;</a></span>process_runasync_default()</h2>
+<a id="afcc6e962a68a1daa2b844f52f4259e7c" name="afcc6e962a68a1daa2b844f52f4259e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc6e962a68a1daa2b844f52f4259e7c">&#9670;&#160;</a></span>process_runasync_default()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -631,8 +667,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">procedure, pass(this) process_runasync_default </td>
           <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span></td><td>)</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -640,7 +680,8 @@ Variables</h2></td></tr>
 <p>Runs a process asynchronously with no arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -651,12 +692,12 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00102">102</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00110">110</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a488db472545c60f72929e121b1882c1a" name="a488db472545c60f72929e121b1882c1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a488db472545c60f72929e121b1882c1a">&#9670;&#160;</a></span>process_runasync_with_arg1()</h2>
+<a id="a091eca4f3e46c567d8b274e74864ad2d" name="a091eca4f3e46c567d8b274e74864ad2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a091eca4f3e46c567d8b274e74864ad2d">&#9670;&#160;</a></span>process_runasync_with_arg1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -669,7 +710,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -678,18 +724,19 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00103">103</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00111">111</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a72851c85a0d17cf54013738be7c94832" name="a72851c85a0d17cf54013738be7c94832"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72851c85a0d17cf54013738be7c94832">&#9670;&#160;</a></span>process_runasync_with_arg2()</h2>
+<a id="ad0232d5117c8179b75c2b8c4f06170c5" name="ad0232d5117c8179b75c2b8c4f06170c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0232d5117c8179b75c2b8c4f06170c5">&#9670;&#160;</a></span>process_runasync_with_arg2()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -707,7 +754,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -717,18 +769,19 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00104">104</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00112">112</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a5336fc9d9d34a374492d63af882ea9f4" name="a5336fc9d9d34a374492d63af882ea9f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5336fc9d9d34a374492d63af882ea9f4">&#9670;&#160;</a></span>process_runasync_with_arg3()</h2>
+<a id="ad3e4908d0118bb0b16f171e80714f510" name="ad3e4908d0118bb0b16f171e80714f510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3e4908d0118bb0b16f171e80714f510">&#9670;&#160;</a></span>process_runasync_with_arg3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -751,7 +804,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -762,18 +820,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00105">105</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00113">113</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ae20df8c1e02c763c22a2113d5581cb1c" name="ae20df8c1e02c763c22a2113d5581cb1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae20df8c1e02c763c22a2113d5581cb1c">&#9670;&#160;</a></span>process_runasync_with_arg4()</h2>
+<a id="aa420084e56c688ccf4684a187a5490ca" name="aa420084e56c688ccf4684a187a5490ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa420084e56c688ccf4684a187a5490ca">&#9670;&#160;</a></span>process_runasync_with_arg4()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -801,7 +860,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -813,18 +877,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00106">106</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00114">114</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ab423b07d99004cdb452ad7b7203b76ab" name="ab423b07d99004cdb452ad7b7203b76ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab423b07d99004cdb452ad7b7203b76ab">&#9670;&#160;</a></span>process_runasync_with_arg5()</h2>
+<a id="a3f02d48bc7fd7c697923b6361661117d" name="a3f02d48bc7fd7c697923b6361661117d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f02d48bc7fd7c697923b6361661117d">&#9670;&#160;</a></span>process_runasync_with_arg5()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -857,7 +922,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -870,18 +940,19 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00107">107</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00115">115</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a47acb06bf9a159f761851b81d333595a" name="a47acb06bf9a159f761851b81d333595a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47acb06bf9a159f761851b81d333595a">&#9670;&#160;</a></span>process_runasync_with_args()</h2>
+<a id="aeb82834beaeee370d4c8226611028271" name="aeb82834beaeee370d4c8226611028271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb82834beaeee370d4c8226611028271">&#9670;&#160;</a></span>process_runasync_with_args()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -894,7 +965,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -903,13 +979,14 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00108">108</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -942,7 +1019,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00134">134</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00142">142</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -975,509 +1052,412 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00140">140</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="afbef0eeb47567dbf9a0a8b6f31380045" name="afbef0eeb47567dbf9a0a8b6f31380045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbef0eeb47567dbf9a0a8b6f31380045">&#9670;&#160;</a></span>run() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a5eea4c2cdf23ba187b39693a987001ea" name="a5eea4c2cdf23ba187b39693a987001ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5eea4c2cdf23ba187b39693a987001ea">&#9670;&#160;</a></span>run() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a5710a831f91ac995d04c4c932494d9dc" name="a5710a831f91ac995d04c4c932494d9dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5710a831f91ac995d04c4c932494d9dc">&#9670;&#160;</a></span>run() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="aec6fc152e950ad6e647394d8356870fb" name="aec6fc152e950ad6e647394d8356870fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec6fc152e950ad6e647394d8356870fb">&#9670;&#160;</a></span>run() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a468edf252c3263bde643635b5d9c6496" name="a468edf252c3263bde643635b5d9c6496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a468edf252c3263bde643635b5d9c6496">&#9670;&#160;</a></span>run() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="ae7914cc7d60ad2bd8868dee394a2c60d" name="ae7914cc7d60ad2bd8868dee394a2c60d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7914cc7d60ad2bd8868dee394a2c60d">&#9670;&#160;</a></span>run() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a1a71134615f39e793f3631de506887f7" name="a1a71134615f39e793f3631de506887f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a71134615f39e793f3631de506887f7">&#9670;&#160;</a></span>run() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="ab1003e22f1c25bf7597d50006dc3933d" name="ab1003e22f1c25bf7597d50006dc3933d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1003e22f1c25bf7597d50006dc3933d">&#9670;&#160;</a></span>runasync() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
 <p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a78f40e97f2bed80cc3eeb360479dd058" name="a78f40e97f2bed80cc3eeb360479dd058"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78f40e97f2bed80cc3eeb360479dd058">&#9670;&#160;</a></span>run() <span class="overload">[1/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a976361ff8e5ed1cef979b9c2ccced6d3" name="a976361ff8e5ed1cef979b9c2ccced6d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a976361ff8e5ed1cef979b9c2ccced6d3">&#9670;&#160;</a></span>run() <span class="overload">[2/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a14cc0fdda765a1d45817647f2f543dae" name="a14cc0fdda765a1d45817647f2f543dae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14cc0fdda765a1d45817647f2f543dae">&#9670;&#160;</a></span>run() <span class="overload">[3/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a36c50486fe24f0bf7d742f0b9fcec245" name="a36c50486fe24f0bf7d742f0b9fcec245"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36c50486fe24f0bf7d742f0b9fcec245">&#9670;&#160;</a></span>run() <span class="overload">[4/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a0abd90afc533dd0347cadbb37b9bdd97" name="a0abd90afc533dd0347cadbb37b9bdd97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0abd90afc533dd0347cadbb37b9bdd97">&#9670;&#160;</a></span>run() <span class="overload">[5/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="ad8eef71963ac2f9d3b8fb90f30555ae0" name="ad8eef71963ac2f9d3b8fb90f30555ae0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8eef71963ac2f9d3b8fb90f30555ae0">&#9670;&#160;</a></span>run() <span class="overload">[6/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="afacd02b7eb137ed8cc7c7a308317419b" name="afacd02b7eb137ed8cc7c7a308317419b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afacd02b7eb137ed8cc7c7a308317419b">&#9670;&#160;</a></span>run() <span class="overload">[7/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1run.html">run</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="afec903e32d799616b36ab273a1d005e6" name="afec903e32d799616b36ab273a1d005e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afec903e32d799616b36ab273a1d005e6">&#9670;&#160;</a></span>runasync() <span class="overload">[1/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a745dcb0d0a832972b61d6e4ab16482a5" name="a745dcb0d0a832972b61d6e4ab16482a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a745dcb0d0a832972b61d6e4ab16482a5">&#9670;&#160;</a></span>runasync() <span class="overload">[2/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="adced174b7ba6866c785ff867aa5ec7bb" name="adced174b7ba6866c785ff867aa5ec7bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adced174b7ba6866c785ff867aa5ec7bb">&#9670;&#160;</a></span>runasync() <span class="overload">[3/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a424ed3833c65b608d16d2afdea6f8183" name="a424ed3833c65b608d16d2afdea6f8183"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a424ed3833c65b608d16d2afdea6f8183">&#9670;&#160;</a></span>runasync() <span class="overload">[4/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="a56afd03885cd52ef97f2ea5191921534" name="a56afd03885cd52ef97f2ea5191921534"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56afd03885cd52ef97f2ea5191921534">&#9670;&#160;</a></span>runasync() <span class="overload">[5/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Remarks</b> </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
-
-</div>
-</div>
-<a id="ae56fc4a654a10d6d08a13cefd145409b" name="ae56fc4a654a10d6d08a13cefd145409b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae56fc4a654a10d6d08a13cefd145409b">&#9670;&#160;</a></span>runasync() <span class="overload">[6/7]</span></h2>
+<a id="a7d85acf9b14df025cc343f1ef6ac7dcf" name="a7d85acf9b14df025cc343f1ef6ac7dcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d85acf9b14df025cc343f1ef6ac7dcf">&#9670;&#160;</a></span>runasync() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1510,7 +1490,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1523,18 +1503,18 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ae1d0387a52e262b2e8972d5ebd302311" name="ae1d0387a52e262b2e8972d5ebd302311"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1d0387a52e262b2e8972d5ebd302311">&#9670;&#160;</a></span>runasync() <span class="overload">[7/7]</span></h2>
+<a id="ace7c1458069946e3f573f0f0284bf15c" name="ace7c1458069946e3f573f0f0284bf15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace7c1458069946e3f573f0f0284bf15c">&#9670;&#160;</a></span>runasync() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1547,7 +1527,22 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1556,13 +1551,177 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a06496d0cd902873813984b21bcd39e8b" name="a06496d0cd902873813984b21bcd39e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06496d0cd902873813984b21bcd39e8b">&#9670;&#160;</a></span>runasync() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a8a3eb51fbcad884e5b654cd0f322bb5a" name="a8a3eb51fbcad884e5b654cd0f322bb5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a3eb51fbcad884e5b654cd0f322bb5a">&#9670;&#160;</a></span>runasync() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="a6f204a469cbe64451417e58ed2debcbb" name="a6f204a469cbe64451417e58ed2debcbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f204a469cbe64451417e58ed2debcbb">&#9670;&#160;</a></span>runasync() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+
+</div>
+</div>
+<a id="af3a291c12817059fa6e37fe7f9f5dfe2" name="af3a291c12817059fa6e37fe7f9f5dfe2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3a291c12817059fa6e37fe7f9f5dfe2">&#9670;&#160;</a></span>runasync() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">generic, public <a class="el" href="interfacesubprocess_1_1runasync.html">runasync</a> </td>
+          <td>(</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1590,7 +1749,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00136">136</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00144">144</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1627,7 +1786,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00140">140</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00148">148</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

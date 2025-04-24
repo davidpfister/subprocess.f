@@ -137,13 +137,13 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00163">163</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00171">171</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
 <h2 class="groupheader">Methods</h2>
-<a id="aaa02561b808bf0b42a668c7a87bf4132" name="aaa02561b808bf0b42a668c7a87bf4132"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa02561b808bf0b42a668c7a87bf4132">&#9670;&#160;</a></span>process_runasync_default()</h2>
+<a id="a59dac287f4d91c97c1894eb7902a8363" name="a59dac287f4d91c97c1894eb7902a8363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59dac287f4d91c97c1894eb7902a8363">&#9670;&#160;</a></span>process_runasync_default()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,8 +151,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="memname">subroutine process_runasync_default </td>
           <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span></td><td>)</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,7 +164,8 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
 <p>Runs a process asynchronously with no arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -171,12 +176,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00390">390</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00417">417</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a1451982a8679f518ea72166480e182fe" name="a1451982a8679f518ea72166480e182fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1451982a8679f518ea72166480e182fe">&#9670;&#160;</a></span>process_runasync_with_arg1()</h2>
+<a id="a9cd5c38b56a0572a26588f88eacabaf3" name="a9cd5c38b56a0572a26588f88eacabaf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd5c38b56a0572a26588f88eacabaf3">&#9670;&#160;</a></span>process_runasync_with_arg1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,7 +194,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -198,18 +208,19 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00405">405</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00434">434</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a7dd493f4eca0ad5a70294337934f21df" name="a7dd493f4eca0ad5a70294337934f21df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dd493f4eca0ad5a70294337934f21df">&#9670;&#160;</a></span>process_runasync_with_arg2()</h2>
+<a id="a774bf71eaac5c4df11c1d8aff96bd3f0" name="a774bf71eaac5c4df11c1d8aff96bd3f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774bf71eaac5c4df11c1d8aff96bd3f0">&#9670;&#160;</a></span>process_runasync_with_arg2()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,7 +238,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -237,18 +253,19 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00422">422</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00453">453</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a1a7f000589c6ee5b29f2f9106dc5eb48" name="a1a7f000589c6ee5b29f2f9106dc5eb48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a7f000589c6ee5b29f2f9106dc5eb48">&#9670;&#160;</a></span>process_runasync_with_arg3()</h2>
+<a id="a6bfed7cedd2c1b4e801d79af4f55ccfa" name="a6bfed7cedd2c1b4e801d79af4f55ccfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bfed7cedd2c1b4e801d79af4f55ccfa">&#9670;&#160;</a></span>process_runasync_with_arg3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +288,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -282,18 +304,19 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00442">442</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00475">475</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a7d557ba4b94a32b80a1e63be70601337" name="a7d557ba4b94a32b80a1e63be70601337"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d557ba4b94a32b80a1e63be70601337">&#9670;&#160;</a></span>process_runasync_with_arg4()</h2>
+<a id="ad049cd41921d33c16f627c2f9618dee8" name="ad049cd41921d33c16f627c2f9618dee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad049cd41921d33c16f627c2f9618dee8">&#9670;&#160;</a></span>process_runasync_with_arg4()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +344,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -333,18 +361,19 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00465">465</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00500">500</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="ae0d0c1d6609f0b787e21ea8e67844e5b" name="ae0d0c1d6609f0b787e21ea8e67844e5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0d0c1d6609f0b787e21ea8e67844e5b">&#9670;&#160;</a></span>process_runasync_with_arg5()</h2>
+<a id="a592496114eaf4a585b26b9efe683bfb3" name="a592496114eaf4a585b26b9efe683bfb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a592496114eaf4a585b26b9efe683bfb3">&#9670;&#160;</a></span>process_runasync_with_arg5()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,7 +406,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -390,18 +424,19 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00491">491</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00528">528</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="af18d0af319089b73702d3e704d7d53fa" name="af18d0af319089b73702d3e704d7d53fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af18d0af319089b73702d3e704d7d53fa">&#9670;&#160;</a></span>process_runasync_with_args()</h2>
+<a id="a98d81867fc23f846d94238c2ec2b4102" name="a98d81867fc23f846d94238c2ec2b4102"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98d81867fc23f846d94238c2ec2b4102">&#9670;&#160;</a></span>process_runasync_with_args()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +449,12 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -423,13 +463,14 @@ $(function(){initNavTree('interfacesubprocess_1_1runasync.html',''); initResizab
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00515">515</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00554">554</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

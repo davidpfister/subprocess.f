@@ -132,56 +132,16 @@ $(function(){initNavTree('interfacesubprocess__handler_1_1internal__runasync.htm
 <div class="header">
   <div class="summary">
 <a href="interfacesubprocess__handler_1_1internal__runasync-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">internal_runasync Interface Reference</div></div>
+  <div class="headertitle"><div class="title">internal_runasync Interface Reference<div class="ingroups"><a class="el" href="group__group__subprocess__handler.html">subprocess_handler</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
 <div class="textblock"><p>Interface for asynchronously running a subprocess. This generic interface provides a single procedure for executing a command asynchronously, allowing it to run in the background without waiting for completion. </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess__handler_8f90_source.html#l00172">172</a> of file <a class="el" href="subprocess__handler_8f90_source.html">subprocess_handler.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess__handler_8f90_source.html#l00193">193</a> of file <a class="el" href="subprocess__handler_8f90_source.html">subprocess_handler.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess__handler_8f90_source.html">subprocess_handler.f90</a></li>
 </ul>
-<h2 class="groupheader">Methods</h2>
-<a id="a66db5d33065cab73b462a68a1d304908" name="a66db5d33065cab73b462a68a1d304908"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66db5d33065cab73b462a68a1d304908">&#9670;&#160;</a></span>internal_runasync_default()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer function internal_runasync_default </td>
-          <td>(</td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>cmd</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__handler_1_1handle__pointer.html">handle_pointer</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>fp</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">integer(c_int), intent(out)</td>          <td class="paramname"><span class="paramname"><em>excode</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Executes a command asynchronously without waiting for completion. This function creates a subprocess with asynchronous capabilities and returns immediately, allowing the command to run in the background. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>The command line string to execute (e.g., "notepad.exe"). </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">fp</td><td>The handle pointer to manage the subprocess. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">excode</td><td>The initial exit code (set to -1 if creation fails). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>pid The process ID of the created subprocess, or a negative value on error. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="subprocess__handler_8f90_source.html#l00209">209</a> of file <a class="el" href="subprocess__handler_8f90_source.html">subprocess_handler.f90</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.1-->

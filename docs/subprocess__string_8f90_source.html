@@ -168,7 +168,7 @@ $(function(){initNavTree('subprocess__string_8f90_source.html',''); initResizabl
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">class</span>(<a class="code hl_struct" href="structsubprocess__string_1_1string.html">string</a>), <span class="keywordtype">intent(in)</span> :: str</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">character(:)</span>, <span class="keywordtype">allocatable</span> :: res</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        res = <a class="code hl_interface" href="interfacesubprocess__string_1_1trim.html">trim</a>(str%chars)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        res = <a class="code hl_interface" href="interfacesubprocess__string_1_1trim.html">trim</a>(adjustl(str%chars))</div>
 </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">end function</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">end module</span></div>

@@ -10,8 +10,9 @@ var searchData=
   ['a_20script_20with_20arguments_7',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]],
   ['about_20the_20project_8',['About the Project',['../index.html#autotoc_md25',1,'']]],
   ['advanced_20example_3a_20running_20a_20script_20with_20arguments_9',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]],
-  ['and_20waiting_20for_20it_20to_20finish_10',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md14',1,'']]],
-  ['arguments_11',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]],
-  ['assignment_12',['assignment',['../structsubprocess__string_1_1string.html#a24060e81d7c996a564c100ed11fd6b5d',1,'subprocess_string::string']]],
-  ['asynchronously_13',['Reading Asynchronously',['../cheatsheet.html#autotoc_md7',1,'']]]
+  ['alive_10',['alive',['../group__group__subprocess__handler.html#ga5b2ac60ab14cfe0a0073249dcfab9186',1,'subprocess_handler::subprocess_s']]],
+  ['and_20waiting_20for_20it_20to_20finish_11',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md14',1,'']]],
+  ['arguments_12',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]],
+  ['assignment_13',['assignment',['../structsubprocess__string_1_1string.html#a24060e81d7c996a564c100ed11fd6b5d',1,'subprocess_string::string']]],
+  ['asynchronously_14',['Reading Asynchronously',['../cheatsheet.html#autotoc_md7',1,'']]]
 ];

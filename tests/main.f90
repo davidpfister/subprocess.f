@@ -67,7 +67,7 @@ end module
     
 #include <assertion.inc>
 TESTPROGRAM(main)
-#ifdef COMPILE_EXAMPLES
+
     TEST(test_gfortran)
         use subprocess, only: process, run, read_stderr, read_stdout
         use test_subs
@@ -100,13 +100,26 @@ TESTPROGRAM(main)
         
             block
                 type(process) :: pg
-                pg = process('gfortran')
-                call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -I'//incpath, '-static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive')
-                code = pg%exit_code()
-                EXPECT_TRUE(code == 0)
-                if (code /= 0) then 
-                    call read_stderr(pg, errmsg)
-                    print *, errmsg
+                logical :: exists
+#ifdef COMPILE_EXAMPLES
+                exists = .true.
+#else
+                inquire(file=dirpath//file//'.exe', exist=exists)
+#endif
+                if (.not. exists) then
+                    pg = process('gfortran')
+                    !the static options are necessary to test the program without passing the 
+                    !parent environmental variables (especially the PATH variable)
+                    call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -I'//incpath, & 
+                             '-static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive')
+                    code = pg%exit_code()
+                    EXPECT_TRUE(code == 0)
+                    if (code /= 0) then 
+                        call read_stderr(pg, errmsg)
+                        print *, errmsg
+                    end if
+                else
+                    EXPECT_TRUE(exists)
                 end if
             end block
             
@@ -115,7 +128,6 @@ TESTPROGRAM(main)
             if (idx >= len(files) - len(extension)) exit
         end do
     END_TEST
-#endif
 
     TEST(test_hello_world)
         use subprocess
@@ -425,6 +437,22 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '42')
         
         EXPECT_TRUE(p%exit_code() == 0)
+    END_TEST
+
+    TEST(process_fail_divzero)
+        use subprocess
+        use test_subs
+
+        character(*), parameter :: commandline = 'process_fail_divzero'
+        type(process) :: p
+
+        p = process(dirpath//commandline)
+        call run(p)
+
+        ! On AArch64 systems divide by zero does not cause a failure.
+#if !((defined(__arm64__) && defined(__APPLE__)) || defined(__aarch64__))
+        EXPECT_NE(p%exit_code(), 0)
+#endif
     END_TEST
 
 END_TESTPROGRAM

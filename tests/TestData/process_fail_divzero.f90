@@ -6,7 +6,7 @@ console(process_fail_divzero)
         p = 42
         q = return_0_non_optimizable()
         r = p / q ! this is an integer division by zero
-        print *, "r=", r
+        stop r
     endmain
 
     function return_0_non_optimizable() result(res)

@@ -137,13 +137,13 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00153">153</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00161">161</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
 <h2 class="groupheader">Methods</h2>
-<a id="acbf8a38edfc803750be63cbaeaa5b09a" name="acbf8a38edfc803750be63cbaeaa5b09a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbf8a38edfc803750be63cbaeaa5b09a">&#9670;&#160;</a></span>process_run_default()</h2>
+<a id="a95c82fa492d35ca7b4f85fa183953e1e" name="a95c82fa492d35ca7b4f85fa183953e1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95c82fa492d35ca7b4f85fa183953e1e">&#9670;&#160;</a></span>process_run_default()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,8 +151,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="memname">subroutine process_run_default </td>
           <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span></td><td>)</td>
+          <td class="paramtype">class(<a class="el" href="structsubprocess_1_1process.html">process</a>), intent(inout)</td>          <td class="paramname"><span class="paramname"><em>this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,7 +164,8 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
 <p>Runs a process synchronously with no arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -171,12 +176,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00228">228</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00237">237</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="af29ca3661d837bbf449ddd66ef2efb69" name="af29ca3661d837bbf449ddd66ef2efb69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af29ca3661d837bbf449ddd66ef2efb69">&#9670;&#160;</a></span>process_run_with_arg1()</h2>
+<a id="af80cf62818a334a67c3848ff7987f232" name="af80cf62818a334a67c3848ff7987f232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80cf62818a334a67c3848ff7987f232">&#9670;&#160;</a></span>process_run_with_arg1()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,7 +194,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -198,18 +208,19 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00243">243</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00254">254</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a2f98e8f5aa7e92723c61c8152f8bacee" name="a2f98e8f5aa7e92723c61c8152f8bacee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f98e8f5aa7e92723c61c8152f8bacee">&#9670;&#160;</a></span>process_run_with_arg2()</h2>
+<a id="a9dff8d84c01be74a2a1f6a3179d36b6e" name="a9dff8d84c01be74a2a1f6a3179d36b6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dff8d84c01be74a2a1f6a3179d36b6e">&#9670;&#160;</a></span>process_run_with_arg2()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,7 +238,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -237,18 +253,19 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00260">260</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00273">273</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a8daed2cfa3a63fc16c40a7fe23b66b58" name="a8daed2cfa3a63fc16c40a7fe23b66b58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8daed2cfa3a63fc16c40a7fe23b66b58">&#9670;&#160;</a></span>process_run_with_arg3()</h2>
+<a id="aca2ac23a57140ad173ddb0ca10b9748e" name="aca2ac23a57140ad173ddb0ca10b9748e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca2ac23a57140ad173ddb0ca10b9748e">&#9670;&#160;</a></span>process_run_with_arg3()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +288,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -282,18 +304,19 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00280">280</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00295">295</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="af1e64dd73cb0cddc4fba2d86dfee85b9" name="af1e64dd73cb0cddc4fba2d86dfee85b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1e64dd73cb0cddc4fba2d86dfee85b9">&#9670;&#160;</a></span>process_run_with_arg4()</h2>
+<a id="a82850e9201bfa5b83642eaa265277b0e" name="a82850e9201bfa5b83642eaa265277b0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82850e9201bfa5b83642eaa265277b0e">&#9670;&#160;</a></span>process_run_with_arg4()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +344,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg4</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -333,18 +361,19 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00303">303</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00320">320</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a7866d138ebcc8bfc75c7103c0e5cfff7" name="a7866d138ebcc8bfc75c7103c0e5cfff7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7866d138ebcc8bfc75c7103c0e5cfff7">&#9670;&#160;</a></span>process_run_with_arg5()</h2>
+<a id="acec1fece3f7118a4ac30c734262d192b" name="acec1fece3f7118a4ac30c734262d192b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acec1fece3f7118a4ac30c734262d192b">&#9670;&#160;</a></span>process_run_with_arg5()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,7 +406,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>&#160;)</td>
+          <td class="paramtype">character(*), intent(in)</td>          <td class="paramname"><span class="paramname"><em>arg5</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -390,18 +424,19 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00329">329</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00348">348</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
-<a id="a3abc8fb2fcf9de1cc3c0fabe6df543b0" name="a3abc8fb2fcf9de1cc3c0fabe6df543b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3abc8fb2fcf9de1cc3c0fabe6df543b0">&#9670;&#160;</a></span>process_run_with_args()</h2>
+<a id="a8129dc79b834f0834a95bb893cb09838" name="a8129dc79b834f0834a95bb893cb09838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8129dc79b834f0834a95bb893cb09838">&#9670;&#160;</a></span>process_run_with_args()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,7 +449,12 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype">type(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), dimension(:), intent(in)</td>          <td class="paramname"><span class="paramname"><em>args</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -423,7 +463,8 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
@@ -434,7 +475,7 @@ $(function(){initNavTree('interfacesubprocess_1_1run.html',''); initResizable(tr
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00353">353</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00374">374</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

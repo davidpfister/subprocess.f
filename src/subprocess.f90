@@ -231,6 +231,7 @@ contains
     !> @brief Runs a process synchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_default(this, option)
@@ -247,6 +248,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg1(this, arg1, option)
@@ -265,6 +267,7 @@ contains
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg2(this, arg1, arg2, option)
@@ -286,6 +289,7 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg3(this, arg1, arg2, arg3, option)
@@ -310,6 +314,7 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4, option)
@@ -337,6 +342,7 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
@@ -362,6 +368,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_args(this, args, option)
@@ -404,6 +411,7 @@ contains
     !> @brief Runs a process asynchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_default(this, option)
@@ -420,6 +428,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink 
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg1(this, arg1, option)
@@ -438,6 +447,7 @@ contains
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg2(this, arg1, arg2, option)
@@ -459,6 +469,7 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg3(this, arg1, arg2, arg3, option)
@@ -483,6 +494,7 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg4(this, arg1, arg2, arg3, arg4, option)
@@ -510,6 +522,7 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
@@ -535,6 +548,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_args(this, args, option)

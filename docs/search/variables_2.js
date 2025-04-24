@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['is_5frunning_0',['is_running',['../structsubprocess_1_1process.html#a97908e3dc4d8bfd24b1fe1ae10f3db2d',1,'subprocess::process']]]
+  ['child_0',['child',['../group__group__subprocess__handler.html#ga7d4c018a7e22cdabe30be238bccec5a9',1,'subprocess_handler::subprocess_s']]]
 ];
