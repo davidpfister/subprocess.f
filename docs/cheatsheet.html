@@ -136,15 +136,15 @@ $(function(){initNavTree('cheatsheet.html',''); initResizable(true); });
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2dev_2_documents_2_git_hub_2sandbox_2subprocess_8f_2_8dox_2articles_2_cheatsheet"></a></p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Launching a Process</h1>
-<p>To launch a process you call <code>subprocess_create</code> like so:</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *command_line[] = {<span class="stringliteral">&quot;echo&quot;</span>, <span class="stringliteral">&quot;\&quot;Hello, world!\&quot;&quot;</span>, NULL};</div>
-<div class="line"><span class="keyword">struct </span>subprocess_s subprocess;</div>
-<div class="line"><span class="keywordtype">int</span> result = subprocess_create(command_line, 0, &amp;subprocess);</div>
-<div class="line"><span class="keywordflow">if</span> (0 != result) {</div>
-<div class="line">  <span class="comment">// an error occurred!</span></div>
-<div class="line">}</div>
-</div><!-- fragment --><p>You specify an array of string for the command line - terminating the array with a <code>NULL</code> element.</p>
-<p>If the process is created successfully then 0 is returned from <code>subprocess_create</code>.</p>
+<p>To launch a process you call <code>run</code> like so:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line">p = process(<span class="stringliteral">&#39;cmd&#39;</span>)</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">call run(p, &#39;echo Hello World!&#39;)</span></div>
+<div class="line"><span class="keywordflow">if</span> (p%exit_code() /= 0) <span class="keywordflow">then</span></div>
+<div class="line">  <span class="comment">!! an error occurred!</span></div>
+<div class="line"><span class="keyword">end </span>if</div>
+</div><!-- fragment --><p>If the process is created successfully then 0 is returned from <code>exit_code()</code>.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Writing to the Standard Input of a Process</h1>
 <p>To write to the standard input of a child process you call <code>subprocess_stdin</code> to get the FILE handle to write with, passing a previously created process, like so:</p>
@@ -225,7 +225,7 @@ Spawning a Process With No Window</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="articles.html">Examples</a></li>
+    <li class="navelem"><a class="el" href="articles.html">Documentation</a></li>
     <li class="footer">
     &copy; Copyright 2017 - 2024
     <a href="LICENSE.txt" target="_blank">

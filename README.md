@@ -67,14 +67,10 @@ Unit test rely on the the files [`assertion.inc`](https://github.com/davidpfiste
 
 
 ```fortran
-use subprocess, only: process
-
 type(process) :: p
 
 p = process('gfortran')
 call p%run('hello_world.f90 -o hello_world')
-!
-
 ```
 
 ### Installation

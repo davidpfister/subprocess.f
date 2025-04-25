@@ -1,5 +1,4 @@
-# Examples {#articles}
+# Articles {#articles}
 
 * @subpage intro
-* @subpage cheatsheet
 * @subpage manual

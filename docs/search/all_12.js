@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['no_20window_0',['Spawning a Process With No Window',['../cheatsheet.html#autotoc_md9',1,'']]]
+  ['of_20the_20tt_20process_20tt_20type_0',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]],
+  ['output_1',['3. Capturing Output',['../manual.html#autotoc_md6',1,'']]]
 ];

@@ -1,20 +1,16 @@
 var searchData=
 [
-  ['script_20with_20arguments_0',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md21',1,'']]],
-  ['spawning_20a_20process_20with_20no_20window_1',['Spawning a Process With No Window',['../cheatsheet.html#autotoc_md9',1,'']]],
-  ['standard_20error_20of_20a_20process_2',['Reading from the Standard Error of a Process',['../cheatsheet.html#autotoc_md3',1,'']]],
-  ['standard_20input_20of_20a_20process_3',['Writing to the Standard Input of a Process',['../cheatsheet.html#autotoc_md1',1,'']]],
-  ['standard_20output_20of_20a_20process_4',['Reading from the Standard Output of a Process',['../cheatsheet.html#autotoc_md2',1,'']]],
-  ['started_5',['Started',['../manual.html#autotoc_md11',1,'Getting Started'],['../index.html#autotoc_md26',1,'Getting Started']]],
-  ['stderr_5ffile_6',['stderr_file',['../group__group__subprocess__handler.html#gada1acccae48f54c5d8287197b407a360',1,'subprocess_handler::subprocess_s']]],
-  ['stdin_5ffile_7',['stdin_file',['../group__group__subprocess__handler.html#ga3c134e69df34d880124f25cf44733619',1,'subprocess_handler::subprocess_s']]],
-  ['stdout_5ffile_8',['stdout_file',['../group__group__subprocess__handler.html#gad65e3f63e6c86627c721693d6f4b6c91',1,'subprocess_handler::subprocess_s']]],
-  ['stopping_20a_20command_20early_9',['4. Stopping a Command Early',['../manual.html#autotoc_md17',1,'']]],
-  ['string_10',['string',['../structsubprocess__string_1_1string.html',1,'subprocess_string']]],
-  ['string_5ftrim_11',['string_trim',['../interfacesubprocess__string_1_1trim.html#a766e037bf5dcaaeade9b526bb073c139',1,'subprocess_string::trim']]],
-  ['studio_202019_12',['Build with Visual Studio 2019',['../index.html#autotoc_md32',1,'']]],
-  ['style_13',['Style',['../index.html#autotoc_md34',1,'']]],
-  ['subprocess_14',['subprocess',['../group__group__subprocess.html',1,'']]],
-  ['subprocess_20f_15',['Subprocess.f',['../index.html',1,'']]],
-  ['subprocess_5fhandler_16',['subprocess_handler',['../group__group__subprocess__handler.html',1,'']]]
+  ['the_20background_0',['2. Running a Command in the Background',['../manual.html#autotoc_md5',1,'']]],
+  ['the_20code_1',['Get the code',['../index.html#autotoc_md20',1,'']]],
+  ['the_20module_2',['Tips for Using the Module',['../manual.html#autotoc_md10',1,'']]],
+  ['the_20project_3',['About the Project',['../index.html#autotoc_md15',1,'']]],
+  ['the_20tt_20process_20tt_20type_4',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]],
+  ['this_20module_5',['What You Can Do with This Module',['../manual.html#autotoc_md0',1,'']]],
+  ['tips_20for_20using_20the_20module_6',['Tips for Using the Module',['../manual.html#autotoc_md10',1,'']]],
+  ['to_20finish_7',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md4',1,'']]],
+  ['trim_8',['trim',['../interfacesubprocess__string_1_1trim.html',1,'subprocess_string']]],
+  ['troubleshooting_9',['Troubleshooting',['../manual.html#autotoc_md12',1,'']]],
+  ['tt_20process_20tt_20type_10',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]],
+  ['tt_20type_11',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]],
+  ['type_12',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]]
 ];

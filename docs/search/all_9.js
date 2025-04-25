@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['destroying_20a_20process_0',['Destroying a Process',['../cheatsheet.html#autotoc_md5',1,'']]],
-  ['do_20with_20this_20module_1',['What You Can Do with This Module',['../manual.html#autotoc_md10',1,'']]]
+  ['do_20with_20this_20module_0',['What You Can Do with This Module',['../manual.html#autotoc_md0',1,'']]],
+  ['documentation_1',['Documentation',['../articles.html',1,'']]]
 ];

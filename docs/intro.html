@@ -134,20 +134,19 @@ $(function(){initNavTree('intro.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__c_1_2_users_2dev_2_documents_2_git_hub_2sandbox_2subprocess_8f_2_8dox_2articles_2_intro"></a></p>
-<p>Hey, glad you stumbled across <code>subprocess.f</code>! This little Fortran gem is all about making your life easier when you want to kick off external programs or commands from inside your Fortran code. Think of it as your friendly sidekick that lets your Fortran app chat with the outside world—whether that’s running a quick shell command, firing up a script, or juggling a bunch of processes without breaking a sweat. You can find the whole thing over at <a href="https://github.com/davidpfister/subprocess.f">https://github.com/davidpfister/subprocess.f</a>, and we’re pumped to have you poking around!</p>
-<p>So, what’s the big deal with <code>subprocess.f</code>? Well, Fortran’s awesome for crunching numbers and doing heavy lifting in science or engineering, but sometimes you need to call out to other tools—like a Python script, a system utility, or whatever else you’ve got lying around. That’s where this library swoops in. It’s got a slick setup that lets you launch stuff, grab what it spits out, and keep tabs on it, all without getting bogged down in the nitty-gritty. Plus, it’s built to play nice whether you’re on Windows or a Linux/macOS box, so no worries about where you’re coding.</p>
+<p>Hey, glad you stumbled across <code>subprocess.f</code>! This little Fortran repo is all about making your life easier when you want to kick off external programs or commands from inside your Fortran code. It is designed to let you run a shell command, fire up a script, or juggle a bunch of processes without breaking a sweat. You can find the whole thing over at <a href="https://github.com/davidpfister/subprocess.f">https://github.com/davidpfister/subprocess.f</a>.</p>
+<p>So, what’s the big deal with <code>subprocess.f</code>? Well, Fortran’s awesome for crunching numbers and doing heavy lifting in science or engineering, but sometimes you need to call out to other tools—like a script, a system utility, or whatever else you’ve got lying around.</p>
 <p>Here’s the rundown of what you can do with it:</p><ul>
-<li><b>Run Stuff Your Way</b>: Use <code>run</code> to fire off a command and chill until it’s done, or go with <code>runasync</code> to let it hum along in the background while you keep coding.</li>
-<li><b>Grab the Output</b>: Snag whatever the command prints with <code>read_stdout</code> for the good stuff or <code>read_stderr</code> for the error messages. You can even send it some input with <code>stdin</code> if it’s that kind of program.</li>
+<li><b>Run Stuff Your Way</b>: Use <code>run</code> to fire off a command and chill until it’s done, or go with <code>runasync</code> to let it hum along in the background while you keep working.</li>
+<li><b>Grab the Output</b>: Snag whatever the command prints with <code>read_stdout</code> for the good stuff or <code>read_stderr</code> for the error messages.</li>
 <li><b>Boss the Process Around</b>: Check if it’s still going with <code>has_exited</code>, wait for it with <code>wait</code>, or shut it down early with <code>kill</code>. Oh, and if you’ve got a bunch of them, <code>waitall</code> has your back.</li>
 <li><b>Know What’s Up</b>: Peek at exit codes to see if it worked, or check how long it took with <code>exit_time</code>. Handy for figuring out if things went south or just took their sweet time.</li>
 </ul>
 <p>The library’s split into two parts to keep things tidy:</p><ul>
 <li><b><code>subprocess</code></b>: This is your go-to module. It’s got a <code>process</code> type that’s super easy to use—just tell it what to run and how, and you’re off to the races.</li>
-<li><b><code>subprocess_handler</code></b>: This is the behind-the-scenes magic. It’s the grunt work layer that talks to the system using some C tricks, so you don’t have to mess with the low-level stuff yourself.</li>
+<li><b><code>subprocess_handler</code></b>: This is the behind-the-scenes magic. It’s the layer that talks to the system using some C tricks, so you don’t have to mess with the low-level stuff yourself.</li>
 </ul>
-<p>Whether you’re a scientist hooking Fortran up to some fancy external tool, a coder throwing together a wild automation setup, or just someone curious about what Fortran can do beyond math, this library’s got something for you. It’s all about giving you the freedom to mix Fortran with whatever else you’re working with, no fuss required.</p>
-<p>We’ve poured some love into making this thing portable and flexible, so it’ll run pretty much anywhere—Windows, Linux, macOS, you name it. The code’s all hanging out on GitHub, and we’d love for you to dig in, try it out, and maybe even toss us some ideas or fixes if you’re feeling generous. This documentation’s packed with all the juicy details—API breakdowns, examples you can tweak, and tips to get you rolling. So, grab a coffee, scroll through, and let’s get some processes running together! </p>
+<p>The code’s all hanging out on GitHub, and we’d love for you to dig in, try it out, and maybe even toss us some ideas or fixes if you’re feeling generous. This documentation’s packed with all the juicy details—API breakdowns, examples you can tweak, and tips to get you rolling. So, grab a coffee, scroll through, and let’s get some processes running together! </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
@@ -155,7 +154,7 @@ $(function(){initNavTree('intro.html',''); initResizable(true); });
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="articles.html">Examples</a></li>
+    <li class="navelem"><a class="el" href="articles.html">Documentation</a></li>
     <li class="footer">
     &copy; Copyright 2017 - 2024
     <a href="LICENSE.txt" target="_blank">

@@ -60,7 +60,7 @@ program simple_run
     type(process) :: proc
 
     ! Create a process for the "dir" command
-    proc = process_new("dir")
+    proc = process("dir")
 
     ! Run it and wait
     call proc%run()
@@ -80,7 +80,7 @@ program run_with_args
     implicit none
     type(process) :: proc
 
-    proc = process_new("echo")
+    proc = process("echo")
     call proc%run("Hello, world!")
 
     print *, "Echo done!"
@@ -101,7 +101,7 @@ program async_run
     implicit none
     type(process) :: proc
 
-    proc = process_new("notepad.exe")
+    proc = process("notepad.exe")
     call proc%runasync()
 
     print *, "Notepad is running in the background!"
@@ -133,7 +133,7 @@ program capture_output
     type(process) :: proc
     character(:), allocatable :: output
 
-    proc = process_new("dir")
+    proc = process("dir")
     call proc%run()
 
     call proc%read_stdout(output)
@@ -155,7 +155,7 @@ program kill_process
     implicit none
     type(process) :: proc
 
-    proc = process_new("ping")
+    proc = process("ping")
     call proc%runasync("localhost")  ! Start pinging in the background
 
     print *, "Pinging started. Waiting 3 seconds..."
@@ -182,8 +182,8 @@ program wait_all
     implicit none
     type(process) :: procs(2)
 
-    procs(1) = process_new("echo")
-    procs(2) = process_new("echo")
+    procs(1) = process("echo")
+    procs(2) = process("echo")
 
     call procs(1)%runasync("First message")
     call procs(2)%runasync("Second message")
@@ -209,7 +209,7 @@ program check_results
     integer :: code
     real(8) :: time_taken
 
-    proc = process_new("echo")
+    proc = process("echo")
     call proc%run("Test")
 
     code = proc%exit_code()
@@ -243,10 +243,10 @@ program advanced_run
     character(:), allocatable :: output
 
     ! Set up the process and arguments
-    proc = process_new("python")
-    args(1)%chars = "myscript.py"
-    args(2)%chars = "--input"
-    args(3)%chars = "data.txt"
+    proc = process("python")
+    args(1) = "myscript.py"
+    args(2) = "--input"
+    args(3) = "data.txt"
 
     ! Run with an array of arguments
     call proc%run(args)
