@@ -130,46 +130,35 @@ $(function(){initNavTree('interfacesubprocess__string_1_1trim.html',''); initRes
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="interfacesubprocess__string_1_1trim-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">trim Interface Reference</div></div>
+  <div class="headertitle"><div class="title">trim Interface Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess__string.html">String</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00017">17</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
-</div><hr/>The documentation for this interface was generated from the following file:<ul>
-<li><a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a></li>
-</ul>
-<h2 class="groupheader">Methods</h2>
-<a id="a766e037bf5dcaaeade9b526bb073c139" name="a766e037bf5dcaaeade9b526bb073c139"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a766e037bf5dcaaeade9b526bb073c139">&#9670;&#160;</a></span>string_trim()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">character(:) function, allocatable string_trim </td>
-          <td>(</td>
-          <td class="paramtype">class(<a class="el" href="structsubprocess__string_1_1string.html">string</a>), intent(in)</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Trims whitespace from a string object. </p>
+<div class="textblock"><p>Trims whitespace from a string object. </p>
+<dl class="section user"><dt></dt><dd><h2>Methods</h2>
+</dd></dl>
+<h3>trim(type(string) str)</h3>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>The string object to trim. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>res The trimmed character string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>res The trimmed character string.</dd></dl>
+<h2>Examples </h2>
+<p>The following example illustrates a call to the <code>trim</code> interface. </p><div class="fragment"><div class="line"> <span class="keywordtype">character(:)</span>, <span class="keywordtype">allocatable</span> :: res</div>
+<div class="line"> <span class="keywordtype">type</span>(string) :: str</div>
+<div class="line"> str = <span class="stringliteral">&#39;Hello          &#39;</span></div>
+<div class="line"> res = trim(str)</div>
+<div class="line"> </div>
+<div class="line">print*, res</div>
+<div class="line">!should print <span class="stringliteral">&#39;Hello&#39;</span></div>
+</div><!-- fragment --> <h2>Remarks </h2>
 
-<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00036">36</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
-
-</div>
-</div>
+<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00067">67</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
+</div><hr/>The documentation for this interface was generated from the following file:<ul>
+<li><a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.1-->

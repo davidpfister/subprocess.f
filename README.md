@@ -12,7 +12,7 @@
   <h3 align="center">subprocess.f</h3>
 
   <p align="center">
-    A experimental library for forking a child process in Fortran
+    The subprocess library allows you to spawn new processes, redirect their input and output pipes and return the exit code.  
     <br />
     <a href="https://github.com/davidpfister/subprocess.f"><strong>Explore the project »</strong></a>
     <br />
@@ -31,9 +31,8 @@
   <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/logo.png?raw=true">
 </p>
 
-This project aims at providing some ideas to create child processes in Fortran. <br><br>
-It is quite experimental at the moment, but looks promising. <br>
-The development of this repo is link to the discussion on the Fortran discourse about the [Stdlib system interaction API](https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037)
+This project aims at providing an easy and comprehensive API to spawn child processes in Fortran. <br>
+The development of this repo is linked to the discussion on the Fortran discourse about the [Stdlib system interaction API](https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037)
 
 * [![fpm][fpm]][fpm-url]
 * [![ifort][ifort]][ifort-url]
@@ -65,12 +64,33 @@ Unit test rely on the the files [`assertion.inc`](https://github.com/davidpfiste
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+The easiest way to invoke a subprocess is to call the `run` subroutine. 
 
 ```fortran
 type(process) :: p
 
 p = process('gfortran')
 call p%run('hello_world.f90 -o hello_world')
+```
+
+The library is written in both functional and oop style meaning that most subroutine can be invoked both as as classical subroutine or attached procedures. For instance, the previous example would write as follows:
+
+```fortran
+type(process) :: p
+
+p = process('gfortran')
+call run(p, 'hello_world.f90', '-o hello_world')
+```
+
+The process can also run asynchronously by invoking the `runasync` procedure.
+
+```fortran
+type(process) :: p
+
+p = process('gfortran')
+call runasync(p, 'hello_world.f90', '-o hello_world')
+!...
+call wait(p)
 ```
 
 ### Installation
@@ -105,7 +125,7 @@ cpp.suffixes = ["F90", "f90"]
 cpp.macros = ["_FPM, _WIN32"]
 ```
 The `_FPM` macro is used to differentiate the build when compiling with _fpm_ or _Visual Studio_. This is mostly present to adapt the hard coded paths that differs in both cases.
-The `_WIN32` macro is used only on Windows system. It should be removed otherwise
+The `_WIN32` macro is used only on Windows system. It should be removed otherwise.
 
 #### Build with Visual Studio 2019
 

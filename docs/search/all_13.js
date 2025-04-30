@@ -3,7 +3,7 @@ var searchData=
   ['path_0',['path',['../structsubprocess_1_1process.html#a24c3853239291ade50ce83ed0c7bbb26',1,'subprocess::process']]],
   ['pid_1',['pid',['../structsubprocess_1_1process.html#aa6b39f6c18694e26ea7c7353e8eaa7e1',1,'subprocess::process']]],
   ['process_2',['process',['../structsubprocess_1_1process.html',1,'subprocess']]],
-  ['process_20tt_20type_3',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../manual.html#autotoc_md2',1,'']]],
+  ['process_20tt_20type_3',['Key Features of the &lt;tt&gt;process&lt;/tt&gt; Type',['../group__group__api.html#autotoc_md3',1,'']]],
   ['process_5fio_4',['process_io',['../interfacesubprocess_1_1process__io.html',1,'subprocess']]],
   ['process_5fkill_5',['process_kill',['../interfacesubprocess_1_1kill.html#a0ebdda8da4230c10baf98a41cdf57ca0',1,'subprocess::kill']]],
   ['process_5fread_5fstderr_6',['process_read_stderr',['../interfacesubprocess_1_1read__stderr.html#a4e3b7b082470c3803b81f3301b747913',1,'subprocess::read_stderr']]],
@@ -25,7 +25,7 @@ var searchData=
   ['process_5fwait_22',['process_wait',['../interfacesubprocess_1_1wait.html#ac843d9c54ac102a9d7c8ea9dcda6ec4c',1,'subprocess::wait']]],
   ['process_5fwaitall_23',['process_waitall',['../interfacesubprocess_1_1waitall.html#aee26539efd8e840c9cec27c0fff2eac2',1,'subprocess::waitall']]],
   ['process_5fwriteto_5fstdin_24',['process_writeto_stdin',['../interfacesubprocess_1_1writeto.html#a88f9058861ed4930f687a85cc6776527',1,'subprocess::writeto']]],
-  ['project_25',['About the Project',['../index.html#autotoc_md15',1,'']]],
+  ['project_25',['About the Project',['../index.html#autotoc_md16',1,'']]],
   ['ptr_26',['ptr',['../structsubprocess_1_1process.html#af9917aa8a43f2c402cddb05cd7d50789',1,'subprocess::process']]],
-  ['pull_20request_27',['Pull request',['../index.html#autotoc_md26',1,'']]]
+  ['pull_20request_27',['Pull request',['../index.html#autotoc_md27',1,'']]]
 ];

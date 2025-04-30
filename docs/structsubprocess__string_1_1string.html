@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="author" content="SXS Collaboration">
     <meta name="generator" content="Doxygen 1.12.0"/>
-  <title>Subprocess.f: string Type Reference</title>
+  <title>Subprocess.f: string Module Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css"/>
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -133,20 +133,36 @@ $(function(){initNavTree('structsubprocess__string_1_1string.html',''); initResi
   <div class="summary">
 <a href="#pub-attribs">Variables</a> &#124;
 <a href="structsubprocess__string_1_1string-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">string Type Reference</div></div>
+  <div class="headertitle"><div class="title">string Module Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess__string.html">String</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
 <div class="textblock"><p>A derived type representing a string with assignment functionality. This type provides a simple wrapper around a character string with a custom assignment operator and a trimming function. </p>
-
-<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00009">9</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
-</div><hr/>The documentation for this type was generated from the following file:<ul>
+<h2>Examples</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">type</span>(string) :: s</div>
+<div class="line">s = <span class="stringliteral">&#39;foo&#39;</span></div>
+</div><!-- fragment --> <h2>Remarks</h2>
+<dl class="section user"><dt></dt><dd>The string implementation proposed here is kept at the bare minimum of what is required by the library. There are many other implementations that can be found. <h2>Constructors</h2>
+</dd></dl>
+<p>Initializes a new instance of the <a class="el" href="structsubprocess__string_1_1string.html">string</a> class </p><h3>string(character(:))</h3>
+<pre class="fragment">type(string) function string(character(:) chars) </pre><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">chars</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Examples</b> </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(string) :: s</div>
+<div class="line">s = string(<span class="stringliteral">&#39;foo&#39;</span>)</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00036">36</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
+</div><hr/>The documentation for this module was generated from the following file:<ul>
 <li><a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a></li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a74c3e1b5723bc1560980b214992afe5a" id="r_a74c3e1b5723bc1560980b214992afe5a"><td class="memItemLeft" align="right" valign="top">character(:), allocatable, public&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74c3e1b5723bc1560980b214992afe5a">chars</a></td></tr>
+<tr class="memdesc:a74c3e1b5723bc1560980b214992afe5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable length character array.  <br /></td></tr>
 <tr class="separator:a74c3e1b5723bc1560980b214992afe5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Methods</h2>
@@ -173,12 +189,19 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">lhs</td><td>The string object to assign to. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The character string to assign. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The character string to assign.</td></tr>
   </table>
   </dd>
 </dl>
+<p><b>Examples</b> </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(string) :: s</div>
+<div class="line"><span class="comment">character(:), allocatable :: c</span></div>
+<div class="line"> </div>
+<div class="line">s = <span class="stringliteral">&#39;foo&#39;</span></div>
+<div class="line"><span class="comment">c = s</span></div>
+<div class="line">! the <span class="keywordtype">value</span> of c is now <span class="stringliteral">&#39;foo&#39;</span></div>
+</div><!-- fragment --><p> <b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00014">14</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess__string_8f90_source.html#l00041">41</a> of file <a class="el" href="subprocess__string_8f90_source.html">subprocess_string.f90</a>.</p>
 
 </div>
 </div>

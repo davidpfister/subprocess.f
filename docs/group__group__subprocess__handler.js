@@ -9,6 +9,7 @@ var group__group__subprocess__handler =
       [ "internal_runasync_default", "group__group__subprocess__handler.html#ga66db5d33065cab73b462a68a1d304908", null ],
       [ "internal_runasync_with_options", "group__group__subprocess__handler.html#ga1de48fe3f50a90a968f442f2027c8caa", null ]
     ] ],
+    [ "option_enum", "classoption__enum.html", null ],
     [ "internal_finalize", "group__group__subprocess__handler.html#ga6146cc43b45dfc57a507f79e1e03f113", null ],
     [ "internal_isalive", "group__group__subprocess__handler.html#ga2fdd9c126e56bee8eb47e6afa4172cd0", null ],
     [ "internal_read_stderr", "group__group__subprocess__handler.html#ga0ac693e009aab9c471ad1d437e41947d", null ],

@@ -133,7 +133,7 @@ $(function(){initNavTree('structsubprocess_1_1process.html',''); initResizable(t
   <div class="summary">
 <a href="#pub-attribs">Variables</a> &#124;
 <a href="structsubprocess_1_1process-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">process Module Reference<div class="ingroups"><a class="el" href="group__group__subprocess.html">subprocess</a></div></div></div>
+  <div class="headertitle"><div class="title">process Module Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess.html">Subprocess</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
@@ -209,7 +209,7 @@ The third example demonstrate how functions can be passed to the process constru
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>The constructed process object.</dd></dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00081">81</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00143">143</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this module was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -254,7 +254,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the exit code of the subprocess. </p>
+<p>Gets the exit code of the associated process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object.</td></tr>
@@ -283,7 +283,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the elapsed time since the subprocess started or until it exited. </p>
+<p>Gets the elapsed time since the process started or until it exited. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object.</td></tr>
@@ -293,7 +293,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The elapsed time in milliseconds.</dd></dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00120">120</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00119">119</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -312,7 +312,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if the subprocess has terminated. </p>
+<p>Checks if the associated process has terminated. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object.</td></tr>
@@ -320,14 +320,9 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the process has exited, false otherwise.</dd></dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00122">122</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00120">120</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -346,7 +341,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Terminates the subprocess. </p>
+<p>Terminates the associated process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to terminate.</td></tr>
@@ -355,7 +350,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00146">146</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00138">138</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -378,7 +373,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -388,13 +383,13 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00104">104</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00105">105</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -422,7 +417,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -433,13 +428,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00105">105</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00106">106</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -472,7 +467,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -484,13 +479,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00106">106</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00107">107</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -528,7 +523,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -541,13 +536,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00107">107</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00108">108</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -590,7 +585,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -604,13 +599,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00108">108</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00109">109</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -633,7 +628,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -643,18 +638,13 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00109">109</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00110">110</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -672,7 +662,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -681,18 +671,13 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00110">110</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00111">111</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -715,7 +700,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -725,13 +710,13 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00111">111</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00112">112</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -759,7 +744,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -770,13 +755,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00112">112</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00113">113</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -809,7 +794,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -821,13 +806,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00113">113</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00114">114</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -865,7 +850,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -878,13 +863,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00114">114</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00115">115</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -927,7 +912,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -941,13 +926,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00115">115</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -970,7 +955,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -980,13 +965,13 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00116">116</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00117">117</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1009,7 +994,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the standard error of the subprocess. </p>
+<p>Reads the standard error of the associated process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object. </td></tr>
@@ -1019,7 +1004,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00142">142</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00136">136</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1042,7 +1027,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the standard output of the subprocess. </p>
+<p>Reads the standard output of the associated process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object. </td></tr>
@@ -1052,7 +1037,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00140">140</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00135">135</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1095,12 +1080,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with five arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
@@ -1109,13 +1094,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1153,12 +1138,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with four arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
@@ -1166,13 +1151,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1205,25 +1190,25 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with three arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1251,24 +1236,24 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with two arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1291,23 +1276,23 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with one argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1330,28 +1315,23 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with an array of arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1369,27 +1349,22 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess synchronously with varying arguments. </p>
+<p>Runs a process synchronously with no arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00124">124</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00121">121</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1432,12 +1407,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with five arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
@@ -1446,13 +1421,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg5</td><td>The fifth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1490,12 +1465,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with four arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
@@ -1503,13 +1478,13 @@ Variables</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg4</td><td>The fourth argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1542,25 +1517,25 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with three arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg3</td><td>The third argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1588,24 +1563,24 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with two arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg2</td><td>The second argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1628,23 +1603,23 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with one argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">arg1</td><td>The first argument to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1667,23 +1642,23 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with an array of arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments to pass to the process. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1701,27 +1676,22 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">integer(option_enum), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
+          <td class="paramtype">integer(<a class="el" href="classoption__enum.html">option_enum</a>), intent(in), optional</td>          <td class="paramname"><span class="paramname"><em>option</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generic interface to run the subprocess asynchronously with varying arguments. </p>
+<p>Runs a process asynchronously with no arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to run. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="">option_enum</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>An integer option selected from <a class="el" href="#ga3390044dafbe5ff1631cc4b1f70594c2">option_enum</a></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Remarks</b> </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>process object type </td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00132">132</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00128">128</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1740,7 +1710,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Waits for the subprocess to complete. </p>
+<p>Waits for the associated process to complete. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to wait for.</td></tr>
@@ -1749,7 +1719,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00144">144</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00137">137</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>
@@ -1777,7 +1747,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Finalizer to release resources when the subprocess object is destroyed. </p>
+<p>Finalizes the process object, releasing resources. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to finalize.</td></tr>
@@ -1786,7 +1756,7 @@ Variables</h2></td></tr>
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00148">148</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00139">139</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

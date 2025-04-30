@@ -132,12 +132,34 @@ $(function(){initNavTree('interfacesubprocess_1_1read__stdout.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="interfacesubprocess_1_1read__stdout-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">read_stdout Interface Reference</div></div>
+  <div class="headertitle"><div class="title">read_stdout Interface Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess.html">Subprocess</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00189">189</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<div class="textblock"><p>Reads the standard output of the associated process. </p>
+<dl class="section user"><dt></dt><dd><h2>Methods</h2>
+</dd></dl>
+<h3>read_stdout(type(process) p(:), character(:), allocatable msg)</h3>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>The captured stdout as a character string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2>Examples </h2>
+<p>The following example illustrates a call to the <code>read_stdout</code> interface. </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line"><span class="keywordtype">character(:)</span>, <span class="keywordtype">allocatable</span> :: files</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line">p = process(<span class="stringliteral">&#39;ls&#39;</span>)</div>
+<div class="line"><span class="keyword">call </span>run(p, <span class="stringliteral">&#39;./ *.f90&#39;</span>)</div>
+<div class="line"><span class="keyword">call </span>read_stdout(p, files)</div>
+<div class="line"> </div>
+<div class="line">print *, trim(files(i))</div>
+</div><!-- fragment --> <h2>Remarks </h2>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00418">418</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -171,7 +193,7 @@ $(function(){initNavTree('interfacesubprocess_1_1read__stdout.html',''); initRes
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00692">692</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00982">982</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

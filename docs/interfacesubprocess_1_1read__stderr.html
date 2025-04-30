@@ -132,12 +132,37 @@ $(function(){initNavTree('interfacesubprocess_1_1read__stderr.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="interfacesubprocess_1_1read__stderr-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">read_stderr Interface Reference</div></div>
+  <div class="headertitle"><div class="title">read_stderr Interface Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess.html">Subprocess</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00193">193</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<div class="textblock"><p>Reads the standard error of the associated process. </p>
+<dl class="section user"><dt></dt><dd><h2>Methods</h2>
+</dd></dl>
+<h3>read_stderr(type(process) p(:), character(:), allocatable output)</h3>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>The captured stderr as a character string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2>Examples </h2>
+<p>The following example illustrates a call to the <code>read_stderr</code> interface. It uses the return code from the <code>exit_code</code> function to determine whether or not an error occurred during execution. </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line"><span class="keywordtype">character(:)</span>, <span class="keywordtype">allocatable</span> :: errmsg</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line">p = process(<span class="stringliteral">&#39;ls&#39;</span>)</div>
+<div class="line"><span class="keyword">call </span>run(p, <span class="stringliteral">&#39;./ *.f90&#39;</span>)</div>
+<div class="line"><span class="keyword">call </span>read_stderr(p, errmsg)</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (p%exit_code() /= 0) <span class="keywordflow">then</span></div>
+<div class="line">    <span class="keyword">call </span>read_stderr(p, errmsg)   </div>
+<div class="line">    print *, errmsg</div>
+<div class="line"><span class="keyword">end </span>if</div>
+</div><!-- fragment --> <h2>Remarks </h2>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00453">453</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -171,7 +196,7 @@ $(function(){initNavTree('interfacesubprocess_1_1read__stderr.html',''); initRes
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00705">705</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00995">995</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

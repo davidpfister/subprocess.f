@@ -1,4 +1,5 @@
-!> @defgroup group_subprocess subprocess
+!> @defgroup group_subprocess Subprocess
+!! @ingroup group_api
 !! @brief @link subprocess::process Subprocess @endlink module
 !> @cond
 #ifdef _WIN32
@@ -114,13 +115,9 @@ module subprocess
         procedure, pass(this)               :: process_runasync_with_arg4
         procedure, pass(this)               :: process_runasync_with_arg5
         procedure, pass(this)               :: process_runasync_with_args
-        !> @brief Gets the exit code of the subprocess.
         procedure, pass(this), public       :: exit_code => process_exit_code
-        !> @brief Gets the elapsed time since the subprocess started or until it exited.
         procedure, pass(this), public       :: exit_time => process_exit_time
-        !> @brief Checks if the subprocess has terminated.
         procedure, pass(this), public       :: has_exited => process_has_exited
-        !> @brief Generic interface to run the subprocess synchronously with varying arguments.
         generic, public :: run              => process_run_default,             &
                                                 process_run_with_arg1,           &
                                                 process_run_with_arg2,           &
@@ -128,7 +125,6 @@ module subprocess
                                                 process_run_with_arg4,           &
                                                 process_run_with_arg5,           &
                                                 process_run_with_args
-        !> @brief Generic interface to run the subprocess asynchronously with varying arguments.
         generic, public :: runasync         => process_runasync_default,        &
                                                 process_runasync_with_arg1,      &
                                                 process_runasync_with_arg2,      &
@@ -136,28 +132,116 @@ module subprocess
                                                 process_runasync_with_arg4,      &
                                                 process_runasync_with_arg5,      &
                                                 process_runasync_with_args
-        !> @brief Reads the standard output of the subprocess.
         procedure, pass(this), public       :: read_stdout => process_read_stdout 
-        !> @brief Reads the standard error of the subprocess.
         procedure, pass(this), public       :: read_stderr => process_read_stderr 
-        !> @brief Waits for the subprocess to complete.
         procedure, pass(this), public       :: wait => process_wait
-        !> @brief Terminates the subprocess.
         procedure, pass(this), public       :: kill => process_kill
-        !> @brief Finalizer to release resources when the subprocess object is destroyed.
         final :: finalize
     end type
 
-    !> @cond
-    interface process
-        module procedure :: process_new
-    end interface
-    !> @endcond
     
+    interface process
+    !! @cond
+        module procedure :: process_new
+    !! @endcond
+    end interface
+    
+    !> @interface kill
+    !! @ingroup group_subprocess
+    !> @brief Terminates the associated process.
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>kill(type(process) p)</h3>
+    !! 
+    !! @param[in,out] this The process object to terminate.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `kill` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  p = process('notepad')
+    !!
+    !!  p%runasync()
+    !!  call kill(p)
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface kill
         module procedure :: process_kill
     end interface
 
+    !> @interface run
+    !! @ingroup group_subprocess
+    !> @brief Runs a process synchronously.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>run(type(process) p, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, character(*) arg1, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, character(*) arg5, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] arg5 The fifth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>run(type(process) p, type(string) args, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run.
+    !! @param[in] args Array of arguments to pass to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `run` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  p = process('ls')
+    !!  call run(p, './ *.f90')
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface run
         module procedure :: process_run_default, &
                             process_run_with_arg1, &
@@ -168,6 +252,80 @@ module subprocess
                             process_run_with_args
     end interface
     
+    !> @interface runasync
+    !! @ingroup group_subprocess
+    !> @brief Runs a process asynchronously.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>runasync(type(process) p, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, character(*) arg1, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run  asynchronously.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, character(*) arg5, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] arg1 The first argument to the process.
+    !! @param[in] arg2 The second argument to the process.
+    !! @param[in] arg3 The third argument to the process.
+    !! @param[in] arg4 The fourth argument to the process.
+    !! @param[in] arg5 The fifth argument to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> </h2>
+    !! <h3>runasync(type(process) p, type(string) args, (optional) integer option)</h3>
+    !! 
+    !! @param[in,out] this The process object to run asynchronously.
+    !! @param[in] args Array of arguments to pass to the process.
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `runasync` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  p = process('ls')
+    !!  call runasync(p, './ *.f90')
+    !!  !...
+    !!  call wait(p)
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface runasync
         module procedure :: process_runasync_default, &
                             process_runasync_with_arg1, &
@@ -178,27 +336,159 @@ module subprocess
                             process_runasync_with_args
     end interface
     
+    !> @interface wait
+    !! @ingroup group_subprocess
+    !> @brief Waits for the associated process to complete.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>wait(type(process) p)</h3>
+    !! 
+    !! @param[in,out] this The process object to wait for.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `wait` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  p = process('ls')
+    !!  call runasync(p, './ *.f90')
+    !!  !...
+    !!  call wait(p)
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface wait 
         module procedure :: process_wait
     end interface
     
+    !> @interface waitall
+    !! @ingroup group_subprocess
+    !> @brief Waits for all processes in an array to complete.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>waitall(type(process) p(:))</h3>
+    !! 
+    !! @param[in,out] processes Array of process objects to wait for.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `waitall` interface.
+    !! @code{.f90}
+    !!  type(process) :: p(5)
+    !!  integer :: i
+    !!
+    !!  do i = 1, 5
+    !!      p(i) = p = process('long_running_process')
+    !!      call p(i)%run()
+    !!  end do
+    !!  call waitall(p)
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface waitall
         module procedure :: process_waitall
     end interface
     
+    !> @interface read_stdout
+    !! @ingroup group_subprocess
+    !> @brief Reads the standard output of the associated process.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>read_stdout(type(process) p(:), character(:), allocatable msg)</h3>
+    !! 
+    !! @param[in,out] this The process object.
+    !! @param[out] output The captured stdout as a character string.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `read_stdout` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  character(:), allocatable :: files
+    !!
+    !!  type(process) :: p
+    !!  p = process('ls')
+    !!  call run(p, './ *.f90')
+    !!  call read_stdout(p, files)
+    !!
+    !!  print *, trim(files(i))
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface read_stdout
         module procedure :: process_read_stdout
     end interface
     
+    !> @interface read_stderr
+    !! @ingroup group_subprocess
+    !> @brief Reads the standard error of the associated process.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>read_stderr(type(process) p(:), character(:), allocatable output)</h3>
+    !! 
+    !! @param[in,out] this The process object.
+    !! @param[out] output The captured stderr as a character string.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `read_stderr` interface.
+    !! It uses the return code from the `exit_code` function to determine whether 
+    !! or not an error occurred during execution.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  character(:), allocatable :: errmsg
+    !!
+    !!  type(process) :: p
+    !!  p = process('ls')
+    !!  call run(p, './ *.f90')
+    !!  call read_stderr(p, errmsg)
+    !!
+    !!  if (p%exit_code() /= 0) then
+    !!      call read_stderr(p, errmsg)   
+    !!      print *, errmsg
+    !!  end if
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface read_stderr
         module procedure :: process_read_stderr
     end interface
 
+    !> @interface writeto
+    !! @ingroup group_subprocess
+    !> @brief Write the standard inlet of the associated process.
+    !!
+    !! @par
+    !! <h2>Methods</h2>
+    !!
+    !! <h3>writeto(type(process) p(:), character(:), allocatable output)</h3>
+    !! 
+    !! @param[in,out] this The process object.
+    !! @param[out] output The message to write to stdin.
+    !!
+    !! <h2> Examples </h2>
+    !! The following example illustrates a call to the `writeto` interface.
+    !! @code{.f90}
+    !!  type(process) :: p
+    !!  character(*) :: msg = 'Hello World!'
+    !!
+    !!  type(process) :: p
+    !!  p = process('my_process')
+    !!  call runasync(p)
+    !!  call writeto(p, msg)
+    !!
+    !!  call wait(p)
+    !! @endcode
+    !! <h2> Remarks </h2>
     interface writeto
         module procedure :: process_writeto_stdin
     end interface
-        
+    
     abstract interface 
+        !! @ingroup group_subprocess
+        !> @brief Abstract interface for io procedures.
+        !! @param[in] sender The process to write to or read from
+        !! @param[in] msg The message to exchange with the running process   
         subroutine process_io(sender, msg)
             import
             implicit none
@@ -231,11 +521,11 @@ contains
     !> @brief Runs a process synchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_default(this, option)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
@@ -248,7 +538,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg1(this, arg1, option)
@@ -267,7 +557,7 @@ contains
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg2(this, arg1, arg2, option)
@@ -289,7 +579,7 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg3(this, arg1, arg2, arg3, option)
@@ -314,7 +604,7 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg4(this, arg1, arg2, arg3, arg4, option)
@@ -342,7 +632,7 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
@@ -368,11 +658,11 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_run_with_args(this, args, option)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         type(string), intent(in)        :: args(:)
         integer(option_enum), intent(in), optional :: option
         !private
@@ -411,11 +701,11 @@ contains
     !> @brief Runs a process asynchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_default(this, option)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
@@ -428,7 +718,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink 
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink 
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg1(this, arg1, option)
@@ -447,7 +737,7 @@ contains
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg2(this, arg1, arg2, option)
@@ -469,7 +759,7 @@ contains
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg3(this, arg1, arg2, arg3, option)
@@ -494,7 +784,7 @@ contains
     !! @param[in] arg2 The second argument to the process.
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg4(this, arg1, arg2, arg3, arg4, option)
@@ -522,7 +812,7 @@ contains
     !! @param[in] arg3 The third argument to the process.
     !! @param[in] arg4 The fourth argument to the process.
     !! @param[in] arg5 The fifth argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg5(this, arg1, arg2, arg3, arg4, arg5, option)
@@ -548,7 +838,7 @@ contains
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler:option_enum option_enum@endlink
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_args(this, args, option)
@@ -627,7 +917,7 @@ contains
     !!
     !! @b Remarks
     function process_has_exited(this) result(res)
-        class(process), intent(inout)   :: this !< process object type
+        class(process), intent(inout)   :: this
         logical :: res
         
         this%is_running = internal_isalive(this%ptr)

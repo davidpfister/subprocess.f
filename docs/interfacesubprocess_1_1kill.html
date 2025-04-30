@@ -132,12 +132,29 @@ $(function(){initNavTree('interfacesubprocess_1_1kill.html',''); initResizable(t
 <div class="header">
   <div class="summary">
 <a href="interfacesubprocess_1_1kill-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">kill Interface Reference</div></div>
+  <div class="headertitle"><div class="title">kill Interface Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess.html">Subprocess</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00157">157</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<div class="textblock"><p>Terminates the associated process. </p>
+<dl class="section user"><dt></dt><dd><h2>Methods</h2>
+</dd></dl>
+<h3>kill(type(process) p)</h3>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">this</td><td>The process object to terminate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2>Examples </h2>
+<p>The following example illustrates a call to the <code>kill</code> interface. </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line">p = process(<span class="stringliteral">&#39;notepad&#39;</span>)</div>
+<div class="line"> </div>
+<div class="line">p%runasync()</div>
+<div class="line"><span class="keyword">call </span>kill(p)</div>
+</div><!-- fragment --> <h2>Remarks </h2>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00169">169</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -166,7 +183,7 @@ $(function(){initNavTree('interfacesubprocess_1_1kill.html',''); initResizable(t
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00671">671</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00961">961</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

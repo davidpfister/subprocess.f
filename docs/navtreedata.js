@@ -25,25 +25,6 @@
 var NAVTREE =
 [
   [ "Subprocess.f", "index.html", [
-    [ "Introduction", "index.html#autotoc_md14", [
-      [ "About the Project", "index.html#autotoc_md15", null ],
-      [ "Getting Started", "index.html#autotoc_md16", [
-        [ "Requirements", "index.html#autotoc_md17", null ]
-      ] ],
-      [ "Usage", "index.html#autotoc_md18", [
-        [ "Installation", "index.html#autotoc_md19", [
-          [ "Get the code", "index.html#autotoc_md20", null ],
-          [ "Build with fpm", "index.html#autotoc_md21", null ],
-          [ "Build with Visual Studio 2019", "index.html#autotoc_md22", null ]
-        ] ],
-        [ "Contributing", "index.html#autotoc_md23", null ],
-        [ "Style", "index.html#autotoc_md24", null ],
-        [ "Reporting a bug", "index.html#autotoc_md25", null ],
-        [ "Pull request", "index.html#autotoc_md26", null ]
-      ] ],
-      [ "License", "index.html#autotoc_md27", null ]
-    ] ],
-    [ "Documentation", "articles.html", "articles" ],
     [ "API", "topics.html", "topics" ],
     [ "Files", "files.html", "files" ],
     [ "GitHub Repository", "^https://github.com/davidpfister/subprocess.f", null ]
@@ -52,7 +33,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"articles.html"
+"classoption__enum.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

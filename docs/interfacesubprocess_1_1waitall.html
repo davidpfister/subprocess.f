@@ -132,12 +132,32 @@ $(function(){initNavTree('interfacesubprocess_1_1waitall.html',''); initResizabl
 <div class="header">
   <div class="summary">
 <a href="interfacesubprocess_1_1waitall-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">waitall Interface Reference</div></div>
+  <div class="headertitle"><div class="title">waitall Interface Reference<div class="ingroups"><a class="el" href="group__group__api.html">Overview</a> &raquo; <a class="el" href="group__group__subprocess.html">Subprocess</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Definition</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00185">185</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<div class="textblock"><p>Waits for all processes in an array to complete. </p>
+<dl class="section user"><dt></dt><dd><h2>Methods</h2>
+</dd></dl>
+<h3>waitall(type(process) p(:))</h3>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">processes</td><td>Array of process objects to wait for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2>Examples </h2>
+<p>The following example illustrates a call to the <code>waitall</code> interface. </p><div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p(5)</div>
+<div class="line"><span class="keywordtype">integer</span> :: i</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">do</span> i = 1, 5</div>
+<div class="line">    p(i) = p = process(<span class="stringliteral">&#39;long_running_process&#39;</span>)</div>
+<div class="line">    <span class="keyword">call </span>p(i)%run()</div>
+<div class="line"><span class="keywordflow">end do</span></div>
+<div class="line"><span class="keyword">call </span>waitall(p)</div>
+</div><!-- fragment --> <h2>Remarks </h2>
+
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00388">388</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
 <li><a class="el" href="subprocess_8f90_source.html">subprocess.f90</a></li>
 </ul>
@@ -166,7 +186,7 @@ $(function(){initNavTree('interfacesubprocess_1_1waitall.html',''); initResizabl
 </dl>
 <p><b>Remarks</b> </p>
 
-<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00654">654</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
+<p class="definition">Definition at line <a class="el" href="subprocess_8f90_source.html#l00944">944</a> of file <a class="el" href="subprocess_8f90_source.html">subprocess.f90</a>.</p>
 
 </div>
 </div>

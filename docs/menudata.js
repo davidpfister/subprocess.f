@@ -24,7 +24,6 @@
 */
 var menudata={children:[
 {text:"Subprocess.f",url:"index.html"},
-{text:"Articles",url:"pages.html"},
 {text:"API",url:"topics.html"},
 {text:"Files",url:"files.html"},
 {text:"GitHub Repository",url:"^https://github.com/davidpfister/subprocess.f"}]}

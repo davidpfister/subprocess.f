@@ -136,52 +136,52 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <div class="toc"><h3>Table of Contents</h3>
 <ul>
   <li class="level1">
-    <a href="#autotoc_md14">Introduction</a>
+    <a href="#autotoc_md15">Introduction</a>
     <ul>
       <li class="level2">
-        <a href="#autotoc_md15">About the Project</a>
+        <a href="#autotoc_md16">About the Project</a>
       </li>
       <li class="level2">
-        <a href="#autotoc_md16">Getting Started</a>
+        <a href="#autotoc_md17">Getting Started</a>
         <ul>
           <li class="level3">
-            <a href="#autotoc_md17">Requirements</a>
+            <a href="#autotoc_md18">Requirements</a>
           </li>
         </ul>
       </li>
       <li class="level2">
-        <a href="#autotoc_md18">Usage</a>
+        <a href="#autotoc_md19">Usage</a>
         <ul>
           <li class="level3">
-            <a href="#autotoc_md19">Installation</a>
+            <a href="#autotoc_md20">Installation</a>
             <ul>
               <li class="level4">
-                <a href="#autotoc_md20">Get the code</a>
+                <a href="#autotoc_md21">Get the code</a>
               </li>
               <li class="level4">
-                <a href="#autotoc_md21">Build with fpm</a>
+                <a href="#autotoc_md22">Build with fpm</a>
               </li>
               <li class="level4">
-                <a href="#autotoc_md22">Build with Visual Studio 2019</a>
+                <a href="#autotoc_md23">Build with Visual Studio 2019</a>
               </li>
             </ul>
           </li>
           <li class="level3">
-            <a href="#autotoc_md23">Contributing</a>
+            <a href="#autotoc_md24">Contributing</a>
           </li>
           <li class="level3">
-            <a href="#autotoc_md24">Style</a>
+            <a href="#autotoc_md25">Style</a>
           </li>
           <li class="level3">
-            <a href="#autotoc_md25">Reporting a bug</a>
+            <a href="#autotoc_md26">Reporting a bug</a>
           </li>
           <li class="level3">
-            <a href="#autotoc_md26">Pull request</a>
+            <a href="#autotoc_md27">Pull request</a>
           </li>
         </ul>
       </li>
       <li class="level2">
-        <a href="#autotoc_md27">License</a>
+        <a href="#autotoc_md28">License</a>
       </li>
     </ul>
   </li>
@@ -191,25 +191,24 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <p><a href="https://github.com/davidpfister/subprocess.f/graphs/contributors"><img src="https://img.shields.io/github/contributors/davidpfister/subprocess.f.svg?style=for-the-badge" alt="Contributors" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/davidpfister/subprocess.f/network/members"><img src="https://img.shields.io/github/forks/davidpfister/subprocess.f.svg?style=for-the-badge" alt="Forks" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/davidpfister/subprocess.f/stargazers"><img src="https://img.shields.io/github/stars/davidpfister/subprocess.f.svg?style=for-the-badge" alt="Stargazers" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/davidpfister/subprocess.f/issues"><img src="https://img.shields.io/github/issues/davidpfister/subprocess.f.svg?style=for-the-badge" alt="Issues" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/davidpfister/subprocess.f/master/LICENSE"><img src="https://img.shields.io/github/license/davidpfister/subprocess.f.svg?style=for-the-badge" alt="MIT License" style="pointer-events: none;" class="inline"/></a></p>
 <p><br  />
  </p><div align="center"> <h3 align="center">subprocess.f</h3>
-</div><div align="center"></div><div align="center"> </div><div align="center"> A experimental library for forking a child process in Fortran <br  />
+</div><div align="center"></div><div align="center"> </div><div align="center"> The subprocess library allows you to spawn new processes, redirect their input and output pipes and return the exit code. <br  />
+ <br  />
  <a href="https://github.com/davidpfister/subprocess.f"><b>Explore the project »</b></a> <br  />
- </div><div align="center"> </div><h1><a class="anchor" id="autotoc_md14"></a>
+ </div><div align="center"> </div><h1><a class="anchor" id="autotoc_md15"></a>
 Introduction</h1>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 About the Project</h2>
 <p><img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/logo.png?raw=true" alt="" class="inline"/> </p>
-<p>This project aims at providing some ideas to create child processes in Fortran. <br  />
-<br  />
- It is quite experimental at the moment, but looks promising. <br  />
- The development of this repo is link to the discussion on the Fortran discourse about the <a href="https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037">Stdlib system interaction API</a></p>
+<p>This project aims at providing an easy and comprehensive API to spawn child processes in Fortran. <br  />
+ The development of this repo is linked to the discussion on the Fortran discourse about the <a href="https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037">Stdlib system interaction API</a></p>
 <ul>
 <li><a href="https://fpm.fortran-lang.org/"><img src="https://img.shields.io/badge/fpm-000000?style=for-the-badge&amp;logo=Fortran&amp;logoColor=734F96" alt="fpm" class="inline"/></a></li>
 <li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html"><img src="https://img.shields.io/badge/ifort-000000?style=for-the-badge&amp;logo=Intel&amp;logoColor=61DAFB" alt="ifort" class="inline"/></a></li>
 <li><a href="https://gcc.gnu.org/wiki/GFortran"><img src="https://img.shields.io/badge/gfortran-000000?style=for-the-badge&amp;logo=gnu&amp;logoColor=white" alt="gfortran" class="inline"/></a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 Getting Started</h2>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md18"></a>
 Requirements</h3>
 <p>To build that library you need</p>
 <ul>
@@ -229,19 +228,32 @@ Requirements</h3>
 <li>a preprocessor. The units tests of <em>subprocess.f</em> use quite some preprocessor macros. It is known to work both with intel <code>fpp</code> and <code>cpp</code>. <br  />
  Unit test rely on the the files <a href="https://github.com/davidpfister/fortiche/tree/master/src/assertion"><code>assertion.inc</code></a> and <a href="https://github.com/davidpfister/fortiche/tree/master/src/app"><code>app.inc</code></a>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Usage</h2>
+<p>The easiest way to invoke a subprocess is to call the <code>run</code> subroutine.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
 <div class="line"> </div>
 <div class="line">p = process(<span class="stringliteral">&#39;gfortran&#39;</span>)</div>
 <div class="line"><span class="comment">call p%run(&#39;hello_world.f90 -o hello_world&#39;)</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><p>The library is written in both functional and oop style meaning that most subroutine can be invoked both as as classical subroutine or attached procedures. For instance, the previous example would write as follows:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line"> </div>
+<div class="line">p = process(<span class="stringliteral">&#39;gfortran&#39;</span>)</div>
+<div class="line"><span class="comment">call run(p, &#39;hello_world.f90&#39;, &#39;-o hello_world&#39;)</span></div>
+</div><!-- fragment --><p>The process can also run asynchronously by invoking the <code>runasync</code> procedure.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">type</span>(process) :: p</div>
+<div class="line"> </div>
+<div class="line">p = process(<span class="stringliteral">&#39;gfortran&#39;</span>)</div>
+<div class="line"><span class="comment">call runasync(p, &#39;hello_world.f90&#39;, &#39;-o hello_world&#39;)</span></div>
+<div class="line"><span class="comment">!...</span></div>
+<div class="line"><span class="comment">call wait(p)</span></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md20"></a>
 Installation</h3>
-<h4><a class="anchor" id="autotoc_md20"></a>
+<h4><a class="anchor" id="autotoc_md21"></a>
 Get the code</h4>
 <div class="fragment"><div class="line">git clone https://github.com/davidpfister/subprocess.f</div>
 <div class="line">cd subprocess.f</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md22"></a>
 Build with fpm</h4>
 <p>The repo is compatible with fpm projects. It can be build using <em>fpm</em> </p><div class="fragment"><div class="line">fpm build</div>
 </div><!-- fragment --><p>Building with ifort requires to specify the compiler name (gfortran by default) </p><div class="fragment"><div class="line">fpm build --compiler ifort</div>
@@ -250,18 +262,18 @@ Build with fpm</h4>
 <div class="fragment"><div class="line">[preprocess]</div>
 <div class="line">cpp.suffixes = [&quot;F90&quot;, &quot;f90&quot;]</div>
 <div class="line">cpp.macros = [&quot;_FPM, _WIN32&quot;]</div>
-</div><!-- fragment --><p> The <code>_FPM</code> macro is used to differentiate the build when compiling with <em>fpm</em> or <em>Visual Studio</em>. This is mostly present to adapt the hard coded paths that differs in both cases. The <code>_WIN32</code> macro is used only on Windows system. It should be removed otherwise</p>
-<h4><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><p> The <code>_FPM</code> macro is used to differentiate the build when compiling with <em>fpm</em> or <em>Visual Studio</em>. This is mostly present to adapt the hard coded paths that differs in both cases. The <code>_WIN32</code> macro is used only on Windows system. It should be removed otherwise.</p>
+<h4><a class="anchor" id="autotoc_md23"></a>
 Build with Visual Studio 2019</h4>
 <p>The project was originally developed on Windows with Visual Studio 2019. The repo contains the solution file (<em>subprocess.f.sln</em>) to get you started with Visual Studio 2019.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
+<h3><a class="anchor" id="autotoc_md24"></a>
 Contributing</h3>
 <p>Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are <b>greatly appreciated</b>. So, thank you for considering contributing to <em>subprocess.f</em>. Please review and follow these guidelines to make the contribution process simple and effective for all involved. In return, the developers will help address your problem, evaluate changes, and guide you through your pull requests.</p>
 <p>By contributing to <em>subprocess.f</em>, you certify that you own or are allowed to share the content of your contribution under the same license.</p>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md25"></a>
 Style</h3>
 <p>Please follow the style used in this repository for any Fortran code that you contribute. This allows focusing on substance rather than style.</p>
-<h3><a class="anchor" id="autotoc_md25"></a>
+<h3><a class="anchor" id="autotoc_md26"></a>
 Reporting a bug</h3>
 <p>A bug is a <em>demonstrable problem</em> caused by the code in this repository. Good bug reports are extremely valuable to us—thank you!</p>
 <p>Before opening a bug report:</p>
@@ -278,7 +290,7 @@ Reporting a bug</h3>
 <li>What happens instead?</li>
 </ol>
 <p>This information will help the developers diagnose the issue quickly and with minimal back-and-forth.</p>
-<h3><a class="anchor" id="autotoc_md26"></a>
+<h3><a class="anchor" id="autotoc_md27"></a>
 Pull request</h3>
 <p>If you have a suggestion that would make this project better, please create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!</p><ol type="1">
 <li>Open a <a href="https://github.com/davidpfister/subprocess.f/issues/new">new issue</a> to describe a bug or propose a new feature. Refer to the earlier sections on how to write a good bug report or feature request.</li>
@@ -295,7 +307,7 @@ Pull request</h3>
 <li>Add tests for your feature or bug fix to be sure that it stays functional and useful</li>
 <li>Be open to constructive criticism and requests for improving your code.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 License</h2>
 <p>Distributed under the MIT License. </p>
 </div></div><!-- PageDoc -->

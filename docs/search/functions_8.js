@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['string_5ftrim_0',['string_trim',['../interfacesubprocess__string_1_1trim.html#a766e037bf5dcaaeade9b526bb073c139',1,'subprocess_string::trim']]]
+  ['wait_0',['wait',['../structsubprocess_1_1process.html#a65b0f22f77c736608603f82954afdbda',1,'subprocess::process']]]
 ];

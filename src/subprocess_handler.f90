@@ -1,4 +1,5 @@
-!> @defgroup group_subprocess_handler subprocess_handler
+!> @defgroup group_subprocess_handler Handler
+!! @ingroup group_api
 !! @brief Provides the binding and wrapper functions to the processlib C library.
 !! @par
 !! <h2>Remarks</h2>
@@ -73,24 +74,25 @@ module subprocess_handler
         type(subprocess_s), allocatable :: handle
     end type
     
+    !> @class option_enum
+    !! @brief Option enumerator type
+    !! @li **option_none**                      : default option
+    !! @li **option_combined_stdout_stderr**    : stdout and stderr are the same FILE.
+    !! @li **option_inherit_environment**       : The child process should inherit the environment variables of the parent.
+    !! @li **option_enable_async**              : Enable asynchronous reading of stdout/stderr before it has completed.
+    !! @li **option_no_window**                 : Enable the child process to be spawned with no window visible if supported by the platform.
+    !! @li **option_search_user_path**          : Search for program names in the PATH variable. Always enabled on Windows. @note 
+    !! this will **not** search for paths in any provided custom environment and instead uses the PATH of the spawning process.
     enum, bind(c)
-        !> @brief default option
         enumerator :: option_none = 0
-        !> @brief stdout and stderr are the same FILE.
         enumerator :: option_combined_stdout_stderr = 1
-        !> @brief The child process should inherit the environment variables of the parent.
         enumerator :: option_inherit_environment = 2
-        !> @brief Enable asynchronous reading of stdout/stderr before it has completed.
         enumerator :: option_enable_async = 4
-        !> @brief Enable the child process to be spawned with no window visible if supported
-        !! by the platform.
         enumerator :: option_no_window = 8
-        !> @brief Search for program names in the PATH variable. Always enabled on Windows.
-        !! Note: this will **not** search for paths in any provided custom environment
-        !! and instead uses the PATH of the spawning process.
         enumerator :: option_search_user_path = 16
     end enum
 
+    
     integer, parameter :: option_enum = kind(option_none)
 
     interface
@@ -183,7 +185,7 @@ module subprocess_handler
     !! This generic interface provides a single procedure for executing a command synchronously,
     !! waiting for its completion, and retrieving its exit code.
     interface internal_run
-        module procedure :: internal_run_default,   &
+        module procedure :: internal_run_default,           &
                             internal_run_with_options
     end interface
     
@@ -191,7 +193,7 @@ module subprocess_handler
     !! This generic interface provides a single procedure for executing a command asynchronously,
     !! allowing it to run in the background without waiting for completion.
     interface internal_runasync
-        module procedure :: internal_runasync_default, &
+        module procedure :: internal_runasync_default,      &
                             internal_runasync_with_options
     end interface
         
@@ -214,7 +216,7 @@ contains
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, option_inherit_environment, fp%handle)
         if (pid < 0) then
-            write (*, *) '*process_run* ERROR: Could not create process!'
+            write (*, *) '*run* ERROR: Could not create process!'
             excode = -1
         end if
         
@@ -225,7 +227,7 @@ contains
     !! This function creates a subprocess, runs the specified command, and waits for it to finish,
     !! returning the process ID and setting the exit code.
     !! @param[in] cmd The command line string to execute (e.g., "ls -l" or "dir").
-    !! @param[in] option integer option
+    !! @param[in] options Integer option
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The exit code of the subprocess (0 typically indicates success).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
@@ -257,7 +259,7 @@ contains
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
         if (pid < 0) then
-            write (*, *) '*process_run* ERROR: Could not create process!'
+            write (*, *) '*run* ERROR: Could not create process!'
             excode = -1
         end if
         
@@ -281,7 +283,7 @@ contains
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option_inherit_environment), fp%handle)
         if (pid < 0) then
-            write (*, *) '*process_run* ERROR: Could not create process!'
+            write (*, *) '*runasync* ERROR: Could not create process!'
             excode = -1
         end if
     end function
@@ -290,7 +292,7 @@ contains
     !! This function creates a subprocess with asynchronous capabilities and returns immediately,
     !! allowing the command to run in the background.
     !! @param[in] cmd The command line string to execute (e.g., "notepad.exe").
-    !! @param[in] option integer option  
+    !! @param[in] options Integer option  
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The initial exit code (set to -1 if creation fails).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
@@ -322,7 +324,7 @@ contains
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
         if (pid < 0) then
-            write (*, *) '*process_run* ERROR: Could not create process!'
+            write (*, *) '*runasync* ERROR: Could not create process!'
             excode = -1
         end if
     end function
@@ -492,5 +494,5 @@ contains
             deallocate(fp%handle)
         end if
     end subroutine
-
 end module
+!> @}

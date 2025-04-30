@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['in_20the_20background_0',['2. Running a Command in the Background',['../manual.html#autotoc_md5',1,'']]],
-  ['installation_1',['Installation',['../index.html#autotoc_md19',1,'']]],
+  ['in_20the_20background_0',['2. Running a Command in the Background',['../group__group__api.html#autotoc_md6',1,'']]],
+  ['installation_1',['Installation',['../index.html#autotoc_md20',1,'']]],
   ['internal_5ffinalize_2',['internal_finalize',['../group__group__subprocess__handler.html#ga6146cc43b45dfc57a507f79e1e03f113',1,'subprocess_handler']]],
   ['internal_5fisalive_3',['internal_isalive',['../group__group__subprocess__handler.html#ga2fdd9c126e56bee8eb47e6afa4172cd0',1,'subprocess_handler']]],
   ['internal_5fread_5fstderr_4',['internal_read_stderr',['../group__group__subprocess__handler.html#ga0ac693e009aab9c471ad1d437e41947d',1,'subprocess_handler']]],
@@ -15,7 +15,7 @@ var searchData=
   ['internal_5fterminate_12',['internal_terminate',['../group__group__subprocess__handler.html#ga719d1b1f024eef23a91f857cd8201487',1,'subprocess_handler']]],
   ['internal_5fwait_13',['internal_wait',['../group__group__subprocess__handler.html#ga02ffa924c7ca6cf87b5bea2b49d773db',1,'subprocess_handler']]],
   ['internal_5fwriteto_5fstdin_14',['internal_writeto_stdin',['../group__group__subprocess__handler.html#gac2034e264ff0874ad20410790274e842',1,'subprocess_handler']]],
-  ['introduction_15',['Introduction',['../index.html#autotoc_md14',1,'']]],
+  ['introduction_15',['Introduction',['../index.html#autotoc_md15',1,'']]],
   ['is_5frunning_16',['is_running',['../structsubprocess_1_1process.html#a97908e3dc4d8bfd24b1fe1ae10f3db2d',1,'subprocess::process']]],
-  ['it_20to_20finish_17',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md4',1,'']]]
+  ['it_20to_20finish_17',['1. Running a Command and Waiting for It to Finish',['../group__group__api.html#autotoc_md5',1,'']]]
 ];

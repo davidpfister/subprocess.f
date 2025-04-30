@@ -36,5 +36,41 @@ var group__group__subprocess =
       [ "runasync", "structsubprocess_1_1process.html#af3a291c12817059fa6e37fe7f9f5dfe2", null ],
       [ "wait", "structsubprocess_1_1process.html#a65b0f22f77c736608603f82954afdbda", null ],
       [ "finalize", "structsubprocess_1_1process.html#a51107d83fe02b8ec343044c1aaf56c5e", null ]
+    ] ],
+    [ "kill", "interfacesubprocess_1_1kill.html", [
+      [ "process_kill", "interfacesubprocess_1_1kill.html#a0ebdda8da4230c10baf98a41cdf57ca0", null ]
+    ] ],
+    [ "run", "interfacesubprocess_1_1run.html", [
+      [ "process_run_default", "interfacesubprocess_1_1run.html#a95c82fa492d35ca7b4f85fa183953e1e", null ],
+      [ "process_run_with_arg1", "interfacesubprocess_1_1run.html#af80cf62818a334a67c3848ff7987f232", null ],
+      [ "process_run_with_arg2", "interfacesubprocess_1_1run.html#a9dff8d84c01be74a2a1f6a3179d36b6e", null ],
+      [ "process_run_with_arg3", "interfacesubprocess_1_1run.html#aca2ac23a57140ad173ddb0ca10b9748e", null ],
+      [ "process_run_with_arg4", "interfacesubprocess_1_1run.html#a82850e9201bfa5b83642eaa265277b0e", null ],
+      [ "process_run_with_arg5", "interfacesubprocess_1_1run.html#acec1fece3f7118a4ac30c734262d192b", null ],
+      [ "process_run_with_args", "interfacesubprocess_1_1run.html#a8129dc79b834f0834a95bb893cb09838", null ]
+    ] ],
+    [ "runasync", "interfacesubprocess_1_1runasync.html", [
+      [ "process_runasync_default", "interfacesubprocess_1_1runasync.html#a59dac287f4d91c97c1894eb7902a8363", null ],
+      [ "process_runasync_with_arg1", "interfacesubprocess_1_1runasync.html#a9cd5c38b56a0572a26588f88eacabaf3", null ],
+      [ "process_runasync_with_arg2", "interfacesubprocess_1_1runasync.html#a774bf71eaac5c4df11c1d8aff96bd3f0", null ],
+      [ "process_runasync_with_arg3", "interfacesubprocess_1_1runasync.html#a6bfed7cedd2c1b4e801d79af4f55ccfa", null ],
+      [ "process_runasync_with_arg4", "interfacesubprocess_1_1runasync.html#ad049cd41921d33c16f627c2f9618dee8", null ],
+      [ "process_runasync_with_arg5", "interfacesubprocess_1_1runasync.html#a592496114eaf4a585b26b9efe683bfb3", null ],
+      [ "process_runasync_with_args", "interfacesubprocess_1_1runasync.html#a98d81867fc23f846d94238c2ec2b4102", null ]
+    ] ],
+    [ "wait", "interfacesubprocess_1_1wait.html", [
+      [ "process_wait", "interfacesubprocess_1_1wait.html#ac843d9c54ac102a9d7c8ea9dcda6ec4c", null ]
+    ] ],
+    [ "waitall", "interfacesubprocess_1_1waitall.html", [
+      [ "process_waitall", "interfacesubprocess_1_1waitall.html#aee26539efd8e840c9cec27c0fff2eac2", null ]
+    ] ],
+    [ "read_stdout", "interfacesubprocess_1_1read__stdout.html", [
+      [ "process_read_stdout", "interfacesubprocess_1_1read__stdout.html#a8ac42e33560ecfe58c08c886143db47c", null ]
+    ] ],
+    [ "read_stderr", "interfacesubprocess_1_1read__stderr.html", [
+      [ "process_read_stderr", "interfacesubprocess_1_1read__stderr.html#a4e3b7b082470c3803b81f3301b747913", null ]
+    ] ],
+    [ "writeto", "interfacesubprocess_1_1writeto.html", [
+      [ "process_writeto_stdin", "interfacesubprocess_1_1writeto.html#a88f9058861ed4930f687a85cc6776527", null ]
     ] ]
 ];

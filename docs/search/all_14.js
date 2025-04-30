@@ -2,14 +2,14 @@ var searchData=
 [
   ['read_5fstderr_0',['read_stderr',['../interfacesubprocess_1_1read__stderr.html',1,'read_stderr'],['../structsubprocess_1_1process.html#a1e9d2b2d3c1483de2a861f433ed19584',1,'subprocess::process::read_stderr()']]],
   ['read_5fstdout_1',['read_stdout',['../interfacesubprocess_1_1read__stdout.html',1,'read_stdout'],['../structsubprocess_1_1process.html#a04e6d69b014f2fcf956156a8a5c42ad5',1,'subprocess::process::read_stdout()']]],
-  ['reporting_20a_20bug_2',['Reporting a bug',['../index.html#autotoc_md25',1,'']]],
-  ['request_3',['Pull request',['../index.html#autotoc_md26',1,'']]],
-  ['requirements_4',['Requirements',['../index.html#autotoc_md17',1,'']]],
-  ['results_5',['6. Checking Results',['../manual.html#autotoc_md9',1,'']]],
+  ['reporting_20a_20bug_2',['Reporting a bug',['../index.html#autotoc_md26',1,'']]],
+  ['request_3',['Pull request',['../index.html#autotoc_md27',1,'']]],
+  ['requirements_4',['Requirements',['../index.html#autotoc_md18',1,'']]],
+  ['results_5',['6. Checking Results',['../group__group__api.html#autotoc_md10',1,'']]],
   ['return_5fstatus_6',['return_status',['../group__group__subprocess__handler.html#ga08aa441923f2dcfcb80b194d4b1d6217',1,'subprocess_handler::subprocess_s']]],
   ['run_7',['run',['../interfacesubprocess_1_1run.html',1,'run'],['../structsubprocess_1_1process.html#a1a71134615f39e793f3631de506887f7',1,'subprocess::process::run(this, option)'],['../structsubprocess_1_1process.html#a468edf252c3263bde643635b5d9c6496',1,'subprocess::process::run(this, arg1, option)'],['../structsubprocess_1_1process.html#aec6fc152e950ad6e647394d8356870fb',1,'subprocess::process::run(this, arg1, arg2, option)'],['../structsubprocess_1_1process.html#a5710a831f91ac995d04c4c932494d9dc',1,'subprocess::process::run(this, arg1, arg2, arg3, option)'],['../structsubprocess_1_1process.html#a5eea4c2cdf23ba187b39693a987001ea',1,'subprocess::process::run(this, arg1, arg2, arg3, arg4, option)'],['../structsubprocess_1_1process.html#afbef0eeb47567dbf9a0a8b6f31380045',1,'subprocess::process::run(this, arg1, arg2, arg3, arg4, arg5, option)'],['../structsubprocess_1_1process.html#ae7914cc7d60ad2bd8868dee394a2c60d',1,'subprocess::process::run(this, args, option)']]],
   ['runasync_8',['runasync',['../interfacesubprocess_1_1runasync.html',1,'runasync'],['../structsubprocess_1_1process.html#af3a291c12817059fa6e37fe7f9f5dfe2',1,'subprocess::process::runasync(this, option)'],['../structsubprocess_1_1process.html#a8a3eb51fbcad884e5b654cd0f322bb5a',1,'subprocess::process::runasync(this, arg1, option)'],['../structsubprocess_1_1process.html#a06496d0cd902873813984b21bcd39e8b',1,'subprocess::process::runasync(this, arg1, arg2, option)'],['../structsubprocess_1_1process.html#ace7c1458069946e3f573f0f0284bf15c',1,'subprocess::process::runasync(this, arg1, arg2, arg3, option)'],['../structsubprocess_1_1process.html#a7d85acf9b14df025cc343f1ef6ac7dcf',1,'subprocess::process::runasync(this, arg1, arg2, arg3, arg4, option)'],['../structsubprocess_1_1process.html#ab1003e22f1c25bf7597d50006dc3933d',1,'subprocess::process::runasync(this, arg1, arg2, arg3, arg4, arg5, option)'],['../structsubprocess_1_1process.html#a6f204a469cbe64451417e58ed2debcbb',1,'subprocess::process::runasync(this, args, option)']]],
-  ['running_20a_20command_20and_20waiting_20for_20it_20to_20finish_9',['1. Running a Command and Waiting for It to Finish',['../manual.html#autotoc_md4',1,'']]],
-  ['running_20a_20command_20in_20the_20background_10',['2. Running a Command in the Background',['../manual.html#autotoc_md5',1,'']]],
-  ['running_20a_20script_20with_20arguments_11',['Advanced Example: Running a Script with Arguments',['../manual.html#autotoc_md11',1,'']]]
+  ['running_20a_20command_20and_20waiting_20for_20it_20to_20finish_9',['1. Running a Command and Waiting for It to Finish',['../group__group__api.html#autotoc_md5',1,'']]],
+  ['running_20a_20command_20in_20the_20background_10',['2. Running a Command in the Background',['../group__group__api.html#autotoc_md6',1,'']]],
+  ['running_20a_20script_20with_20arguments_11',['Advanced Example: Running a Script with Arguments',['../group__group__api.html#autotoc_md12',1,'']]]
 ];
