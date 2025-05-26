@@ -213,6 +213,7 @@ extern "C" {
 #define SUBPROCESS_NULL NULL
 
 #if !defined(_WIN32)
+#include <fcntl.h>
 #include <signal.h>
 #include <spawn.h>
 #include <stdlib.h>
@@ -416,6 +417,7 @@ extern "C" {
 		const unsigned long pipeAccessInbound = 0x00000001;
 		const unsigned long fileFlagOverlapped = 0x40000000;
 		const unsigned long pipeTypeByte = 0x00000000;
+		const unsigned long pipeWait = 0x00000000;
 		const unsigned long pipeNoWait = 0x00000001;
 		const unsigned long genericWrite = 0x40000000;
 		const unsigned long openExisting = 3;
@@ -443,7 +445,7 @@ extern "C" {
 
 		* rd =
 			CreateNamedPipeA(name, pipeAccessInbound | fileFlagOverlapped,
-				pipeTypeByte | pipeNoWait, 1, 4096, 4096, SUBPROCESS_NULL,
+				pipeTypeByte | pipeWait, 1, 4096, 4096, SUBPROCESS_NULL,
 				SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr));
 
 		if (invalidHandleValue == *rd) {
@@ -826,11 +828,11 @@ extern "C" {
 		out_process->stdout_file = fdopen(stdoutfd[0], "rb");
 
 		// Set non blocking if we are async
-		if (options & subprocess_option_enable_async) {
-			fd = fileno(out_process->stdout_file);
-			fd_flags = fcntl(fd, F_GETFL, 0);
-			fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
-		}
+		//if (options & subprocess_option_enable_async) {
+		//	fd = fileno(out_process->stdout_file);
+		//	fd_flags = fcntl(fd, F_GETFL, 0);
+		//	fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+		//}
 
 		if (subprocess_option_combined_stdout_stderr ==
 			(options & subprocess_option_combined_stdout_stderr)) {
@@ -842,11 +844,11 @@ extern "C" {
 			// Store the stderr read end
 			out_process->stderr_file = fdopen(stderrfd[0], "rb");
 			// Set non blocking if we are async
-			if (options & subprocess_option_enable_async) {
-				fd = fileno(out_process->stderr_file);
-				fd_flags = fcntl(fd, F_GETFL, 0);
-				fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
-			}
+			//if (options & subprocess_option_enable_async) {
+			//	fd = fileno(out_process->stderr_file);
+			//	fd_flags = fcntl(fd, F_GETFL, 0);
+			//	fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+			//}
 		}
 
 		// Store the child's pid

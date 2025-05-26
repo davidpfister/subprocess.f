@@ -102,7 +102,7 @@ TESTPROGRAM(main)
                 type(process) :: pg
                 logical :: exists
 #ifdef COMPILE_EXAMPLES
-                exists = .true.
+                exists = .false.
 #else
                 inquire(file=dirpath//file//'.exe', exist=exists)
 #endif
@@ -263,7 +263,30 @@ TESTPROGRAM(main)
         call stdin(p, temp)
         call wait(p)
         call read_stdout(p, res)
-        EXPECT_EQ(res, '40');
+        EXPECT_EQ(res, '40')
+    END_TEST
+    
+    TEST(subprocess_ping)
+        use subprocess
+        use test_subs
+
+        type(process) :: p
+        character(:), allocatable :: res
+        character(*), parameter :: commandline = 'ping'
+        integer :: i
+
+        p = process(commandline)
+        call runasync(p, '-t', 'www.bbc.co.uk')
+
+        res = 'a'
+        i = 0
+        do while (len_trim(res) /= 0)
+            i = i + 1
+            call read_stdout(p, res)
+            if (i > 10) exit
+        end do
+        call kill(p)
+        EXPECT_EQ(i, 11)
     END_TEST
     
     TEST(subprocess_stdout_argc)

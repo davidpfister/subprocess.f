@@ -56,7 +56,9 @@
 	</Configurations>
 	<Files>
 		<File RelativePath=".\subprocess.f90"/>
-		<File RelativePath=".\subprocess_handler.f90"/>
+		<File RelativePath=".\subprocess_handler.f90">
+		</File>
+		<File RelativePath=".\subprocess_sleep.f90"/>
 		<File RelativePath=".\subprocess_string.f90">
 		</File>
 	</Files>

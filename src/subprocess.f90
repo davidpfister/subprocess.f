@@ -24,6 +24,7 @@ module subprocess
               read_stderr, &
               read_stdout, &
               wait, &
+              sleep, &
               waitall, &
               writeto, &
               process_io
@@ -31,7 +32,6 @@ module subprocess
     public :: option_none,                     &
               option_combined_stdout_stderr,   &
               option_inherit_environment,      &
-              option_enable_async,             &
               option_no_window,                &
               option_search_user_path,         &
               option_enum
@@ -99,6 +99,8 @@ module subprocess
         procedure(process_io), pointer, nopass, private :: stderr => null()
         !> @brief Internal handle pointer for subprocess management.
         type(handle_pointer)                            :: ptr
+        !> @brief Logical flag indicating id the subprocess is running asynchronously
+        logical                                         :: isasync
     contains
         private
         procedure, pass(this)               :: process_run_default
@@ -510,6 +512,7 @@ contains
         
         that%is_running = .false.
         that%path = trim(path)
+        that%isasync = .false.
         if (present(stdin)) then
             nullify(stdin)
             stdin => process_writeto_stdin
@@ -670,6 +673,7 @@ contains
         procedure(process_io), pointer :: fptr => null()
         integer :: i
 
+        this%isasync = .false.
         cmd = this%path
         do i = 1, size(args)
             cmd = trim(cmd)//' '//trim(args(i))
@@ -690,11 +694,11 @@ contains
         this%is_running = internal_isalive(this%ptr)
         
         if (associated(this%stdout)) then
-            call this%stdout(this, internal_read_stdout(this%ptr))
+            call this%stdout(this, internal_read_stdout(this%ptr, this%isasync))
         end if
         
         if (associated(this%stderr)) then
-            call this%stderr(this, internal_read_stderr(this%ptr))
+            call this%stderr(this, internal_read_stderr(this%ptr, this%isasync))
         end if
     end subroutine
     
@@ -849,6 +853,7 @@ contains
         character(:), allocatable :: cmd, arg
         integer :: i
         
+        this%isasync = .true.
         cmd = this%path
         do i = 1, size(args)
             cmd = trim(cmd)//' '//trim(args(i))
@@ -859,7 +864,7 @@ contains
         this%is_running = .true.
         call get_time(this%begtime)
         if (present(option)) then
-            this%pid = internal_runasync(cmd, this%ptr, this%excode)
+            this%pid = internal_runasync(cmd, option, this%ptr, this%excode)
         else
             this%pid = internal_runasync(cmd, this%ptr, this%excode)
         end if
@@ -970,6 +975,7 @@ contains
             this%is_running = internal_isalive(this%ptr)
         end if
         if (.not. this%is_running) call get_time(this%extime)
+        this%isasync = .false.
         call internal_finalize(this%ptr)
     end subroutine
     
@@ -983,7 +989,7 @@ contains
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
         
-        output = internal_read_stdout(this%ptr)
+        output = internal_read_stdout(this%ptr, this%isasync)
     end subroutine
     
     !> @brief Reads the standard error of the associated process.
@@ -996,7 +1002,7 @@ contains
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
         
-        output = internal_read_stderr(this%ptr)
+        output = internal_read_stderr(this%ptr, this%isasync)
     end subroutine
     
     !> @brief Writes a message to the standard input of the associated process.
@@ -1023,6 +1029,7 @@ contains
         nullify(this%stdout)
         nullify(this%stdout)
         
+        this%isasync = .false.
         call internal_finalize(this%ptr)
         this%is_running = .false.
     end subroutine

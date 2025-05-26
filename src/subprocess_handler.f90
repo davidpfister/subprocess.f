@@ -9,6 +9,7 @@
 !! @{
 module subprocess_handler
     use, intrinsic :: iso_c_binding
+    use subprocess_sleep
 
     implicit none; private
 
@@ -20,7 +21,8 @@ module subprocess_handler
                 internal_read_stdout,   &
                 internal_read_stderr,   &
                 internal_isalive,       &
-                internal_terminate
+                internal_terminate,     &
+                sleep
 
     public ::   option_none,                     &
                 option_combined_stdout_stderr,   &
@@ -273,14 +275,15 @@ contains
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The initial exit code (set to -1 if creation fails).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
-    integer function internal_runasync_default(cmd, fp, excode) result(pid)
+    function internal_runasync_default(cmd, fp, excode) result(pid)
         character(*), intent(in)                :: cmd
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
-        integer :: ierr
+        integer :: pid
         
         if (.not. allocated(fp%handle)) allocate(fp%handle)
+               
         pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option_inherit_environment), fp%handle)
         if (pid < 0) then
             write (*, *) '*runasync* ERROR: Could not create process!'
@@ -322,7 +325,9 @@ contains
         end select
 
         if (.not. allocated(fp%handle)) allocate(fp%handle)
+        
         pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
+        
         if (pid < 0) then
             write (*, *) '*runasync* ERROR: Could not create process!'
             excode = -1
@@ -350,8 +355,9 @@ contains
     !! end-of-line characters based on the platform (CRLF on Windows, LF on others).
     !! @param[in,out] fp The handle pointer to the subprocess.
     !! @return output The captured stdout as an allocatable character string (empty if no output or handle not allocated).
-    function internal_read_stdout(fp) result(output)
+    function internal_read_stdout(fp, isasync) result(output)
         type(handle_pointer), intent(inout)     :: fp
+        logical, intent(in)                     :: isasync
         character(:), allocatable :: output
         !private
         integer(c_long) :: l
@@ -371,6 +377,7 @@ contains
                 l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
                 if (l > 0) then 
                     output = output // trim(buf(:l))
+                    if (isasync) exit
                 end if
             end do
             n = len(output)-len(eol)
@@ -391,8 +398,9 @@ contains
     !! trailing end-of-line characters based on the platform (CRLF on Windows, LF on others).
     !! @param[in,out] fp The handle pointer to the subprocess.
     !! @return output The captured stderr as an allocatable character string (empty if no output or handle not allocated).
-    function internal_read_stderr(fp) result(output)
+    function internal_read_stderr(fp, isasync) result(output)
         type(handle_pointer), intent(inout)     :: fp
+        logical, intent(in)                     :: isasync
         character(:), allocatable :: output
         !private
         integer(c_long) :: l
@@ -411,6 +419,7 @@ contains
                 l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
                 if (l > 0) then 
                     output = output // trim(buf(:l))
+                    if (isasync) exit
                 end if
             end do
             n = len(output)-len(eol)
