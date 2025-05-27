@@ -354,6 +354,7 @@ contains
     !! This function captures all available output from the subprocess's stdout, trimming trailing
     !! end-of-line characters based on the platform (CRLF on Windows, LF on others).
     !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @param[in] isasync .true. if the process runs asynchronously, .false. overwise.
     !! @return output The captured stdout as an allocatable character string (empty if no output or handle not allocated).
     function internal_read_stdout(fp, isasync) result(output)
         type(handle_pointer), intent(inout)     :: fp
@@ -397,6 +398,7 @@ contains
     !! This function captures all available error messages from the subprocess's stderr, trimming
     !! trailing end-of-line characters based on the platform (CRLF on Windows, LF on others).
     !! @param[in,out] fp The handle pointer to the subprocess.
+    !! @param[in] isasync .true. if the process runs asynchronously, .false. overwise.
     !! @return output The captured stderr as an allocatable character string (empty if no output or handle not allocated).
     function internal_read_stderr(fp, isasync) result(output)
         type(handle_pointer), intent(inout)     :: fp

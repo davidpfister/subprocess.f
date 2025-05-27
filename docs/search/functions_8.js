@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wait_0',['wait',['../structsubprocess_1_1process.html#a65b0f22f77c736608603f82954afdbda',1,'subprocess::process']]]
+  ['sleep_0',['sleep',['../group__group__subprocess__sleep.html#ga1f3f9008b37bc3b20e8e20f70b9ed904',1,'subprocess_sleep']]]
 ];

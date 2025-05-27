@@ -27,9 +27,11 @@
 # Introduction
 <!-- ABOUT THE PROJECT -->
 ## About the Project
+<center>
 <p align="center">
-  <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/logo.png?raw=true">
+  <img src="https://github.com/davidpfister/subprocess.f/blob/master/.dox/images/logo.png?raw=true" width="512" height="512">
 </p>
+</center>
 
 This project aims at providing an easy and comprehensive API to spawn child processes in Fortran. <br>
 The development of this repo is linked to the discussion on the Fortran discourse about the [Stdlib system interaction API](https://fortran-lang.discourse.group/t/stdlib-system-interaction-api-call-for-feedback/9037)
