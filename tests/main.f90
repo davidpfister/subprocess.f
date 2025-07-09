@@ -68,7 +68,7 @@ end module
 #include <assertion.inc>
 TESTPROGRAM(main)
 
-    TEST(test_gfortran)
+    TEST('test_gfortran')
         use subprocess, only: process, run, read_stderr, read_stdout
         use test_subs
 
@@ -129,7 +129,7 @@ TESTPROGRAM(main)
         end do
     END_TEST
 
-    TEST(test_hello_world)
+    TEST('test_hello_world')
         use subprocess
         use test_subs
 
@@ -142,7 +142,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(output, 'Hello from child!')
     END_TEST
     
-    TEST(process_return_zero)
+    TEST('process_return_zero')
         use subprocess
         use test_subs
 
@@ -157,7 +157,7 @@ TESTPROGRAM(main)
         EXPECT_TRUE(p%has_exited())
     END_TEST
     
-    TEST(subprocess_return_fortytwo)
+    TEST('subprocess_return_fortytwo')
         use subprocess
         use test_subs
 
@@ -172,7 +172,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '42')
     END_TEST
     
-    TEST(subprocess_return_argc)
+    TEST('subprocess_return_argc')
         use subprocess
         use test_subs
 
@@ -187,7 +187,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '4')
     END_TEST
     
-    TEST(subprocess_return_argv)
+    TEST('subprocess_return_argv')
         use subprocess
         use test_subs
 
@@ -202,7 +202,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '13')
     END_TEST
     
-    TEST(subprocess_return_stdin)
+    TEST('subprocess_return_stdin')
         use subprocess
         use test_subs
 
@@ -248,7 +248,7 @@ TESTPROGRAM(main)
         EXPECT_TRUE(p%has_exited())
     END_TEST
     
-    TEST(subprocess_return_stdin_count)
+    TEST('subprocess_return_stdin_count')
         use subprocess
         use test_subs
 
@@ -266,7 +266,7 @@ TESTPROGRAM(main)
         EXPECT_EQ(res, '40')
     END_TEST
     
-    TEST(subprocess_ping)
+    TEST('subprocess_ping')
         use subprocess
         use test_subs
 
@@ -289,7 +289,7 @@ TESTPROGRAM(main)
         EXPECT_EQ(i, 11)
     END_TEST
     
-    TEST(subprocess_stdout_argc)
+    TEST('subprocess_stdout_argc')
         use subprocess
         use test_subs
 
@@ -305,7 +305,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '4')
     END_TEST
     
-    TEST(subprocess_stdout_argc_with_empty_strings)
+    TEST('subprocess_stdout_argc_with_empty_strings')
         use subprocess
         use test_subs
 
@@ -321,7 +321,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '0')
     END_TEST
     
-    TEST(subprocess_stdout_argv)
+    TEST('subprocess_stdout_argv')
         use subprocess
         use test_subs
 
@@ -337,7 +337,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, 'foo bar baz faz')
     END_TEST
     
-    TEST(subprocess_stderr_argc)
+    TEST('subprocess_stderr_argc')
         use subprocess
         use test_subs
 
@@ -353,7 +353,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '4')
     END_TEST
     
-    TEST(subprocess_stderr_argc_with_empty_strings)
+    TEST('subprocess_stderr_argc_with_empty_strings')
         use subprocess
         use test_subs
 
@@ -369,7 +369,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, '0')
     END_TEST
     
-    TEST(subprocess_stderr_argv)
+    TEST('subprocess_stderr_argv')
         use subprocess
         use test_subs
 
@@ -385,7 +385,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, 'foo bar baz faz')
     END_TEST
 
-    TEST(process_return_lpcmdline)
+    TEST('process_return_lpcmdline')
         use subprocess
         use test_subs
 
@@ -403,7 +403,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, compare)
     END_TEST
 
-    TEST(process_combined_stdout_stderr)
+    TEST('process_combined_stdout_stderr')
         use subprocess
         use test_subs
 
@@ -422,7 +422,7 @@ TESTPROGRAM(main)
         EXPECT_STREQ(res, compare);
     END_TEST
 
-    TEST(process_not_inherit_environment)
+    TEST('process_not_inherit_environment')
         use subprocess
         use test_subs
 
@@ -442,7 +442,7 @@ TESTPROGRAM(main)
         EXPECT_TRUE(p%exit_code() == 0)
     END_TEST
 
-    TEST(process_inherit_environment)
+    TEST('process_inherit_environment')
         use subprocess
         use test_subs
 
@@ -462,7 +462,7 @@ TESTPROGRAM(main)
         EXPECT_TRUE(p%exit_code() == 0)
     END_TEST
 
-    TEST(process_fail_divzero)
+    TEST('process_fail_divzero')
         use subprocess
         use test_subs
 
