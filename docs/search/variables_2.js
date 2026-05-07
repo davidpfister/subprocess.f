@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['chars_0',['chars',['../structsubprocess__string_1_1string.html#a74c3e1b5723bc1560980b214992afe5a',1,'subprocess_string::string']]],
-  ['child_1',['child',['../group__group__subprocess__handler.html#ga7d4c018a7e22cdabe30be238bccec5a9',1,'subprocess_handler::subprocess_s']]]
+  ['excode_0',['excode',['../structsubprocess_1_1process.html#a6bf4f578c0429aff185f1167f7c67a31',1,'subprocess::process']]],
+  ['extime_1',['extime',['../structsubprocess_1_1process.html#a046eb221f5a11c4a4ce35f9d272bf350',1,'subprocess::process']]]
 ];

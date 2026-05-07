@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['excode_0',['excode',['../structsubprocess_1_1process.html#a6bf4f578c0429aff185f1167f7c67a31',1,'subprocess::process']]],
-  ['extime_1',['extime',['../structsubprocess_1_1process.html#a046eb221f5a11c4a4ce35f9d272bf350',1,'subprocess::process']]]
+  ['is_5frunning_0',['is_running',['../structsubprocess_1_1process.html#a97908e3dc4d8bfd24b1fe1ae10f3db2d',1,'subprocess::process']]],
+  ['isasync_1',['isasync',['../structsubprocess_1_1process.html#ac5292f81de3a3707c58a3327eb42d0e7',1,'subprocess::process']]]
 ];

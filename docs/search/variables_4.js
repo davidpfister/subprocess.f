@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['heventerror_0',['heventerror',['../group__group__subprocess__handler.html#ga68d355d7c72d8c394f07e36d5d593be3',1,'subprocess_handler::subprocess_s']]],
-  ['heventoutput_1',['heventoutput',['../group__group__subprocess__handler.html#gac8830b55e3695c16cdbfd5915a88939d',1,'subprocess_handler::subprocess_s']]],
-  ['hprocess_2',['hprocess',['../group__group__subprocess__handler.html#gac16bc8972c67160517f45e9cb5793e93',1,'subprocess_handler::subprocess_s']]],
-  ['hstdinput_3',['hstdinput',['../group__group__subprocess__handler.html#ga6949cbb8ecbd3ad6a1af19684dbaa4c6',1,'subprocess_handler::subprocess_s']]]
+  ['path_0',['path',['../structsubprocess_1_1process.html#a24c3853239291ade50ce83ed0c7bbb26',1,'subprocess::process']]],
+  ['pid_1',['pid',['../structsubprocess_1_1process.html#aa6b39f6c18694e26ea7c7353e8eaa7e1',1,'subprocess::process']]],
+  ['ptr_2',['ptr',['../structsubprocess_1_1process.html#af9917aa8a43f2c402cddb05cd7d50789',1,'subprocess::process']]]
 ];
