@@ -1,5 +1,5 @@
-!> @defgroup group_subprocess Subprocess
-!! @ingroup group_api
+!> @file
+!! @defgroup group_subprocess Subprocess
 !! @brief @link subprocess::process Subprocess @endlink module
 !> @cond
 #ifdef _WIN32
@@ -18,7 +18,7 @@ module subprocess
 
     implicit none; private
 
-    public :: kill, &
+    public :: kill,  &
               run, &
               runasync, &
               read_stderr, &
@@ -36,12 +36,10 @@ module subprocess
               option_search_user_path,         &
               option_enum
 
-    !> @class process
-    !! @ingroup group_subprocess
-    !> @brief   A derived type representing a subprocess with associated properties and methods.
-    !!          This type encapsulates the state and behavior of a subprocess, including its process ID,
-    !!          path, execution status, and I/O handlers. It provides methods to run, manage, and
-    !!          interact with the subprocess.
+    !> A derived type representing a subprocess with associated properties and methods.
+    !! This type encapsulates the state and behavior of a subprocess, including its process ID,
+    !! path, execution status, and I/O handlers. It provides methods to run, manage, and
+    !! interact with the subprocess.
     !! <h2>Examples</h2>
     !! The following examples demonstrate some of the main members of the @ref process. 
     !! @n
@@ -79,6 +77,7 @@ module subprocess
     !! @return The constructed process object.
     !!
     !! @b Remarks
+    !! @ingroup group_subprocess
     type, public :: process
         private
         !> @brief The process ID of the subprocess.
@@ -148,9 +147,7 @@ module subprocess
     !! @endcond
     end interface
     
-    !> @interface kill
-    !! @ingroup group_subprocess
-    !> @brief Terminates the associated process.
+    !> Terminates the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -168,14 +165,14 @@ module subprocess
     !!  call kill(p)
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface kill
+    !! @cond
         module procedure :: process_kill
+    !! @endcond
     end interface
 
-    !> @interface run
-    !! @ingroup group_subprocess
-    !> @brief Runs a process synchronously.
-    !!
+    !> Runs a process synchronously.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -244,7 +241,9 @@ module subprocess
     !!  call run(p, './ *.f90')
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface run
+    !! @cond
         module procedure :: process_run_default, &
                             process_run_with_arg1, &
                             process_run_with_arg2, &
@@ -252,12 +251,10 @@ module subprocess
                             process_run_with_arg4, &
                             process_run_with_arg5, &
                             process_run_with_args
+    !! @endcond
     end interface
     
-    !> @interface runasync
-    !! @ingroup group_subprocess
-    !> @brief Runs a process asynchronously.
-    !!
+    !> Runs a process asynchronously.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -328,7 +325,9 @@ module subprocess
     !!  call wait(p)
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface runasync
+    !! @cond
         module procedure :: process_runasync_default, &
                             process_runasync_with_arg1, &
                             process_runasync_with_arg2, &
@@ -336,12 +335,10 @@ module subprocess
                             process_runasync_with_arg4, &
                             process_runasync_with_arg5, &
                             process_runasync_with_args
+    !! @endcond
     end interface
     
-    !> @interface wait
-    !! @ingroup group_subprocess
-    !> @brief Waits for the associated process to complete.
-    !!
+    !> Waits for the associated process to complete.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -359,14 +356,13 @@ module subprocess
     !!  call wait(p)
     !! @endcode
     !! <h2> Remarks </h2>
-    interface wait 
+    interface wait
+    !! @cond
         module procedure :: process_wait
+    !! @endcond
     end interface
     
-    !> @interface waitall
-    !! @ingroup group_subprocess
-    !> @brief Waits for all processes in an array to complete.
-    !!
+    !> Waits for all processes in an array to complete.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -387,14 +383,12 @@ module subprocess
     !!  call waitall(p)
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface waitall
         module procedure :: process_waitall
     end interface
     
-    !> @interface read_stdout
-    !! @ingroup group_subprocess
-    !> @brief Reads the standard output of the associated process.
-    !!
+    !> Reads the standard output of the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -417,14 +411,12 @@ module subprocess
     !!  print *, trim(files(i))
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface read_stdout
         module procedure :: process_read_stdout
     end interface
     
-    !> @interface read_stderr
-    !! @ingroup group_subprocess
-    !> @brief Reads the standard error of the associated process.
-    !!
+    !> Reads the standard error of the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -452,14 +444,12 @@ module subprocess
     !!  end if
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface read_stderr
         module procedure :: process_read_stderr
     end interface
 
-    !> @interface writeto
-    !! @ingroup group_subprocess
-    !> @brief Write the standard inlet of the associated process.
-    !!
+    !> Write the standard inlet of the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
@@ -482,15 +472,18 @@ module subprocess
     !!  call wait(p)
     !! @endcode
     !! <h2> Remarks </h2>
+    !! @ingroup group_subprocess
     interface writeto
+    !! @cond
         module procedure :: process_writeto_stdin
+    !! @endcond
     end interface
     
     abstract interface 
-        !! @ingroup group_subprocess
-        !> @brief Abstract interface for io procedures.
+        !! Abstract interface for io procedures.
         !! @param[in] sender The process to write to or read from
-        !! @param[in] msg The message to exchange with the running process   
+        !! @param[in] msg The message to exchange with the running process
+        !! @ingroup group_subprocess 
         subroutine process_io(sender, msg)
             import
             implicit none
@@ -671,12 +664,17 @@ contains
         !private
         character(:), allocatable :: cmd, arg
         procedure(process_io), pointer :: fptr => null()
-        integer :: i
+        character(2), parameter :: invalids = char(10)//char(13)
+        integer :: i, j
 
         this%isasync = .false.
         cmd = this%path
         do i = 1, size(args)
-            cmd = trim(cmd)//' '//trim(args(i))
+            arg = args(i)
+            do  j = 1, len(arg)
+                if (scan(arg(j:j), invalids) /= 0) arg(j:j) = ' '
+            end do
+            cmd = trim(cmd)//' '//trim(adjustl(arg))
         end do
 
         if (allocated(this%excode)) deallocate(this%excode)

@@ -1,5 +1,5 @@
 module test_subs
-    use subprocess, only: process, process_io
+    use subprocess, only: process, process_io, sleep
     
     implicit none; private
     
@@ -207,9 +207,13 @@ TESTPROGRAM(main)
         use test_subs
 
         type(process) :: p
+        character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_stdin'
-
+        
         p = process(dirpath//commandline, stdin=stdin)
+        call runasync(p)
+        call kill(p)
+        
         call runasync(p)
         
         call stdin(p, 'a')
@@ -220,7 +224,7 @@ TESTPROGRAM(main)
         EXPECT_FALSE(p%has_exited())
         call stdin(p, 'a')
         EXPECT_FALSE(p%has_exited())
-        call stdin(p, ' ')
+        call stdin(p, '_')
         EXPECT_FALSE(p%has_exited())
         call stdin(p, 'a')
         EXPECT_FALSE(p%has_exited())
@@ -228,7 +232,7 @@ TESTPROGRAM(main)
         EXPECT_FALSE(p%has_exited())
         call stdin(p, 'e')
         EXPECT_FALSE(p%has_exited())
-        call stdin(p, ' ')
+        call stdin(p, '_')
         EXPECT_FALSE(p%has_exited())
         call stdin(p, 'g')
         EXPECT_FALSE(p%has_exited())
@@ -241,11 +245,11 @@ TESTPROGRAM(main)
         call stdin(p, 't')
         EXPECT_FALSE(p%has_exited())
         call stdin(p, '!')
-        EXPECT_FALSE(p%has_exited())
-        call stdin(p, '@')
-
         call wait(p)
+        
+        call read_stdout(p, res)
         EXPECT_TRUE(p%has_exited())
+        EXPECT_STREQ(res, 'abba_are_great!')
     END_TEST
     
     TEST('subprocess_return_stdin_count')
@@ -280,10 +284,11 @@ TESTPROGRAM(main)
 
         res = 'a'
         i = 0
-        do while (len_trim(res) /= 0)
+        do while (.not. p%has_exited())
             i = i + 1
             call read_stdout(p, res)
             if (i > 10) exit
+            if (len(res) == 0) call sleep(100)
         end do
         call kill(p)
         EXPECT_EQ(i, 11)

@@ -86,6 +86,8 @@ extern "C" {
 		subprocess_option_search_user_path = 0x10
 	};
 
+	__declspec(dllexport) void __cdecl c_sleep(int milliseconds);
+
 	/// @brief Create a process.
 	/// @param command_line An array of strings for the command line to execute for
 	/// this process. The last element must be NULL to signify the end of the array.
@@ -207,6 +209,18 @@ extern "C" {
 	/// @return If the process is still alive non-zero is returned.
 	__declspec(dllexport) int __cdecl subprocess_alive(struct subprocess_s* process);
 
+	/// @brief Wait for the stdout handle for a given time.
+	/// @param process The process to check.
+	/// @param timeout_ms the time to wait.
+	__declspec(dllexport) int __cdecl subprocess_wait_stdout(struct subprocess_s* process,
+		int timeout_ms);
+
+	/// @brief Wait for the stdout handle for a given time.
+	/// @param process The process to check.
+	/// @param timeout_ms the time to wait.
+	__declspec(dllexport) int __cdecl subprocess_wait_stderr(struct subprocess_s* process,
+		int timeout_ms);
+
 #define SUBPROCESS_CAST(type, x) static_cast<type>(x)
 #define SUBPROCESS_PTR_CAST(type, x) reinterpret_cast<type>(x)
 #define SUBPROCESS_CONST_CAST(type, x) const_cast<type>(x)
@@ -223,7 +237,7 @@ extern "C" {
 #endif
 
 #if defined(_WIN32)
-
+#include <windows.h>
 #if (_MSC_VER < 1920)
 #ifdef _WIN64
 	typedef __int64 subprocess_intptr_t;
@@ -349,7 +363,7 @@ extern "C" {
 		unsigned long, void* const*, int, unsigned long);
 	__declspec(dllimport) int __stdcall GetOverlappedResult(void*, LPOVERLAPPED,
 		unsigned long*, int);
-
+	__declspec(dllimport) int __stdcall CancelIo(void*);
 #if defined(_DLL)
 #define SUBPROCESS_DLLIMPORT __declspec(dllimport)
 #else
@@ -644,10 +658,10 @@ extern "C" {
 
 		if (options & subprocess_option_enable_async) {
 			out_process->hEventOutput =
-				CreateEventA(SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr), 1, 1,
+				CreateEventA(SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr), TRUE, FALSE,
 					SUBPROCESS_NULL);
 			out_process->hEventError =
-				CreateEventA(SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr), 1, 1,
+				CreateEventA(SUBPROCESS_PTR_CAST(LPSECURITY_ATTRIBUTES, &saAttr), TRUE, FALSE,
 					SUBPROCESS_NULL);
 		}
 		else {
@@ -828,11 +842,11 @@ extern "C" {
 		out_process->stdout_file = fdopen(stdoutfd[0], "rb");
 
 		// Set non blocking if we are async
-		//if (options & subprocess_option_enable_async) {
-		//	fd = fileno(out_process->stdout_file);
-		//	fd_flags = fcntl(fd, F_GETFL, 0);
-		//	fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
-		//}
+		if (options & subprocess_option_enable_async) {
+			fd = fileno(out_process->stdout_file);
+			fd_flags = fcntl(fd, F_GETFL, 0);
+			fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+		}
 
 		if (subprocess_option_combined_stdout_stderr ==
 			(options & subprocess_option_combined_stdout_stderr)) {
@@ -844,11 +858,11 @@ extern "C" {
 			// Store the stderr read end
 			out_process->stderr_file = fdopen(stderrfd[0], "rb");
 			// Set non blocking if we are async
-			//if (options & subprocess_option_enable_async) {
-			//	fd = fileno(out_process->stderr_file);
-			//	fd_flags = fcntl(fd, F_GETFL, 0);
-			//	fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
-			//}
+			if (options & subprocess_option_enable_async) {
+				fd = fileno(out_process->stderr_file);
+				fd_flags = fcntl(fd, F_GETFL, 0);
+				fcntl(fd, F_SETFL, fd_flags | O_NONBLOCK);
+			}
 		}
 
 		// Store the child's pid
@@ -967,10 +981,11 @@ extern "C" {
 
 			if (process->hEventOutput) {
 				CloseHandle(process->hEventOutput);
+				process->hEventOutput = SUBPROCESS_NULL;
 			}
-
 			if (process->hEventError) {
 				CloseHandle(process->hEventError);
+				process->hEventError = SUBPROCESS_NULL;
 			}
 		}
 #endif
@@ -1015,18 +1030,17 @@ extern "C" {
 			// Means we've got an async read!
 			if (error == errorIoPending) {
 				const uintptr_t statusPending = 0x00000103;
-
 				const int wait = statusPending == overlapped.Internal;
 
 				if (!GetOverlappedResult(handle,
 					SUBPROCESS_PTR_CAST(LPOVERLAPPED, &overlapped),
-					&bytes_read, wait)) {
+					&bytes_read, 0)) {
+					// const unsigned long errorIoIncomplete = 996;
 					const unsigned long errorHandleEOF = 38;
-					const unsigned long errorBrokenPipe = 109;
-					const unsigned long errorIoIncomplete = 996;
 					error = GetLastError();
 
-					if ((errorHandleEOF != error) && (errorBrokenPipe != error) && (errorIoIncomplete != error)) {
+					if ( /* (error != errorIoIncomplete) && */ (error != errorHandleEOF)) {
+						CancelIo(handle);
 						return 0;
 					}
 				}
@@ -1064,14 +1078,17 @@ extern "C" {
 
 			// Means we've got an async read!
 			if (error == errorIoPending) {
+				const uintptr_t statusPending = 0x00000103;
+				const int wait = statusPending == overlapped.Internal;
 				if (!GetOverlappedResult(handle,
 					SUBPROCESS_PTR_CAST(LPOVERLAPPED, &overlapped),
-					&bytes_read, 1)) {
-					const unsigned long errorIoIncomplete = 996;
+					&bytes_read, FALSE)) {
+					//const unsigned long errorIoIncomplete = 996;
 					const unsigned long errorHandleEOF = 38;
 					error = GetLastError();
 
-					if ((error != errorIoIncomplete) && (error != errorHandleEOF)) {
+					if (/*(error != errorIoIncomplete) && */(error != errorHandleEOF)) {
+						CancelIo(handle);
 						return 0;
 					}
 				}
@@ -1136,9 +1153,124 @@ extern "C" {
 		return is_alive;
 	}
 
+	/// @brief Wait for data to be available on stdout of the child process.
+	/// @param process The process to wait on.
+	/// @param timeout_ms Timeout in milliseconds. Use -1 to wait forever.
+	/// @return 1 if data is available, 0 if timeout, -1 on error.
+	int subprocess_wait_stdout(struct subprocess_s* process, int timeout_ms)
+	{
+		if (!process || !process->stdout_file) {
+			return -1;
+	}
+
+#if defined(_WIN32)
+		if (!process->hEventOutput) {
+			return -1;
+		}
+
+		DWORD dwTimeout = (timeout_ms < 0) ? INFINITE : (DWORD)timeout_ms;
+		DWORD result = WaitForSingleObject(process->hEventOutput, dwTimeout);
+
+		if (result == WAIT_OBJECT_0)      return 1;   /* data available */
+		if (result == WAIT_TIMEOUT)       return 0;   /* timeout */
+		return -1;                                        /* error */
+#else
+		int fd = fileno(process->stdout_file);
+		if (fd < 0) {
+			return -1;
+	}
+
+		struct pollfd pfd = {
+			.fd = fd,
+			.events = POLLIN,
+			.revents = 0
+		};
+
+		int ret = poll(&pfd, 1, timeout_ms);
+
+		if (ret > 0 && (pfd.revents & POLLIN)) {
+			return 1;   /* data available */
+		}
+		if (ret == 0) {
+			return 0;   /* timeout */
+		}
+		return -1;      /* error */
+#endif
+}
+
+	/// @brief Wait for data to be available on stderr of the child process.
+	/// @param process The process to wait on.
+	/// @param timeout_ms Timeout in milliseconds. Use -1 to wait forever.
+	/// @return 1 if data is available, 0 if timeout, -1 on error.
+	int subprocess_wait_stderr(struct subprocess_s* process, int timeout_ms)
+	{
+		if (!process) {
+			return -1;
+		}
+
+		/* If stdout and stderr are merged, delegate to stdout waiter */
+		if (process->stdout_file == process->stderr_file) {
+			return subprocess_wait_stdout(process, timeout_ms);
+		}
+
+		if (!process->stderr_file) {
+			return -1;
+		}
+
+#if defined(_WIN32)
+		if (!process->hEventError) {
+			return -1;
+		}
+
+		DWORD dwTimeout = (timeout_ms < 0) ? INFINITE : (DWORD)timeout_ms;
+		DWORD result = WaitForSingleObject(process->hEventError, dwTimeout);
+
+		if (result == WAIT_OBJECT_0)      return 1;
+		if (result == WAIT_TIMEOUT)       return 0;
+		return -1;
+#else
+		int fd = fileno(process->stderr_file);
+		if (fd < 0) {
+			return -1;
+		}
+
+		struct pollfd pfd = {
+			.fd = fd,
+			.events = POLLIN,
+			.revents = 0
+		};
+
+		int ret = poll(&pfd, 1, timeout_ms);
+
+		if (ret > 0 && (pfd.revents & POLLIN)) {
+			return 1;
+		}
+		if (ret == 0) {
+			return 0;
+		}
+		return -1;
+#endif
+	}
+
 #if defined(__clang__)
 #if __has_warning("-Wunsafe-buffer-usage")
 #pragma clang diagnostic pop
 #endif
+#endif
+
+#if defined(_WIN32)
+	// https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
+	extern void c_sleep(int milliseconds) {
+		Sleep(milliseconds);
+	}
+
+#else
+
+	// https://linux.die.net/man/3/usleep
+	extern void c_sleep(int milliseconds)
+	{
+		int ierr = usleep(milliseconds * 1000);
+	}
+
 #endif
 } // extern "C"

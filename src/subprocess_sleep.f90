@@ -1,13 +1,10 @@
-!> @defgroup group_subprocess_sleep Sleep
-!! @ingroup group_api
-!! @brief Sleep module
-!! @{
+!> @file
+!! @defgroup group_subprocess_sleep Sleep
+!! Sleep module
 module subprocess_sleep
     use, intrinsic :: iso_c_binding, only: c_int
 
-    implicit none
-
-    private
+    implicit none; private
 
     public :: sleep
 
@@ -23,8 +20,9 @@ module subprocess_sleep
     end interface
 contains
 
-    !> @brief Sleep function
+    !> Sleep function
     !! @param[in] millisec Time to sleep in milliseconds
+    !! @ingroup group_subprocess_sleep
     subroutine sleep(millisec)
         integer, intent(in), optional :: millisec
         integer(c_int) :: ierr
@@ -36,4 +34,3 @@ contains
         call sleep_c(int(millisec, c_int))
     end subroutine
 end module
-!> @}
