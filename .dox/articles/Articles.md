@@ -1,36 +1,36 @@
-!> @defgroup group_api Overview
+# Documentation
 
 Hey, glad you stumbled across `subprocess.f`! This little Fortran repo is all about making your life easier when you want to kick off external programs or commands from inside your Fortran code. It is designed to let you run a shell command, fire up a script, or juggle a bunch of processes without breaking a sweat. You can find the whole thing over at [https://github.com/davidpfister/subprocess.f](https://github.com/davidpfister/subprocess.f).
 
-So, what’s the big deal with `subprocess.f`? Well, Fortran’s awesome for crunching numbers and doing heavy lifting in science or engineering, but sometimes you need to call out to other tools—like a script, a system utility, or whatever else you’ve got lying around.
+So, what's the big deal with `subprocess.f`? Well, Fortran's awesome for crunching numbers and doing heavy lifting in science or engineering, but sometimes you need to call out to other tools, like a script, a system utility, or whatever else you've got lying around.
 
-Here’s the rundown of what you can do with it:
-- **Run Stuff Your Way**: Use `run` to fire off a command and chill until it’s done, or go with `runasync` to let it hum along in the background while you keep working.
+Here's the rundown of what you can do with it:
+- **Run Stuff Your Way**: Use `run` to fire off a command and chill until it's done, or go with `runasync` to let it hum along in the background while you keep working.
 - **Grab the Output**: Snag whatever the command prints with `read_stdout` for the good stuff or `read_stderr` for the error messages.
-- **Boss the Process Around**: Check if it’s still going with `has_exited`, wait for it with `wait`, or shut it down early with `kill`. Oh, and if you’ve got a bunch of them, `waitall` has your back.
-- **Know What’s Up**: Peek at exit codes to see if it worked, or check how long it took with `exit_time`. Handy for figuring out if things went south or just took their sweet time.
+- **Boss the Process Around**: Check if it's still going with `has_exited`, wait for it with `wait`, or shut it down early with `kill`. Oh, and if you've got a bunch of them, `waitall` has your back.
+- **Know What's Up**: Peek at exit codes to see if it worked, or check how long it took with `exit_time`. Handy for figuring out if things went south or just took their sweet time.
 
-The library’s split into two parts to keep things tidy:
-- **`subprocess`**: This is your go-to module. It’s got a `process` type that’s super easy to use—just tell it what to run and how, and you’re off to the races.
-- **`subprocess_handler`**: This is the behind-the-scenes magic. It’s the layer that talks to the system using some C tricks, so you don’t have to mess with the low-level stuff yourself.
+The library's split into two parts to keep things tidy:
+- **`subprocess`**: This is your go-to module. It's got a `process` type that's super easy to use, just tell it what to run and how, and you're off to the races.
+- **`subprocess_handler`**: This is the behind-the-scenes magic. It's the layer that talks to the system using some C tricks, so you don't have to mess with the low-level stuff yourself.
 
-The code’s all hanging out on GitHub, and we’d love for you to dig in, try it out, and maybe even toss us some ideas or fixes if you’re feeling generous. This documentation’s packed with all the juicy details—API breakdowns, examples you can tweak, and tips to get you rolling. So, grab a coffee, scroll through, and let’s get some processes running together!
+The code's all hanging out on GitHub, and we'd love for you to dig in, try it out, and maybe even toss us some ideas or fixes if you're feeling generous. This documentation's packed with all the juicy details, API breakdowns, examples you can tweak, and tips to get you rolling. So, grab a coffee, scroll through, and let's get some processes running together!
 
 ## End-User Manual
 
-Welcome to the `subprocess` module! This tool lets you run external commands (like programs or scripts) from your Fortran program, manage them, and capture their output. It’s designed to be flexible and easy to use, whether you’re running a command and waiting for it to finish or launching something in the background while your program keeps going.
+Welcome to the `subprocess` module! This tool lets you run external commands (like programs or scripts) from your Fortran program, manage them, and capture their output. It's designed to be flexible and easy to use, whether you're running a command and waiting for it to finish or launching something in the background while your program keeps going.
 
-This manual explains how to use the module in simple terms, with examples you can try out. We’ll assume you have a basic Fortran setup and can compile code that uses this module.
+This manual explains how to use the module in simple terms, with examples you can try out. We'll assume you have a basic Fortran setup and can compile code that uses this module.
 
 ### What You Can Do with This Module
 
 - **Run commands**: Execute any command or program, like `ls` on Linux or `dir` on Windows, with or without arguments.
-- **Wait or don’t wait**: Run a command and wait for it to finish (synchronous), or let it run in the background (asynchronous).
+- **Wait or don't wait**: Run a command and wait for it to finish (synchronous), or let it run in the background (asynchronous).
 - **Capture output**: Read what the command prints to the screen (stdout) or its error messages (stderr).
 - **Control processes**: Check if a command is still running, wait for it to finish, or stop it early.
-- **Pass input**: Send data to a command’s input (stdin), if it expects it.
+- **Pass input**: Send data to a command's input (stdin), if it expects it.
 
-The main tool you’ll use is the `process` type, which acts like a container for a command you want to run. You create a `process`, tell it what to do, and then use its features to manage it.
+The main tool you'll use is the `process` type, which acts like a container for a command you want to run. You create a `process`, tell it what to do, and then use its features to manage it.
 
 ### Getting Started
 
@@ -38,25 +38,24 @@ To use this module, include it in your Fortran program:
 
 ```fortran
 use subprocess
-implicit none
 ```
 
-You’ll also need to link against the `subprocess_handler` library when compiling, but that’s a detail for your compiler setup. For now, let’s focus on the code.
+You'll also need to link against the `subprocess_handler` library when compiling, but that's a detail for your compiler setup. For now, let's focus on the code.
 
-### Key Features of the `process` Type
+### Key Features of the process Type
 
 When you create a `process`, it has some properties and actions (methods) you can use:
 
 - **Properties**:
   - `pid`: The process ID (a number) assigned to the running command.
-  - `filename`: The name of the command or program you’re running (e.g., `"notepad.exe"` or `"ls"`).
+  - `filename`: The name of the command or program you're running (e.g., `"notepad.exe"` or `"ls"`).
   - (Other internal details like exit codes and timing are handled automatically.)
 
 - **Actions**:
   - `run`: Starts the command and waits for it to finish.
   - `runasync`: Starts the command and lets it run in the background.
-  - `read_stdout`: Gets the command’s output.
-  - `read_stderr`: Gets the command’s error messages.
+  - `read_stdout`: Gets the command's output.
+  - `read_stderr`: Gets the command's error messages.
   - `wait`: Waits for a background command to finish.
   - `kill`: Stops a running command.
   - `exit_code`: Tells you how the command ended (e.g., 0 means success).
@@ -65,11 +64,11 @@ When you create a `process`, it has some properties and actions (methods) you ca
 
 ### Examples
 
-Let’s walk through some common tasks with examples. These assume you’re on a system where the commands work (e.g., Windows for `dir`, Linux/macOS for `ls`). Adjust the commands to match your system.
+Let's walk through some common tasks with examples. These assume you're on a system where the commands work (e.g., Windows for `dir`, Linux/macOS for `ls`). Adjust the commands to match your system.
 
 #### 1. Running a Command and Waiting for It to Finish
 
-Suppose you want to list files in a directory. On Windows, you’d use `dir`; on Linux, `ls`. Here’s how to run `dir` and wait for it to finish:
+Suppose you want to list files in a directory. On Windows, you'd use `dir`; on Linux, `ls`. Here's how to run `dir` and wait for it to finish:
 
 ```fortran
 program simple_run
@@ -87,10 +86,10 @@ program simple_run
 end program
 ```
 
-- **What happens**: The program runs `dir`, waits until it’s done, and then prints "Command finished!"
-- **Note**: You won’t see the output of `dir` yet—we’ll cover that later.
+- **What happens**: The program runs `dir`, waits until it's done, and then prints "Command finished!"
+- **Note**: You won't see the output of `dir` yet, we'll cover that later.
 
-You can also add arguments. Here’s how to run `echo` with a message:
+You can also add arguments. Here's how to run `echo` with a message:
 
 ```fortran
 program run_with_args
@@ -107,11 +106,11 @@ end program
 
 - **What happens**: It runs `echo Hello, world!` and waits for it to finish.
 
-You can add up to five arguments directly (e.g., `call proc%run("arg1", "arg2", "arg3")`), or use an array for more flexibility (see the advanced example later).
+You can add up to five arguments directly (e.g., `call proc % run("arg1", "arg2", "arg3")`), or use an array for more flexibility (see the advanced example later).
 
 #### 2. Running a Command in the Background
 
-If you don’t want to wait, use `runasync`. Here’s how to start `notepad` (on Windows) and keep going:
+If you don't want to wait, use `runasync`. Here's how to start `notepad` (on Windows) and keep going:
 
 ```fortran
 program async_run
@@ -126,9 +125,9 @@ program async_run
     print *, "Process ID:", proc%pid
 
     ! Wait a bit (optional, for demo)
-    call sleep(2)
+    call sleep(2000)
 
-    ! Check if it’s still running
+    ! Check if it's still running
     if (proc%has_exited()) then
         print *, "Notepad already closed."
     else
@@ -138,11 +137,11 @@ end program
 ```
 
 - **What happens**: Notepad opens, and your program keeps running. It prints the process ID and checks if Notepad is still open after 2 seconds.
-- **Note**: `sleep` isn’t part of this module—you’d need a custom delay or skip that part.
+- **Note**: `sleep` isn't part of this module, you'd need a custom delay or skip that part.
 
 #### 3. Capturing Output
 
-To see what a command prints, use `read_stdout`. Here’s how to run `dir` and print its output:
+To see what a command prints, use `read_stdout`. Here's how to run `dir` and print its output:
 
 ```fortran
 program capture_output
@@ -165,7 +164,7 @@ end program
 
 #### 4. Stopping a Command Early
 
-If a command is running and you want to stop it, use `kill`. Here’s an example with a long-running command (like `ping` on Windows):
+If a command is running and you want to stop it, use `kill`. Here's an example with a long-running command (like `ping` on Windows):
 
 ```fortran
 program kill_process
@@ -177,7 +176,7 @@ program kill_process
     call proc%runasync("localhost")  ! Start pinging in the background
 
     print *, "Pinging started. Waiting 3 seconds..."
-    call sleep(3)
+    call sleep(3000)
 
     if (.not. proc%has_exited()) then
         call proc%kill()
@@ -188,11 +187,11 @@ program kill_process
 end program
 ```
 
-- **What happens**: It starts `ping localhost`, waits 3 seconds, and then stops it if it’s still running.
+- **What happens**: It starts `ping localhost`, waits 3 seconds, and then stops it if it's still running.
 
 #### 5. Waiting for Multiple Commands
 
-If you’re running several commands in the background, use `waitall` to wait for all of them. Here’s an example:
+If you're running several commands in the background, use `waitall` to wait for all of them. Here's an example:
 
 ```fortran
 program wait_all
@@ -210,7 +209,6 @@ program wait_all
     call waitall(procs)
 
     print *, "All done!"
-    !
 end program
 ```
 
@@ -243,15 +241,15 @@ end program
 
 ### Tips for Using the Module
 
-- **Command Names**: Use the full path (e.g., `"C:\Windows\notepad.exe"`) if the command isn’t in your system’s PATH.
-- **Arguments**: For commands with spaces or special characters, test carefully—some systems might need quotes.
+- **Command Names**: Use the full path (e.g., `"C:\Windows\notepad.exe"`) if the command isn't in your system's PATH.
+- **Arguments**: For commands with spaces or special characters, test carefully, some systems might need quotes.
 - **Background Commands**: If you use `runasync`, remember to check `has_exited()` or call `wait()` if you need to sync up later.
-- **Output**: `read_stdout` and `read_stderr` only work after the command finishes with `run`, or you’ll need to manage timing with `runasync`.
+- **Output**: `read_stdout` and `read_stderr` only work after the command finishes with `run`, or you'll need to manage timing with `runasync`.
 - **Cleanup**: The module handles cleanup automatically when a `process` goes out of scope, but `kill()` ensures a command stops if needed.
 
 ### Advanced Example: Running a Script with Arguments
 
-Here’s a more complex example running a hypothetical Python script with multiple arguments:
+Here's a more complex example running a hypothetical Python script with multiple arguments:
 
 ```fortran
 program advanced_run
@@ -282,17 +280,17 @@ end program
 ```
 
 - **What happens**: It runs `python myscript.py --input data.txt`, captures the output, and shows the results.
-- **Note**: The `string` type is used here for argument arrays—set `chars` directly as shown.
+- **Note**: The `string` type is used here for argument arrays, set `chars` directly as shown.
 
 ### Troubleshooting
 
-- **Command not found**: Check the `filename` and ensure it’s correct for your system.
+- **Command not found**: Check the `filename` and ensure it's correct for your system.
 - **No output**: Make sure you call `read_stdout` or `read_stderr` after the command finishes.
-- **Process won’t stop**: Use `kill()` and check `has_exited()` to confirm it worked.
-- **Errors**: Look at `exit_code()`—non-zero values mean something went wrong (specific meanings depend on the command).
+- **Process won't stop**: Use `kill()` and check `has_exited()` to confirm it worked.
+- **Errors**: Look at `exit_code()`, non-zero values mean something went wrong (specific meanings depend on the command).
 
 ### Wrapping Up
 
-The `subprocess` module makes it easy to run and manage external commands from Fortran. Start with simple `run` calls, then explore `runasync` and output capturing as needed. Play with the examples, tweak them for your system, and you’ll be controlling processes like a pro!
+The `subprocess` module makes it easy to run and manage external commands from Fortran. Start with simple `run` calls, then explore `runasync` and output capturing as needed. Play with the examples, and tweak them for your system.
 
-For more details, check the API documentation (if you have it)—it lists every method and property in technical terms. Happy coding!
+For more details, check the API documentation, it lists every method and property in technical terms. Happy coding!
