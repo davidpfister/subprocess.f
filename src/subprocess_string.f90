@@ -47,17 +47,17 @@ module subprocess_string
     !! s = 'foo'
     !! ```
     !! @note
-    !! The string implementation proposed here is kept at the bare 
-    !! minimum of what is required by the library. There are many 
+    !! The string implementation proposed here is kept at the bare
+    !! minimum of what is required by the library. There are many
     !! other implementations that can be found.
     !! @par
     !! <h2  class="groupheader">Constructors</h2>
     !! Initializes a new instance of the @ref string class
     !! <h3>string(character(:))</h3>
     !! @verbatim type(string) function string(character(:) chars) @endverbatim
-    !! 
+    !!
     !! @param[in] chars The character array
-    !! 
+    !!
     !! @b Examples
     !! ```fortran
     !! type(string) :: s
@@ -68,22 +68,22 @@ module subprocess_string
     !! @ingroup group_subprocess_string
     type, public :: string
         private
-        character(:), allocatable, public :: chars !< Variable length character array
+        character(:), allocatable, public :: chars  !< Variable length character array
     contains
         procedure, private, pass(lhs) :: string_assign_character
         procedure, private, pass(rhs) :: character_assign_string
-        generic :: assignment(=)      => string_assign_character, &
-                                         character_assign_string
+        generic :: assignment(=) => string_assign_character, &
+                character_assign_string
     end type
 
-    !> Trims whitespace from a string object. 
+    !> Trims whitespace from a string object.
     !! <h2  class="groupheader">Methods</h2>
     !!
     !! <h3>trim(type(string) str)</h3>
-    !! 
+    !!
     !! @param[in] str The string object to trim.
     !! @return res The trimmed character string.
-    !! 
+    !!
     !! <h2  class="groupheader">Examples</h2>
     !! The following example illustrates a call to the `trim` interface.
     !! @code{.f90}
@@ -99,22 +99,22 @@ module subprocess_string
     !! <h2> Remarks </h2>
     !! @ingroup group_subprocess_string
     interface trim
-    !! @cond
+        !! @cond
         module procedure :: string_trim
-    !! @endcond
+        !! @endcond
     end interface
 
-    contains
+contains
 
     !> Assigns a character string to a string object.
     !! @param[in,out] lhs The string object to assign to.
     !! @param[in] rhs The character string to assign.
-    !! 
+    !!
     !! @b Examples
     !! @code{.f90}
     !! type(string) :: s
     !! character(:), allocatable :: c
-    !! 
+    !!
     !! s = 'foo'
     !! c = s
     !! ! The value of c is now 'foo'
@@ -128,16 +128,16 @@ module subprocess_string
 
         lhs%chars = rhs
     end subroutine
-    
+
     !> Assigns a string object to a character string.
     !! @param[in,out] lhs The character string to assign to.
     !! @param[in] rhs The string object to assign.
-    !! 
+    !!
     !! @b Examples
     !! @code{.f90}
     !! character(:), allocatable :: c
     !! type(string) :: s
-    !! 
+    !!
     !! s = string('foo')
     !! c = s
     !! ! The value of c is now 'foo'
@@ -147,7 +147,7 @@ module subprocess_string
     !! @b Remarks
     pure subroutine character_assign_string(lhs, rhs)
         character(:), allocatable, intent(inout)    :: lhs
-        class(string), intent(in)                   :: rhs   
+        class(string), intent(in)                   :: rhs
 
         lhs = rhs%chars
     end subroutine
@@ -155,7 +155,7 @@ module subprocess_string
     function string_trim(str) result(res)
         class(string), intent(in) :: str
         character(:), allocatable :: res
-        
+
         res = trim(adjustl(str%chars))
     end function
 end module

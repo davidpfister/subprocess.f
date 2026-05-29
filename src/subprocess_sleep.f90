@@ -12,6 +12,7 @@ module subprocess_sleep
         !! @cond
         subroutine sleep_c(millseconds) bind(c, name='c_sleep')
             import :: c_int
+            implicit none
             !DEC$ ATTRIBUTES STDCALL :: sleep_c
             !GCC$ ATTRIBUTES STDCALL :: sleep_c
             integer(c_int), intent(in), value :: millseconds

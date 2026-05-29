@@ -2,9 +2,9 @@
 !! @defgroup group_subprocess_handler Handler
 !! Provides the binding and wrapper functions to the processlib C library.
 !! @note
-!! The binding is obtained using the `iso_c_binding` intrinsic module. 
-!! If the compiler does not provide such intrinsic module then the 
-!! compilation will fail. 
+!! The binding is obtained using the `iso_c_binding` intrinsic module.
+!! If the compiler does not provide such intrinsic module then the
+!! compilation will fail.
 module subprocess_handler
     use, intrinsic :: iso_c_binding
     use subprocess_sleep, only: sleep
@@ -12,35 +12,35 @@ module subprocess_handler
     implicit none; private
 
     public  ::  internal_run,           &
-                internal_runasync,      &
-                internal_finalize,      &
-                internal_wait,          &
-                internal_writeto_stdin, &
-                internal_read_stdout,   &
-                internal_read_stderr,   &
-                internal_isalive,       &
-                internal_terminate,     &
-                sleep
+            internal_runasync,      &
+            internal_finalize,      &
+            internal_wait,          &
+            internal_writeto_stdin, &
+            internal_read_stdout,   &
+            internal_read_stderr,   &
+            internal_isalive,       &
+            internal_terminate,     &
+            sleep
 
     public ::   option_none,                     &
-                option_combined_stdout_stderr,   &
-                option_inherit_environment,      &
-                option_enable_async,             &
-                option_no_window,                &
-                option_search_user_path,         &
-                option_enum
-    
+            option_combined_stdout_stderr,   &
+            option_inherit_environment,      &
+            option_enable_async,             &
+            option_no_window,                &
+            option_search_user_path,         &
+            option_enum
+
     character(*), parameter :: CR = char(13)
     character(*), parameter :: LF = char(10)
-    character(*), parameter :: SPACE = char(32) 
-        
+    character(*), parameter :: SPACE = char(32)
+
     !> A C-bound derived type representing the internal state of a subprocess.
     !! This type is used to interface with C functions for managing subprocesses, holding file pointers
     !! for I/O streams and platform-specific process handles. It is not intended for direct user manipulation.
     !! @ingroup group_subprocess_handler
     type, bind(c) :: subprocess_s
         !> @brief Pointer to the subprocess's stdin file stream (FILE* in C).
-        type(c_ptr) :: stdin_file 
+        type(c_ptr) :: stdin_file
         !> @brief Pointer to the subprocess's stdout file stream (FILE* in C).
         type(c_ptr) :: stdout_file
         !> @brief Pointer to the subprocess's stderr file stream (FILE* in C).
@@ -75,14 +75,14 @@ module subprocess_handler
         private
         type(subprocess_s), allocatable :: handle
     end type
-    
+
     !> Option enumerator type
     !! @li **option_none**                      : default option
     !! @li **option_combined_stdout_stderr**    : stdout and stderr are the same FILE.
     !! @li **option_inherit_environment**       : The child process should inherit the environment variables of the parent.
     !! @li **option_enable_async**              : Enable asynchronous reading of stdout/stderr before it has completed.
     !! @li **option_no_window**                 : Enable the child process to be spawned with no window visible if supported by the platform.
-    !! @li **option_search_user_path**          : Search for program names in the PATH variable. Always enabled on Windows. @note 
+    !! @li **option_search_user_path**          : Search for program names in the PATH variable. Always enabled on Windows. @note
     !! this will **not** search for paths in any provided custom environment and instead uses the PATH of the spawning process.
     !! @ingroup group_subprocess_handler
     enum, bind(c)
@@ -94,69 +94,79 @@ module subprocess_handler
         enumerator :: option_search_user_path = 16
     end enum
 
-    
     integer, parameter :: option_enum = kind(option_none)
 
     interface
         integer(c_int) function subprocess_create_c(cmd, options, process) bind(C, name='subprocess_create')
             import
+            implicit none
             character(c_char), intent(in) :: cmd(*)
             integer(c_int), intent(in), value :: options
             type(subprocess_s), intent(inout) :: process
         end function
-           
+
         type(c_ptr) function subprocess_stdin_c(process) bind(C, name='subprocess_stdin')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         type(c_ptr) function subprocess_stdout_c(process) bind(C, name='subprocess_stdout')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         type(c_ptr) function subprocess_stderr_c(process) bind(C, name='subprocess_stderr')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         integer(c_int) function subprocess_join_c(process, exit_code) bind(C, name='subprocess_join')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
             integer(c_int), intent(out) :: exit_code
         end function
-    
+
         integer(c_int) function subprocess_destroy_c(process) bind(C, name='subprocess_destroy')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         integer(c_int) function subprocess_terminate_c(process) bind(C, name='subprocess_terminate')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         integer(c_long) function subprocess_read_stdout_c(process, buffer, size) bind(C, name='subprocess_read_stdout')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
             character(c_char), intent(inout) :: buffer(*)
             integer(c_long), value :: size
         end function
-    
+
         integer(c_long) function subprocess_read_stderr_c(process, buffer, size) bind(C, name='subprocess_read_stderr')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
             character(c_char), intent(inout) :: buffer(*)
             integer(c_long), value :: size
         end function
-    
+
         integer(c_int) function subprocess_alive_c(process) bind(C, name='subprocess_alive')
             import
+            implicit none
             type(subprocess_s), intent(inout) :: process
         end function
-    
+
         type(c_ptr) function fgets_c(str, numChars, stream) bind(C, name='fgets')
             import
+            implicit none
             character(c_char), intent(inout) :: str(*)
             integer(c_int), intent(inout) :: numChars
             type(c_ptr), value :: stream
@@ -164,12 +174,14 @@ module subprocess_handler
 
         integer(c_int) function fputs_c(buf, handle) bind(C, name='fputs')
             import
+            implicit none
             character(c_char), intent(in) :: buf(*)
             type(c_ptr), value :: handle
         end function
 
         function fflush_c(handle) bind(C, name='fflush')
             import
+            implicit none
             integer(c_int) :: fflush_c
             type(c_ptr), value :: handle
         end function
@@ -181,18 +193,18 @@ module subprocess_handler
     !! @ingroup group_subprocess_handler
     interface internal_run
         module procedure :: internal_run_default,           &
-                            internal_run_with_options
+                internal_run_with_options
     end interface
-    
+
     !> Interface for asynchronously running a subprocess.
     !! This generic interface provides a single procedure for executing a command asynchronously,
     !! allowing it to run in the background without waiting for completion.
     !! @ingroup group_subprocess_handler
     interface internal_runasync
         module procedure :: internal_runasync_default,      &
-                            internal_runasync_with_options
+                internal_runasync_with_options
     end interface
-        
+
 contains
 
     !> Executes a command synchronously and waits for its completion.
@@ -209,14 +221,14 @@ contains
         integer(c_int), intent(out)             :: excode
         !private
         integer :: ierr
-        
+
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, option_inherit_environment, fp%handle)
         if (pid < 0) then
-            write (*, *) '*run* ERROR: Could not create process!'
+            write(*, *) '*run* ERROR: Could not create process!'
             excode = -1
         end if
-        
+
         ierr = subprocess_join_c(fp%handle, excode)
     end function
 
@@ -237,9 +249,9 @@ contains
         !private
         integer :: ierr, i
         integer(option_enum) :: opt
-        
+
         opt = option_inherit_environment
-        select rank(o => options)
+        select rank (o => options)
         rank(0)
             opt = merge(ior(opt, o), option_none, o /= option_none)
         rank(1)
@@ -253,17 +265,17 @@ contains
         rank default
             opt = option_inherit_environment
         end select
-        
+
         if (.not. allocated(fp%handle)) allocate(fp%handle)
         pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
         if (pid < 0) then
-            write (*, *) '*run* ERROR: Could not create process!'
+            write(*, *) '*run* ERROR: Could not create process!'
             excode = -1
         end if
-        
+
         ierr = subprocess_join_c(fp%handle, excode)
     end function
-    
+
     !> Executes a command asynchronously without waiting for completion.
     !! This function creates a subprocess with asynchronous capabilities and returns immediately,
     !! allowing the command to run in the background.
@@ -278,12 +290,12 @@ contains
         integer(c_int), intent(out)             :: excode
         !private
         integer :: pid
-        
+
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-               
+
         pid = subprocess_create_c(cmd // c_null_char, ior(option_enable_async, option_inherit_environment), fp%handle)
         if (pid < 0) then
-            write (*, *) '*runasync* ERROR: Could not create process!'
+            write(*, *) '*runasync* ERROR: Could not create process!'
             excode = -1
         end if
     end function
@@ -292,7 +304,7 @@ contains
     !! This function creates a subprocess with asynchronous capabilities and returns immediately,
     !! allowing the command to run in the background.
     !! @param[in] cmd The command line string to execute (e.g., "notepad.exe").
-    !! @param[in] options Integer option  
+    !! @param[in] options Integer option
     !! @param[in,out] fp The handle pointer to manage the subprocess.
     !! @param[out] excode The initial exit code (set to -1 if creation fails).
     !! @return pid The process ID of the created subprocess, or a negative value on error.
@@ -305,9 +317,9 @@ contains
         !private
         integer :: ierr, i
         integer(option_enum) :: opt
-        
+
         opt = ior(option_enable_async, option_inherit_environment)
-        select rank(o => options)
+        select rank (o => options)
         rank(0)
             opt = merge(ior(opt, o), option_enable_async, o /= option_none)
         rank(1)
@@ -323,15 +335,15 @@ contains
         end select
 
         if (.not. allocated(fp%handle)) allocate(fp%handle)
-        
+
         pid = subprocess_create_c(cmd // c_null_char, opt, fp%handle)
-        
+
         if (pid < 0) then
-            write (*, *) '*runasync* ERROR: Could not create process!'
+            write(*, *) '*runasync* ERROR: Could not create process!'
             excode = -1
         end if
     end function
-    
+
     !> Writes a message to the standard input of a subprocess.
     !! This subroutine sends the provided message to the stdin of the subprocess if it is active.
     !! @param[in] fp The handle pointer to the subprocess.
@@ -349,7 +361,7 @@ contains
             end if
         end if
     end subroutine
-    
+
     !> Reads the standard output from a subprocess.
     !! This function captures all available output from the subprocess's stdout, trimming trailing
     !! end-of-line characters based on the platform (CRLF on Windows, LF on others).
@@ -365,7 +377,7 @@ contains
         integer(c_long) :: l
         character(BUFFER_SIZE) :: buf
 #ifdef _WIN32
-        character(*), parameter :: eol = CR//LF
+        character(*), parameter :: eol = CR // LF
 #else
         character(*), parameter :: eol = LF
 #endif
@@ -377,14 +389,14 @@ contains
             allocate(character(0)::output)
             do while (l > 0)
                 l = subprocess_read_stdout_c(fp%handle, buf, BUFFER_SIZE)
-                if (l > 0) then 
+                if (l > 0) then
                     output = output // trim(buf(:l))
                     if (isasync) exit
                 end if
             end do
-            n = len(output)-len(eol)
+            n = len(output) - len(eol)
             if (n > 0) then
-                if (output(n+1:) == eol) then
+                if (output(n + 1:) == eol) then
                     output = adjustl(output(:n))
                 end if
             else
@@ -394,7 +406,7 @@ contains
             output = ''
         end if
     end function
-    
+
     !> Reads the standard error from a subprocess.
     !! This function captures all available error messages from the subprocess's stderr, trimming
     !! trailing end-of-line characters based on the platform (CRLF on Windows, LF on others).
@@ -411,7 +423,7 @@ contains
         character(BUFFER_SIZE) :: buf
         integer :: n
 #ifdef _WIN32
-        character(*), parameter :: eol = CR//LF
+        character(*), parameter :: eol = CR // LF
 #else
         character(*), parameter :: eol = LF
 #endif
@@ -421,24 +433,24 @@ contains
             allocate(character(0)::output)
             do while (l > 0)
                 l = subprocess_read_stderr_c(fp%handle, buf, BUFFER_SIZE)
-                if (l > 0) then 
+                if (l > 0) then
                     output = output // trim(buf(:l))
                     if (isasync) exit
                 end if
             end do
-            n = len(output)-len(eol)
+            n = len(output) - len(eol)
             if (n > 0) then
-                if (output(n+1:) == eol) then
+                if (output(n + 1:) == eol) then
                     output = adjustl(output(:n))
                 end if
             else
                 output = ''
             end if
-        else 
+        else
             output = ''
         end if
     end function
-    
+
     !> Checks if a subprocess is still running.
     !! This function queries the subprocess's alive status and returns a logical value.
     !! @param[in,out] fp The handle pointer to the subprocess.
@@ -448,13 +460,15 @@ contains
         type(handle_pointer), intent(inout)     :: fp
         logical :: alive
         !private
-        integer(c_int) :: status = 0
+        integer(c_int) :: status
+
+        status = 0_c_int
         if (allocated(fp%handle)) then
             status = subprocess_alive_c(fp%handle)
         end if
         alive = (status /= 0)
     end function
-    
+
     !> Waits for a subprocess to complete and retrieves its exit code.
     !! This subroutine blocks until the subprocess finishes and updates the provided exit code.
     !! @param[in,out] fp The handle pointer to the subprocess.
@@ -464,12 +478,14 @@ contains
         type(handle_pointer), intent(inout)     :: fp
         integer(c_int), intent(out)             :: excode
         !private
-        integer :: ierr = 0
+        integer :: ierr
+
+        ierr = 0
         if (allocated(fp%handle)) then
             ierr = subprocess_join_c(fp%handle, excode)
         end if
     end subroutine
-    
+
     !> Terminates a running subprocess.
     !! This subroutine attempts to terminate the subprocess and optionally returns an error status.
     !! @param[in,out] fp The handle pointer to the subprocess.
@@ -479,14 +495,16 @@ contains
         type(handle_pointer), intent(inout)     :: fp
         integer, intent(out), optional          :: ierr
         !private
-        integer :: istat = 0
+        integer :: istat
         integer(c_int) :: rcode
+
+        istat = 0
         if (allocated(fp%handle)) then
             istat = subprocess_terminate_c(fp%handle)
         end if
         if (present(ierr)) ierr = istat
     end subroutine
-    
+
     !> Finalizes a subprocess by terminating it if running and releasing resources.
     !! This subroutine ensures the subprocess is stopped and its resources are cleaned up.
     !! @param[in,out] fp The handle pointer to the subprocess.
@@ -506,7 +524,9 @@ contains
     subroutine internal_destroy(fp)
         type(handle_pointer), intent(inout) :: fp
         !private
-        integer(c_int) :: ierr = 0
+        integer(c_int) :: ierr
+
+        ierr = 0_c_int
         if (allocated(fp%handle)) then
             ierr = subprocess_destroy_c(fp%handle)
             deallocate(fp%handle)

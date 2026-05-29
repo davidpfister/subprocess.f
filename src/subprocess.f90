@@ -19,32 +19,32 @@ module subprocess
     implicit none; private
 
     public :: kill,  &
-              run, &
-              runasync, &
-              read_stderr, &
-              read_stdout, &
-              wait, &
-              sleep, &
-              waitall, &
-              writeto, &
-              process_io
+            run, &
+            runasync, &
+            read_stderr, &
+            read_stdout, &
+            wait, &
+            sleep, &
+            waitall, &
+            writeto, &
+            process_io
 
     public :: option_none,                     &
-              option_combined_stdout_stderr,   &
-              option_inherit_environment,      &
-              option_no_window,                &
-              option_search_user_path,         &
-              option_enum
+            option_combined_stdout_stderr,   &
+            option_inherit_environment,      &
+            option_no_window,                &
+            option_search_user_path,         &
+            option_enum
 
     !> A derived type representing a subprocess with associated properties and methods.
     !! This type encapsulates the state and behavior of a subprocess, including its process ID,
     !! path, execution status, and I/O handlers. It provides methods to run, manage, and
     !! interact with the subprocess.
     !! <h2>Examples</h2>
-    !! The following examples demonstrate some of the main members of the @ref process. 
+    !! The following examples demonstrate some of the main members of the @ref process.
     !! @n
     !! The first example shows a simple usage of the process type. It creates a child process
-    !! to list the files in a given folder. 
+    !! to list the files in a given folder.
     !! @n
     !! @snippet snippet.f90 process_ex1
     !! @n
@@ -59,7 +59,7 @@ module subprocess
     !! @snippet snippet.f90 process_ex3
     !! @par
     !! <h2>Constructors</h2>
-    !! Constructs a new process object with the specified path 
+    !! Constructs a new process object with the specified path
     !! and optional I/O handlers.
     !! <h3>process(character(*), procedure(process_io), procedure(process_io), procedure(process_io))</h3>
     !! @verbatim type(process) function process(character(*) path) @endverbatim
@@ -72,7 +72,7 @@ module subprocess
     !! @b Examples
     !! ```fortran
     !! type(process) :: p
-    !! p = process('cmd') 
+    !! p = process('cmd')
     !! ```
     !! @return The constructed process object.
     !!
@@ -119,40 +119,39 @@ module subprocess
         procedure, pass(this), public       :: exit_code => process_exit_code
         procedure, pass(this), public       :: exit_time => process_exit_time
         procedure, pass(this), public       :: has_exited => process_has_exited
-        generic, public :: run              => process_run_default,             &
-                                                process_run_with_arg1,           &
-                                                process_run_with_arg2,           &
-                                                process_run_with_arg3,           &
-                                                process_run_with_arg4,           &
-                                                process_run_with_arg5,           &
-                                                process_run_with_args
-        generic, public :: runasync         => process_runasync_default,        &
-                                                process_runasync_with_arg1,      &
-                                                process_runasync_with_arg2,      &
-                                                process_runasync_with_arg3,      &
-                                                process_runasync_with_arg4,      &
-                                                process_runasync_with_arg5,      &
-                                                process_runasync_with_args
-        procedure, pass(this), public       :: read_stdout => process_read_stdout 
-        procedure, pass(this), public       :: read_stderr => process_read_stderr 
+        generic, public :: run => process_run_default,             &
+                process_run_with_arg1,           &
+                process_run_with_arg2,           &
+                process_run_with_arg3,           &
+                process_run_with_arg4,           &
+                process_run_with_arg5,           &
+                process_run_with_args
+        generic, public :: runasync => process_runasync_default,        &
+                process_runasync_with_arg1,      &
+                process_runasync_with_arg2,      &
+                process_runasync_with_arg3,      &
+                process_runasync_with_arg4,      &
+                process_runasync_with_arg5,      &
+                process_runasync_with_args
+        procedure, pass(this), public       :: read_stdout => process_read_stdout
+        procedure, pass(this), public       :: read_stderr => process_read_stderr
         procedure, pass(this), public       :: wait => process_wait
         procedure, pass(this), public       :: kill => process_kill
         final :: finalize
     end type
 
-    
     interface process
-    !! @cond
+        !! @cond
         module procedure :: process_new
-    !! @endcond
+        !! @endcond
     end interface
-    
+
     !> Terminates the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>kill(type(process) p)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to terminate.
     !!
     !! <h2> Examples </h2>
@@ -167,9 +166,9 @@ module subprocess
     !! <h2> Remarks </h2>
     !! @ingroup group_subprocess
     interface kill
-    !! @cond
+        !! @cond
         module procedure :: process_kill
-    !! @endcond
+        !! @endcond
     end interface
 
     !> Runs a process synchronously.
@@ -177,20 +176,20 @@ module subprocess
     !! <h2>Methods</h2>
     !!
     !! <h3>run(type(process) p, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, character(*) arg1, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -198,7 +197,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -207,7 +206,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -217,7 +216,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, character(*) arg5, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -228,7 +227,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>run(type(process) p, type(string) args, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run.
     !! @param[in] args Array of arguments to pass to the process.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
@@ -243,36 +242,36 @@ module subprocess
     !! <h2> Remarks </h2>
     !! @ingroup group_subprocess
     interface run
-    !! @cond
+        !! @cond
         module procedure :: process_run_default, &
-                            process_run_with_arg1, &
-                            process_run_with_arg2, &
-                            process_run_with_arg3, &
-                            process_run_with_arg4, &
-                            process_run_with_arg5, &
-                            process_run_with_args
-    !! @endcond
+                process_run_with_arg1, &
+                process_run_with_arg2, &
+                process_run_with_arg3, &
+                process_run_with_arg4, &
+                process_run_with_arg5, &
+                process_run_with_args
+        !! @endcond
     end interface
-    
+
     !> Runs a process asynchronously.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>runasync(type(process) p, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, character(*) arg1, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run  asynchronously.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -280,7 +279,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -289,7 +288,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -299,7 +298,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, character(*) arg1, character(*) arg2, character(*) arg3, character(*) arg4, character(*) arg5, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] arg1 The first argument to the process.
     !! @param[in] arg2 The second argument to the process.
@@ -310,7 +309,7 @@ module subprocess
     !!
     !! <h2> </h2>
     !! <h3>runasync(type(process) p, type(string) args, (optional) integer option)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to run asynchronously.
     !! @param[in] args Array of arguments to pass to the process.
     !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
@@ -327,23 +326,23 @@ module subprocess
     !! <h2> Remarks </h2>
     !! @ingroup group_subprocess
     interface runasync
-    !! @cond
+        !! @cond
         module procedure :: process_runasync_default, &
-                            process_runasync_with_arg1, &
-                            process_runasync_with_arg2, &
-                            process_runasync_with_arg3, &
-                            process_runasync_with_arg4, &
-                            process_runasync_with_arg5, &
-                            process_runasync_with_args
-    !! @endcond
+                process_runasync_with_arg1, &
+                process_runasync_with_arg2, &
+                process_runasync_with_arg3, &
+                process_runasync_with_arg4, &
+                process_runasync_with_arg5, &
+                process_runasync_with_args
+        !! @endcond
     end interface
-    
+
     !> Waits for the associated process to complete.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>wait(type(process) p)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object to wait for.
     !!
     !! <h2> Examples </h2>
@@ -357,17 +356,17 @@ module subprocess
     !! @endcode
     !! <h2> Remarks </h2>
     interface wait
-    !! @cond
+        !! @cond
         module procedure :: process_wait
-    !! @endcond
+        !! @endcond
     end interface
-    
+
     !> Waits for all processes in an array to complete.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>waitall(type(process) p(:))</h3>
-    !! 
+    !!
     !! @param[in,out] processes Array of process objects to wait for.
     !!
     !! <h2> Examples </h2>
@@ -387,13 +386,13 @@ module subprocess
     interface waitall
         module procedure :: process_waitall
     end interface
-    
+
     !> Reads the standard output of the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>read_stdout(type(process) p(:), character(:), allocatable msg)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object.
     !! @param[out] output The captured stdout as a character string.
     !!
@@ -415,19 +414,19 @@ module subprocess
     interface read_stdout
         module procedure :: process_read_stdout
     end interface
-    
+
     !> Reads the standard error of the associated process.
     !! @par
     !! <h2>Methods</h2>
     !!
     !! <h3>read_stderr(type(process) p(:), character(:), allocatable output)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object.
     !! @param[out] output The captured stderr as a character string.
     !!
     !! <h2> Examples </h2>
     !! The following example illustrates a call to the `read_stderr` interface.
-    !! It uses the return code from the `exit_code` function to determine whether 
+    !! It uses the return code from the `exit_code` function to determine whether
     !! or not an error occurred during execution.
     !! @code{.f90}
     !!  type(process) :: p
@@ -439,7 +438,7 @@ module subprocess
     !!  call read_stderr(p, errmsg)
     !!
     !!  if (p%exit_code() /= 0) then
-    !!      call read_stderr(p, errmsg)   
+    !!      call read_stderr(p, errmsg)
     !!      print *, errmsg
     !!  end if
     !! @endcode
@@ -454,7 +453,7 @@ module subprocess
     !! <h2>Methods</h2>
     !!
     !! <h3>writeto(type(process) p(:), character(:), allocatable output)</h3>
-    !! 
+    !!
     !! @param[in,out] this The process object.
     !! @param[out] output The message to write to stdin.
     !!
@@ -474,16 +473,16 @@ module subprocess
     !! <h2> Remarks </h2>
     !! @ingroup group_subprocess
     interface writeto
-    !! @cond
+        !! @cond
         module procedure :: process_writeto_stdin
-    !! @endcond
+        !! @endcond
     end interface
-    
-    abstract interface 
+
+    abstract interface
         !! Abstract interface for io procedures.
         !! @param[in] sender The process to write to or read from
         !! @param[in] msg The message to exchange with the running process
-        !! @ingroup group_subprocess 
+        !! @ingroup group_subprocess
         subroutine process_io(sender, msg)
             import
             implicit none
@@ -500,9 +499,9 @@ contains
         procedure(process_io), optional                         :: stdout
         procedure(process_io), optional                         :: stderr
         type(process) :: that
-        
+
         call internal_finalize(that%ptr)
-        
+
         that%is_running = .false.
         that%path = trim(path)
         that%isasync = .false.
@@ -513,7 +512,7 @@ contains
         if (present(stdout)) that%stdout => stdout
         if (present(stderr)) that%stderr => stderr
     end function
-   
+
     !> @brief Runs a process synchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -525,11 +524,11 @@ contains
         integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
-        
+
         allocate(args(0))
         call process_run_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with one argument.
     !!
     !! @param[in,out] this The process object to run.
@@ -547,7 +546,7 @@ contains
         args = arg1
         call process_run_with_args(this, [args], option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with two arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -568,7 +567,7 @@ contains
         args(2) = arg2
         call process_run_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with three arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -592,7 +591,7 @@ contains
         args(3) = arg3
         call process_run_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with four arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -619,7 +618,7 @@ contains
         args(4) = arg4
         call process_run_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with five arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -649,7 +648,7 @@ contains
         args(5) = arg5
         call process_run_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process synchronously with an array of arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -664,7 +663,7 @@ contains
         !private
         character(:), allocatable :: cmd, arg
         procedure(process_io), pointer :: fptr => null()
-        character(2), parameter :: invalids = char(10)//char(13)
+        character(2), parameter :: invalids = char(10) // char(13)
         integer :: i, j
 
         this%isasync = .false.
@@ -674,14 +673,14 @@ contains
             do  j = 1, len(arg)
                 if (scan(arg(j:j), invalids) /= 0) arg(j:j) = ' '
             end do
-            cmd = trim(cmd)//' '//trim(adjustl(arg))
+            cmd = trim(cmd) // ' ' // trim(adjustl(arg))
         end do
 
         if (allocated(this%excode)) deallocate(this%excode)
-        allocate(this%excode, source = 0)
-        
+        allocate(this%excode, source=0)
+
         this%is_running = .true.
-        
+
         call get_time(this%begtime)
         if (present(option)) then
             this%pid = internal_run(cmd, option, this%ptr, this%excode)
@@ -690,16 +689,16 @@ contains
         end if
         call get_time(this%extime)
         this%is_running = internal_isalive(this%ptr)
-        
+
         if (associated(this%stdout)) then
             call this%stdout(this, internal_read_stdout(this%ptr, this%isasync))
         end if
-        
+
         if (associated(this%stderr)) then
             call this%stderr(this, internal_read_stderr(this%ptr, this%isasync))
         end if
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with no arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -711,16 +710,16 @@ contains
         integer(option_enum), intent(in), optional :: option
         !private
         type(string), allocatable :: args(:)
-        
+
         allocate(args(0))
         call process_runasync_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with one argument.
     !!
     !! @param[in,out] this The process object to run.
     !! @param[in] arg1 The first argument to the process.
-    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink 
+    !! @param[in] option An integer option selected from @link subprocess_handler::option_enum option_enum@endlink
     !!
     !! @b Remarks
     subroutine process_runasync_with_arg1(this, arg1, option)
@@ -733,7 +732,7 @@ contains
         args = arg1
         call process_runasync_with_args(this, [args], option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with two arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -754,7 +753,7 @@ contains
         args(2) = arg2
         call process_runasync_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with three arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -778,7 +777,7 @@ contains
         args(3) = arg3
         call process_runasync_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with four arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -805,7 +804,7 @@ contains
         args(4) = arg4
         call process_runasync_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with five arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -835,7 +834,7 @@ contains
         args(5) = arg5
         call process_runasync_with_args(this, args, option)
     end subroutine
-    
+
     !> @brief Runs a process asynchronously with an array of arguments.
     !!
     !! @param[in,out] this The process object to run.
@@ -850,15 +849,15 @@ contains
         !private
         character(:), allocatable :: cmd, arg
         integer :: i
-        
+
         this%isasync = .true.
         cmd = this%path
         do i = 1, size(args)
-            cmd = trim(cmd)//' '//trim(args(i))
+            cmd = trim(cmd) // ' ' // trim(args(i))
         end do
-        
+
         if (allocated(this%excode)) deallocate(this%excode)
-        allocate(this%excode, source = 0)
+        allocate(this%excode, source=0)
         this%is_running = .true.
         call get_time(this%begtime)
         if (present(option)) then
@@ -866,11 +865,11 @@ contains
         else
             this%pid = internal_runasync(cmd, this%ptr, this%excode)
         end if
-        if (this%excode == 0) then 
+        if (this%excode == 0) then
             deallocate(this%excode)
         end if
     end subroutine
-    
+
     !> @brief Gets the exit code of the associated process.
     !!
     !! @param[in,out] this The process object.
@@ -881,18 +880,18 @@ contains
     function process_exit_code(this) result(res)
         class(process), intent(inout)   :: this
         integer :: res
-        
+
         if (allocated(this%excode)) then
             res = this%excode
         else
             if (this%has_exited()) then
                 res = 0
             else
-                res = int(z'017F') !the process is still running
+                res = int(z'017F')  !the process is still running
             end if
         end if
     end function
-    
+
     !> @brief Gets the elapsed time since the process started or until it exited.
     !!
     !! @param[in,out] this The process object.
@@ -903,15 +902,15 @@ contains
     function process_exit_time(this) result(res)
         class(process), intent(inout)   :: this
         real(r8) :: res
-        
+
         if (this%has_exited()) then
             res = this%extime - this%begtime
-        else 
+        else
             call get_time(res)
             res = res - this%begtime
         end if
     end function
-    
+
     !> @brief Checks if the associated process has terminated.
     !!
     !! @param[in,out] this The process object.
@@ -922,11 +921,11 @@ contains
     function process_has_exited(this) result(res)
         class(process), intent(inout)   :: this
         logical :: res
-        
+
         this%is_running = internal_isalive(this%ptr)
         res = .not. this%is_running
     end function
-    
+
     !> @brief Waits for the associated process to complete.
     !!
     !! @param[in,out] this The process object to wait for.
@@ -934,11 +933,11 @@ contains
     !! @b Remarks
     subroutine process_wait(this)
         class(process), intent(inout) :: this
-        
+
         call internal_wait(this%ptr, this%excode)
         this%is_running = internal_isalive(this%ptr)
     end subroutine
-    
+
     !> @brief Waits for all processes in an array to complete.
     !!
     !! @param[in,out] processes Array of process objects to wait for.
@@ -948,7 +947,7 @@ contains
         class(process), intent(inout) :: processes(:)
         !private
         integer :: i
-        
+
         do i = 1, size(processes)
             if (.not. processes(i)%has_exited()) then
                 call processes(i)%wait()
@@ -976,7 +975,7 @@ contains
         this%isasync = .false.
         call internal_finalize(this%ptr)
     end subroutine
-    
+
     !> @brief Reads the standard output of the associated process.
     !!
     !! @param[in,out] this The process object.
@@ -986,10 +985,10 @@ contains
     subroutine process_read_stdout(this, output)
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
-        
+
         output = internal_read_stdout(this%ptr, this%isasync)
     end subroutine
-    
+
     !> @brief Reads the standard error of the associated process.
     !!
     !! @param[in,out] this The process object.
@@ -999,10 +998,10 @@ contains
     subroutine process_read_stderr(this, output)
         class(process), intent(inout)           :: this
         character(:), allocatable, intent(out)  :: output
-        
+
         output = internal_read_stderr(this%ptr, this%isasync)
     end subroutine
-    
+
     !> @brief Writes a message to the standard input of the associated process.
     !!
     !! @param[in] sender The process object sending the message.
@@ -1012,10 +1011,10 @@ contains
     subroutine process_writeto_stdin(sender, msg)
         class(process), intent(in)  :: sender
         character(*), intent(in)    :: msg
-        
+
         call internal_writeto_stdin(sender%ptr, msg)
     end subroutine
-    
+
     !> @brief Finalizes the process object, releasing resources.
     !!
     !! @param[in,out] this The process object to finalize.
@@ -1026,19 +1025,19 @@ contains
 
         nullify(this%stdout)
         nullify(this%stdout)
-        
+
         this%isasync = .false.
         call internal_finalize(this%ptr)
         this%is_running = .false.
     end subroutine
-  
+
     !> @brief Gets the current time in milliseconds.
     !!
     !! @param[out] ctime The current time in milliseconds.
     !!
     !! @b Remarks
-    subroutine get_time(ctime) 
-        real(r8), intent(out) :: ctime !< time in milliseconds
+    subroutine get_time(ctime)
+        real(r8), intent(out) :: ctime  !< time in milliseconds
         !private
         integer(i8) :: dt(8)
 

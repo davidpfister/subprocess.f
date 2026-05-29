@@ -110,8 +110,13 @@ TESTPROGRAM(main)
                     pg = process('gfortran')
                     !the static options are necessary to test the program without passing the 
                     !parent environmental variables (especially the PATH variable)
+#ifdef _WIN32
+                    call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -D_WIN32 -I'//incpath, & 
+                             '-static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive')
+#else
                     call run(pg, dirpath//file//extension, '-o '//dirpath//file, '-cpp -I'//incpath, & 
                              '-static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive')
+#endif
                     code = pg%exit_code()
                     EXPECT_TRUE(code == 0)
                     if (code /= 0) then 
@@ -210,10 +215,7 @@ TESTPROGRAM(main)
         character(:), allocatable :: res
         character(*), parameter :: commandline = 'process_return_stdin'
         
-        p = process(dirpath//commandline, stdin=stdin)
-        call runasync(p)
-        call kill(p)
-        
+        p = process(dirpath//commandline, stdin=stdin)       
         call runasync(p)
         
         call stdin(p, 'a')

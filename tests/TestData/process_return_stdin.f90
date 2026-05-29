@@ -10,6 +10,7 @@ console(process_return_stdin)
         do i = 1, len(str)
             read(input_unit, '(A)') input_char
 			write(output_unit, '(A)', advance='no') trim(input_char)
+            flush(output_unit)
             if (trim(input_char) == '!') then
                 exit
             end if
