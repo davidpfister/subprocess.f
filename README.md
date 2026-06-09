@@ -87,10 +87,10 @@ set FPM_FC=ifort
 
 Besides the build command, several commands are also available:
 ```bash
-@pretiffy
-option clean --all
+@prettify
 system codee format ./src
-system fortitute check ./src --fix
+system fortitude check ./src --fix
+option run --list
 
 @clean
 option clean --all
@@ -106,8 +106,9 @@ option build --flag '-ffree-line-length-none'
 options test --flag '-ffree-line-length-none'
 
 @doc
-option clean --all
 system cd ./.dox & doxygen ./Doxyfile.in & cd ..
+system powershell ./tools/Fix-Doxygen.ps1 -Path "./docs"
+option run --list
 ```
 
 The toml files contains the settings to the cpp preprocessor are specified in the file. 
